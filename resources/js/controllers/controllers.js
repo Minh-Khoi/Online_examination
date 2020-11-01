@@ -113,6 +113,18 @@ export class Controller {
         return list;
     }
 
+    /** Read User by id (User object from Backend in JSON) */
+    async readUserByID(id) {
+        let user = null;
+        // console.log(id);
+        await fetch(window.location.origin + "/action/find_user/" + id)
+            .then(response => ((response.status == 200) ? response.text() : response.status))
+            .then(res => {
+                user = (isNaN(res)) ? JSON.parse(res) : res;
+            })
+        return user;
+    }
+
 
 
 }

@@ -28,15 +28,27 @@
         <!--  -->
         <thead>
           <tr>
-            <th>Rendering engine</th>
-            <th>Browser</th>
-            <th>Platform(s)</th>
-            <th>Engine version</th>
-            <th>CSS grade</th>
+            <th>EXAM ID</th>
+            <th>QUIZ --- (ID)</th>
+            <th>USER --- (ID)</th>
           </tr>
         </thead>
         <tbody>
-          <!--  -->
+          <tr v-for="exam in exams_list" :key="exam.id">
+            <td>{{exam.id}}</td>
+            <td>
+              {{exam.quiz_name}} ---
+              <b>(ID: {{exam.quiz_id}} )</b>
+            </td>
+            <td>
+              {{exam.user_name}} ---
+              <b>(ID: {{exam.user_id}} )</b>
+            </td>
+            <td>
+              <button @click="goto_edit_form(exam)" class="btn btn-warning">EDIT</button>
+              <button @click="goto_delete_form(exam)" class="btn btn-danger">DELETE</button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -45,6 +57,7 @@
 
 <script>
 import { Controller } from "../../controllers/controllers.js";
+import { router } from "../../routes/routes";
 
 export default {
   //
@@ -64,6 +77,30 @@ export default {
       let input = document.querySelector("#table_for_exams #myInput");
       let table = document.querySelector("#table_for_exams #myTable");
       helper.filterTable(input, table);
+    },
+
+    /**
+     * Event handler for button "edit".
+     * @param array exam
+     */
+    goto_edit_form(exam) {
+      console.log(exam);
+      router.push({
+        name: "edit_exam",
+        params: { id: exam.id, exam: exam }
+      });
+    },
+
+    /**
+     * Event handler for button "delete".
+     * @param array exam
+     */
+    goto_delete_form(exam) {
+      console.log(exam);
+      router.push({
+        name: "delete_exam",
+        params: { id: exam.id, exam: exam }
+      });
     }
   },
 
@@ -71,9 +108,16 @@ export default {
    * when this component is mounted. A list of all User instances will be loaded in JSON objec
    */
   async mounted() {
-    let helper = new Controller();
-    this.exams_list = await helper.loadExamsList();
-    console.log(this.exams_list);
+    let controller = new Controller();
+    let exams_list = await controller.loadExamsList();
+
+    for (let exam of exams_list) {
+      let quiz = await controller.readQuizByID(exam.quiz_id);
+      let user = await controller.readUserByID(exam.user_id);
+      exam["user_name"] = user.name;
+      exam["quiz_name"] = quiz.name;
+    }
+    this.exams_list = exams_list;
   }
 };
 </script>

@@ -71,6 +71,7 @@ viewUsersElement.addEventListener('click', function (e) {
 
 createExamElement.addEventListener('click', function (e) {
     e.preventDefault();
+    router.push({ name: 'create_exam' });
 });
 
 viewExamElement.addEventListener('click', function (e) {

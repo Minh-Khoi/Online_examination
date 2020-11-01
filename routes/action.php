@@ -19,6 +19,17 @@ Route::get('all_users', function () {
 });
 
 /**
+ * THis Route will find the id-specified User instance and return it (in JSON) to Client
+ * with method GET
+ * @param int user_id
+ */
+Route::get('find_user/{user_id}', function ($user_id) {
+    $user = User::find($user_id);
+    return  json_encode($user);
+});
+
+
+/**
  * This Route will get list of all Quiz instances and convert them in JSON
  */
 Route::get('all_quizzes', function () {
@@ -83,6 +94,39 @@ Route::get('all_exams', function () {
     $exams_list = QuizUser::all();
     return json_encode(($exams_list));
 });
+
+/**
+ * This Route will receive FormData object from Controller and Create new QuizUser instance
+ */
+Route::post('create_quiz_user', function (Request $request) {
+    $quiz_user = new QuizUser();
+    $quiz_user->quiz_id = $request->input('quiz_id');
+    $quiz_user->user_id = $request->input('user_id');
+    $quiz_user->save();
+    return "01 Exam has been assigned";
+});
+
+/**
+ * This Route will receive FormData object from Controller and Update detail of id-specified QuizUser instance
+ */
+Route::post('edit_quiz_user', function (Request $request) {
+    $quiz_user = QuizUser::find($request->input('id'));
+    $quiz_user->quiz_id = $request->input('quiz_id');
+    $quiz_user->user_id = $request->input('user_id');
+    $quiz_user->save();
+    return "01 Exam has been updated";
+});
+
+/**
+ * This Route will receive FormData object from Controller and delete the id-specified Question instance
+ * The method of this Route is POST
+ */
+Route::post('delete_quiz_user', function (Request $request) {
+    $quiz_user = QuizUser::find($request->input('id'));
+    $quiz_user->delete();
+    return "Delete 01 Exam successfully";
+});
+
 
 /**
  * This Route will get list of all Questions instances and convert them in JSON

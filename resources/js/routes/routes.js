@@ -10,6 +10,9 @@ import DeleteQuizComponent from '../components/form_component/quiz/DeleteQuizCom
 import DeleteQuestionComponent from "../components/form_component/question/DeleteQuestionComponent.vue";
 import EditQuestionComponent from '../components/form_component/question/EditQuestionComponent.vue';
 import CreateQuestionComponent from '../components/form_component/question/CreateQuestionComponent.vue';
+import CreateExamComponent from '../components/form_component/exam/CreateExamComponent.vue';
+import EditExamComponent from '../components/form_component/exam/EditExamComponent';
+import DeleteExamComponent from '../components/form_component/exam/DeleteExamComponent';
 
 const routes = [
     {
@@ -20,7 +23,6 @@ const routes = [
             { path: "questions", name: "questions", component: TableQuestionsComponent },
             { path: "exams", name: "exams", component: TableExamsComponent },
         ]
-
     },
     {
         path: "/vue/create_quiz", name: "create_quiz", component: CreateQuizComponent
@@ -29,16 +31,25 @@ const routes = [
         path: "/vue/create_question", name: "create_question", component: CreateQuestionComponent
     },
     {
+        path: "/vue/create_exam", name: "create_exam", component: CreateExamComponent
+    },
+    {
         path: "/vue/edit_quiz/:id", name: "edit_quiz", component: EditQuizComponent
     },
     {
         path: "/vue/edit_question/:id", name: "edit_question", component: EditQuestionComponent
     },
     {
+        path: "/vue/edit_exam/:id", name: "edit_exam", component: EditExamComponent
+    },
+    {
         path: "/vue/delete_quiz/:id", name: "delete_quiz", component: DeleteQuizComponent
     },
     {
         path: "/vue/delete_question/:id", name: "delete_question", component: DeleteQuestionComponent
+    },
+    {
+        path: "/vue/delete_exam/:id", name: "delete_exam", component: DeleteExamComponent
     },
     {
         path: "/home", redirect: "/vue/dashboard"
