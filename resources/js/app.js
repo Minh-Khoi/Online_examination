@@ -45,6 +45,9 @@ let createExamElement = document.querySelector('.sidebar #create_exam');
 let viewExamElement = document.querySelector('.sidebar #view_exams');
 let createQuestionElement = document.querySelector('.sidebar #create_question');
 let viewQuestionsElement = document.querySelector('.sidebar #view_questions');
+let createAnswerElement = document.querySelector('.sidebar #create_answer');
+let viewAnswersElement = document.querySelector('.sidebar #view_answer');
+
 
 // Then, append Event Handler for those HTMLElement objects
 // (createUserElement will invoke the ajax for register)
@@ -87,5 +90,15 @@ createQuestionElement.addEventListener('click', function (e) {
 viewQuestionsElement.addEventListener('click', function (e) {
     e.preventDefault();
     router.push({ name: 'questions' });
+});
+
+createAnswerElement.addEventListener('click', function (e) {
+    e.preventDefault();
+    router.push({ name: 'create_answer' });
+});
+
+viewAnswersElement.addEventListener('click', function (e) {
+    e.preventDefault();
+    router.push({ name: 'answers' });
 });
 

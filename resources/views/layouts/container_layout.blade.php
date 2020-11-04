@@ -47,6 +47,15 @@
                         </li>
                     </ul>
 
+                    <ul class="widget widget-menu unstyled">
+                        <li id="create_answer">
+                            <a href="ui-button-icon.html"><i class="menu-icon icon-bold"></i> Create Answer </a>
+                        </li>
+                        <li id="view_answer">
+                            <a href="ui-typography.html"><i class="menu-icon icon-book"></i>View Answer </a>
+                        </li>
+                    </ul>
+
                 </div>
                 <!--/.sidebar-->
             </div>

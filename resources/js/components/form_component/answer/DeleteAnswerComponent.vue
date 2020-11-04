@@ -6,16 +6,19 @@
       {{errors}}
     </div>
 
-    <h3>You are going to delete the exam with ID {{exam.id}}</h3>
-    <p class="content_of_exam">
-      <b>User:</b>
+    <h3>You are going to delete the answer with ID {{answer.id}}</h3>
+    <p class="content_of_question">
+      <b>For Question:</b>
       <br />
-      {{exam.user_name}}
-      <br />
-      <b>Quiz:</b>
-      <br />
-      {{exam.quiz_name}}
+      {{question.question_content}}
     </p>
+
+    <p class="content_of_answer">
+      <b>Answer content:</b>
+      <br />
+      {{answer.answer_content}}
+    </p>
+
     <button class="btn btn-danger" @click="agree_deleting()">AGREE</button>
   </div>
 </template>
@@ -26,8 +29,9 @@ import { router } from "../../../routes/routes";
 export default {
   data() {
     return {
-      exam: this.$route.params.exam,
-      errors: ""
+      answer: this.$route.params.answer,
+      errors: "",
+      question: {}
     };
   },
 
@@ -36,16 +40,16 @@ export default {
     async agree_deleting() {
       let controller = new Controller();
       let form_datas = new FormData();
-      form_datas.append("id", this.exam.id);
+      form_datas.append("id", this.question.id);
       let submit_result = await controller.sendAPI(
-        "/action/delete_quiz_user",
+        "/action/delete_answer",
         form_datas,
         "POST"
       );
       if (isNaN(submit_result)) {
-        alert("deleted 01 exam successfully");
+        alert("deleted 01 answer successfully");
         setTimeout(() => {
-          router.push({ name: "exams" });
+          router.push({ name: "answers" });
         }, 1200);
       } else {
         this.error = "Something wrong!! deleting failed";
@@ -53,19 +57,16 @@ export default {
     }
   },
 
-  /** we need to add attributes "quiz_name" and "user_name" for current exam */
   async mounted() {
     let controller = new Controller();
-    let quiz = await controller.readQuizByID(this.exam.quiz_id);
-    let user = await controller.readUserByID(this.exam.user_id);
-    this.exam["user_name"] = user.name;
-    this.exam["quiz_name"] = quiz.name;
+    this.question = await controller.readQuestionByID(this.answer.question_id);
   }
 };
 </script>
 
 <style scoped>
-p.content_of_exam {
+p.content_of_answer,
+p.content_of_question {
   background-color: azure;
 }
 </style>

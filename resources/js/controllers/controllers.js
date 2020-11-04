@@ -1,6 +1,13 @@
 import { router } from '../routes/routes';
 
-
+/**
+ * This Controller class will keep contact with the route "action" on Server-side and Vue components on
+ * Client-side.
+ * We usually see the Controller run on server-side, contact to Action classes by importing module
+ * and get request through HTTP request from client side. However, in this website it is different
+ * Controller class will run on client side. IT will be invoked by Vue Router, a JS dependency installed by npm;
+ *  and contact to route "action" (Just a php file configed for this role, not a class) by HTTP requests.
+ */
 export class Controller {
     constructor() { };
 
@@ -90,6 +97,18 @@ export class Controller {
         return list;
     }
 
+    /** Read Question by id (Question object in JSON) */
+    async readQuestionByID(id) {
+        let question = null;
+        // console.log(id);
+        await fetch(window.location.origin + "/action/find_question/" + id)
+            .then(response => ((response.status == 200) ? response.text() : response.status))
+            .then(res => {
+                question = (isNaN(res)) ? JSON.parse(res) : res;
+            })
+        return question;
+    }
+
     /** Read Quiz by id (Quiz object in JSON) */
     async readQuizByID(id) {
         let quiz = null;
@@ -113,6 +132,61 @@ export class Controller {
         return list;
     }
 
+    /** Load the list of Answer instances in JSON */
+    async loadAnswersList() {
+        let list = [];
+        await fetch(window.location.origin + "/action/all_answers")
+            .then((response) => response.text())
+            .then((res) => {
+                list = JSON.parse(res);
+            })
+        return list;
+    }
+
+    /** Load the list of Answer instances in JSON */
+    async loadResultsList() {
+        let list = [];
+        await fetch(window.location.origin + "/action/all_results")
+            .then((response) => response.text())
+            .then((res) => {
+                list = JSON.parse(res);
+            })
+        return list;
+    }
+
+    /**  Find the Result Object in JSON by its id */
+    async readResultByID(id) {
+        let result = null;
+        await fetch(window.location.origin + "/action/find_result/" + id)
+            .then(response => ((response.status == 200) ? response.text() : response.status))
+            .then(res => {
+                result = (isNaN(res)) ? JSON.parse(res) : res;
+            })
+        return result;
+    }
+
+    /**  Find the Result Object in JSON by its user 's id */
+    async readResultByUserID(user_id) {
+        let result = null;
+        await fetch(window.location.origin + "/action/find_result/user/" + user_id)
+            .then(response => ((response.status == 200) ? response.text() : response.status))
+            .then(res => {
+                result = (isNaN(res)) ? JSON.parse(res) : res;
+            })
+        return result;
+    }
+
+    /**  Find the Result Object in JSON by its quiz id */
+    async readResultByQuizID(quiz_id) {
+        let result = null;
+        await fetch(window.location.origin + "/action/find_result/quiz/" + quiz_id)
+            .then(response => ((response.status == 200) ? response.text() : response.status))
+            .then(res => {
+                result = (isNaN(res)) ? JSON.parse(res) : res;
+            })
+        return result;
+    }
+
     /** Read User by id (User object from Backend in JSON) */
     async readUserByID(id) {
         let user = null;
@@ -124,7 +198,6 @@ export class Controller {
             })
         return user;
     }
-
 
 
 }

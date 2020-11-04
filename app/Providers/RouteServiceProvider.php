@@ -79,8 +79,10 @@ class RouteServiceProvider extends ServiceProvider
     }
 
     /**
-     * Define "server" routes for the application. These route will be used to call the Action class
-     * through AJAX
+     * Define "action" routes (in file 'routes/action.php') for the application
+     * which will be used to be called as an Action class.
+     * the Controller (class Controller in file controller.js on client side) call for executing
+     *  this route file through AJAX and be received a JSON Object returned.
      */
     protected function mapActiondRoutes()
     {

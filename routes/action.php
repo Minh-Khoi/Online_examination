@@ -1,8 +1,16 @@
 <?php
 
+/**
+ * This route file ('routes/action.php') was created to handle all the logical business with data
+ * before send it to Controller on Client-side. Actually, It 's working as an Action class.
+ * But the Controller can only call it by HTTP request: AJAX, FETCH API (instead of importing modules)
+ */
+
+use App\Answer;
 use App\Question;
 use App\Quiz;
 use App\QuizUser;
+use App\Result;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -152,6 +160,16 @@ Route::post('create_question', function (Request $request) {
 });
 
 /**
+ * Find Question instance by specified id (pass through API)
+ * @param int $id question id
+ */
+Route::get('find_question/{id}', function ($id) {
+    $question = Question::find($id);
+    return json_encode($question);
+});
+
+
+/**
  * This Route will receive FormData object from Controller and edit details of the id - specified
  *  Question instance. The method of this Route is POST
  */
@@ -171,4 +189,115 @@ Route::post('delete_question', function (Request $request) {
     $question = Question::find($request->input('id'));
     $question->delete();
     return "Delete 01 Quiz successfully";
+});
+
+/**
+ * This Route will get list of all Answers instances and convert them in JSON
+ */
+Route::get('all_answers', function () {
+    // The variable below is a collection of Answer instances, but we can convert it directly to JSON string.
+    // It 's not neccessary to convert it to array
+    $answers_list = Answer::all();
+    return json_encode(($answers_list));
+});
+
+/**
+ * This Route will receive FormData object from Controller and create new a new Answer instance
+ * The method of this Route is POST
+ */
+Route::post('create_answer', function (Request $request) {
+    $answer = new Answer();
+    $answer->id = 0;
+    $answer->question_id = $request->input('question_id');
+    $answer->answern_content = $request->input('answer_content');
+    $answer->save();
+    return "Create 01 Answer successfully";
+});
+
+/**
+ * This Route will receive FormData object from Controller and update details of the id-specified
+ * Answer instance. The method of this Route is POST
+ */
+Route::post('edit_answer', function (Request $request) {
+    $answer = Answer::find($request->input('id'));
+    $answer->question_id = $request->input('question_id');
+    $answer->answern_content = $request->input('answer_content');
+    $answer->save();
+    return "Updated 01 Answer successfully";
+});
+
+/**
+ * This Route will receive FormData object from Controller and delete the id-specified Answer instance
+ * The method of this Route is POST
+ */
+Route::post('delete_answer', function (Request $request) {
+    $answer = Answer::find($request->input('id'));
+    $answer->delete();
+    return "Delete 01 Answer successfully";
+});
+
+/**
+ * This Route will get list of all Result instances and convert them in JSON
+ */
+Route::get('all_results', function () {
+    // The variable below is a collection of Answer instances, but we can convert it directly to JSON string.
+    // It 's not neccessary to convert it to array
+    $results_list = Result::all();
+    return json_encode(($results_list));
+});
+
+/**
+ * This Route will receive FormData object from Controller and create new a new Result instance
+ * The method of this Route is POST
+ */
+Route::post('create_result', function (Request $request) {
+    $result = new Result();
+    $result->id = 0;
+    $result->user_id = $request->input('user_id');
+    $result->quiz_id = $request->input('quiz_id');
+    $result->question_id = $request->input('question_id');
+    $result->answern_id = $request->input('answer_id');
+    $result->save();
+    return "Create 01 result successfully";
+});
+
+/**
+ * This Route will receive FormData object from Controller and edit a id-specified Result instance
+ * The method of this Route is POST
+ */
+Route::post('edit_result', function (Request $request) {
+    $result = Result::find($request->input('id'));
+    $result->user_id = $request->input('user_id');
+    $result->quiz_id = $request->input('quiz_id');
+    $result->question_id = $request->input('question_id');
+    $result->answern_id = $request->input('answer_id');
+    $result->save();
+    return "edit 01 result successfully";
+});
+
+/**
+ * Find Result instance by result 's  id (pass through API)
+ * @param int $id Result id
+ */
+Route::get('find_result/{id}', function ($id) {
+    $result = Result::find($id);
+    return json_encode($result);
+});
+
+/**
+ * Find Result instance by specified user id (pass through API)
+ * @param int $user_id user 's id who do exam
+ */
+Route::get('find_result/user/{user_id}', function ($user_id) {
+    $results_list = Result::where("user_id", $user_id)->get();
+    return json_encode($results_list);
+});
+
+/**
+ * Find Result instance by specified quiz id (pass through API)
+ * @param int $quiz_id quiz 's id with which the user do exam
+ */
+Route::get('find_result/quiz/{quiz_id}', function ($quiz_id) {
+    $results_list = Result::where("quiz_id", $quiz_id)->get();
+    return json_encode($results_list);
 });

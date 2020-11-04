@@ -4,6 +4,7 @@ import TableQuizzesComponent from '../components/table_component/TableQuizzesCom
 import TableExamsComponent from '../components/table_component/TableExamsComponent.vue';
 import TableUsersComponent from '../components/table_component/TableUsersComponent.vue';
 import TableQuestionsComponent from '../components/table_component/TableQuestionsComponent.vue';
+import TableAnswersComponent from "../components//table_component/TableAnswersComponent.vue";
 import CreateQuizComponent from '../components/form_component/quiz/CreateQuizComponent.vue';
 import EditQuizComponent from '../components/form_component/quiz/EditQuizComponent.vue';
 import DeleteQuizComponent from '../components/form_component/quiz/DeleteQuizComponent.vue';
@@ -13,6 +14,7 @@ import CreateQuestionComponent from '../components/form_component/question/Creat
 import CreateExamComponent from '../components/form_component/exam/CreateExamComponent.vue';
 import EditExamComponent from '../components/form_component/exam/EditExamComponent';
 import DeleteExamComponent from '../components/form_component/exam/DeleteExamComponent';
+import CreateAnswerComponent from "../components/form_component/answer/CreateAnswerComponent.vue";
 
 const routes = [
     {
@@ -22,6 +24,7 @@ const routes = [
             { path: "users", name: "users", component: TableUsersComponent },
             { path: "questions", name: "questions", component: TableQuestionsComponent },
             { path: "exams", name: "exams", component: TableExamsComponent },
+            { path: "answers", name: "answers", component: TableAnswersComponent },
         ]
     },
     {
@@ -32,6 +35,9 @@ const routes = [
     },
     {
         path: "/vue/create_exam", name: "create_exam", component: CreateExamComponent
+    },
+    {
+        path: "/vue/create_answer", name: "create_answer", component: CreateAnswerComponent
     },
     {
         path: "/vue/edit_quiz/:id", name: "edit_quiz", component: EditQuizComponent
