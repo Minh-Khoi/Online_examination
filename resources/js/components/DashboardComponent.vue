@@ -4,23 +4,23 @@
       <div class="btn-box-row row-fluid">
         <span @click="showUserTable()" class="btn-box big span2" style="margin-left: 3.2vw">
           <i class="icon-random"></i>
-          <b>65%</b>
-          <p class="text-muted">Users</p>
+          <b>SEE Users</b>
         </span>
         <span @click="showQuizzesTable()" class="btn-box big span2" style="margin-left: 3.2vw">
           <i class="icon-user"></i>
-          <b>15</b>
-          <p class="text-muted">Quizzes</p>
+          <b>SEE Quizzes</b>
         </span>
-        <span @click="showExamsTable()" class="btn-box big span2" style="margin-left: 3.2vw">
+        <span
+          @click="showExamsTable()"
+          class="btn-box bg-success big span2"
+          style="margin-left: 3.2vw; background-color: #FF7F50"
+        >
           <i class="icon-money"></i>
-          <b>15,152</b>
-          <p class="text-muted">User 's quizzes</p>
+          <b>DO An Exam</b>
         </span>
         <span @click="showQuestionsTable()" class="btn-box big span2" style="margin-left: 3.2vw">
           <i class="icon-money"></i>
-          <b>15,152</b>
-          <p class="text-muted">Results</p>
+          <b>See Results</b>
         </span>
 
         <router-view></router-view>
@@ -31,6 +31,7 @@
 
 <script>
 import { router } from "../routes/routes.js";
+import { Controller } from "../controllers/controllers.js";
 
 export default {
   //

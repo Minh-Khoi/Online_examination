@@ -1921,6 +1921,7 @@ module.exports = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes_routes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../routes/routes.js */ "./resources/js/routes/routes.js");
+/* harmony import */ var _controllers_controllers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../controllers/controllers.js */ "./resources/js/controllers/controllers.js");
 //
 //
 //
@@ -1952,6 +1953,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   //
@@ -41651,9 +41653,7 @@ var render = function() {
             [
               _c("i", { staticClass: "icon-random" }),
               _vm._v(" "),
-              _c("b", [_vm._v("65%")]),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-muted" }, [_vm._v("Users")])
+              _c("b", [_vm._v("SEE Users")])
             ]
           ),
           _vm._v(" "),
@@ -41671,17 +41671,18 @@ var render = function() {
             [
               _c("i", { staticClass: "icon-user" }),
               _vm._v(" "),
-              _c("b", [_vm._v("15")]),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-muted" }, [_vm._v("Quizzes")])
+              _c("b", [_vm._v("SEE Quizzes")])
             ]
           ),
           _vm._v(" "),
           _c(
             "span",
             {
-              staticClass: "btn-box big span2",
-              staticStyle: { "margin-left": "3.2vw" },
+              staticClass: "btn-box bg-success big span2",
+              staticStyle: {
+                "margin-left": "3.2vw",
+                "background-color": "#FF7F50"
+              },
               on: {
                 click: function($event) {
                   return _vm.showExamsTable()
@@ -41691,11 +41692,7 @@ var render = function() {
             [
               _c("i", { staticClass: "icon-money" }),
               _vm._v(" "),
-              _c("b", [_vm._v("15,152")]),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-muted" }, [
-                _vm._v("User 's quizzes")
-              ])
+              _c("b", [_vm._v("DO An Exam")])
             ]
           ),
           _vm._v(" "),
@@ -41713,9 +41710,7 @@ var render = function() {
             [
               _c("i", { staticClass: "icon-money" }),
               _vm._v(" "),
-              _c("b", [_vm._v("15,152")]),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-muted" }, [_vm._v("Results")])
+              _c("b", [_vm._v("See Results")])
             ]
           ),
           _vm._v(" "),
