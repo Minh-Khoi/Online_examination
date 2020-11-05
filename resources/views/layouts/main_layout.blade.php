@@ -96,5 +96,4 @@
     <script src="{{asset('scripts/common.js')}}" type="text/javascript"></script>
     <!-- And this is VUE Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-
 </body>

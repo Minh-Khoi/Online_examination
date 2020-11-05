@@ -13,6 +13,7 @@ use App\QuizUser;
 use App\Result;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Console\Helper\Helper;
 
@@ -34,6 +35,17 @@ Route::get('all_users', function () {
 Route::get('find_user/{user_id}', function ($user_id) {
     $user = User::find($user_id);
     return  json_encode($user);
+});
+
+/**
+ * THis Route will return detail of the loged-in user in JSON
+ */
+Route::get('current_user', function () {
+    $current_user = Auth::user();
+    if ($current_user) {
+        return json_encode($current_user);
+    }
+    return false;
 });
 
 

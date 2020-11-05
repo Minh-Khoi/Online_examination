@@ -5,6 +5,7 @@
  */
 import VueRouter from "vue-router";
 import { router } from "./routes/routes.js";
+import { Controller } from "./controllers/controllers.js";
 require('./bootstrap');
 
 window.Vue = require('vue');
@@ -23,18 +24,6 @@ Vue.use(VueRouter);
 
 Vue.component('dashboard-component', require('./components/DashboardComponent.vue').default);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-const app = new Vue({
-    el: '#app',
-    router: router,
-});
-
-
 // Add event listener for the DOM element on the Sidebar
 // First, call all the HTMLElement (<li> tags) objects in sidebar
 let dashboardElement = document.querySelector('.sidebar #dashboard');
@@ -48,57 +37,86 @@ let viewQuestionsElement = document.querySelector('.sidebar #view_questions');
 let createAnswerElement = document.querySelector('.sidebar #create_answer');
 let viewAnswersElement = document.querySelector('.sidebar #view_answer');
 
+// Get Current Logged in user
+let controller = new Controller();
+let mixin = null;
+// THis is how I run an async function directly on a main JS file
+(async function () {
+    let current_user = await controller.findLoggedInUser();
+    console.log(current_user);
+    // Then, append Event Handler for those HTMLElement objects
+    // (createUserElement will invoke the ajax for register)
+    dashboardElement.addEventListener('click', function (e) {
+        e.preventDefault();
+        router.push({ name: 'dashboard', params: { current_user: current_user } });
+    });
 
-// Then, append Event Handler for those HTMLElement objects
-// (createUserElement will invoke the ajax for register)
-dashboardElement.addEventListener('click', function (e) {
-    e.preventDefault();
-    router.push({ name: 'dashboard' });
-});
+    createQuizElement.addEventListener('click', function (e) {
+        e.preventDefault();
+        router.push({ name: "create_quiz", params: { current_user: current_user } });
+    });
 
-createQuizElement.addEventListener('click', function (e) {
-    e.preventDefault();
-    router.push({ name: "create_quiz" });
-});
+    viewQuizzesElement.addEventListener('click', function (e) {
+        e.preventDefault();
+        router.push({ name: 'quizzes', params: { current_user: current_user } });
+    });
 
-viewQuizzesElement.addEventListener('click', function (e) {
-    e.preventDefault();
-    // router.go({ path: 'vue/dashboard/quizzes' });
-    router.push({ name: 'quizzes' });
-});
+    viewUsersElement.addEventListener('click', function (e) {
+        e.preventDefault();
+        router.push({ name: 'users', params: { current_user: current_user } });
+    });
 
-viewUsersElement.addEventListener('click', function (e) {
-    e.preventDefault();
-    router.push({ name: 'users' });
-});
+    createExamElement.addEventListener('click', function (e) {
+        e.preventDefault();
+        router.push({ name: 'create_exam', params: { current_user: current_user } });
+    });
 
-createExamElement.addEventListener('click', function (e) {
-    e.preventDefault();
-    router.push({ name: 'create_exam' });
-});
+    viewExamElement.addEventListener('click', function (e) {
+        e.preventDefault();
+        router.push({ name: 'exams', params: { current_user: current_user } });
+    });
 
-viewExamElement.addEventListener('click', function (e) {
-    e.preventDefault();
-    router.push({ name: 'exams' });
-});
+    createQuestionElement.addEventListener('click', function (e) {
+        e.preventDefault();
+        router.push({ name: 'create_question', params: { current_user: current_user } });
+    });
 
-createQuestionElement.addEventListener('click', function (e) {
-    e.preventDefault();
-    router.push({ name: 'create_question' });
-});
+    viewQuestionsElement.addEventListener('click', function (e) {
+        e.preventDefault();
+        router.push({ name: 'questions', params: { current_user: current_user } });
+    });
 
-viewQuestionsElement.addEventListener('click', function (e) {
-    e.preventDefault();
-    router.push({ name: 'questions' });
-});
+    createAnswerElement.addEventListener('click', function (e) {
+        e.preventDefault();
+        router.push({ name: 'create_answer', params: { current_user: current_user } });
+    });
 
-createAnswerElement.addEventListener('click', function (e) {
-    e.preventDefault();
-    router.push({ name: 'create_answer' });
-});
+    viewAnswersElement.addEventListener('click', function (e) {
+        e.preventDefault();
+        router.push({ name: 'answers', params: { current_user: current_user } });
+    });
 
-viewAnswersElement.addEventListener('click', function (e) {
-    e.preventDefault();
-    router.push({ name: 'answers' });
-});
+    // Set Global Variables with Vue.Mixin. These variables will be used to pass the Logging in User details
+    let mixin = {
+        data() {
+            return {
+                current_user: current_user
+            }
+        }
+    };
+
+    /**
+     * Next, we will create a fresh Vue application instance and attach it to
+     * the page. Then, you may begin adding components to this application
+     * or customize the JavaScript scaffolding to fit your unique needs.
+     */
+
+    const app = new Vue({
+        el: '#app',
+        router: router,
+        mixins: [mixin]
+    });
+
+})();
+
 

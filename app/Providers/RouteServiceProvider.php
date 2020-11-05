@@ -87,6 +87,9 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapActiondRoutes()
     {
         Route::prefix('action')
+            // We need this middleware to use some helper class such as Auth
+            // This class is necessary to define Logging in user
+            ->middleware('web')
             ->namespace($this->namespace)
             ->group(base_path('routes/action.php'));
     }

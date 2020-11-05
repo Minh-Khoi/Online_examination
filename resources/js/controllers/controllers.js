@@ -52,6 +52,24 @@ export class Controller {
         return users_list;
     }
 
+    /**
+     * Find the user who are Logging in
+     */
+    async findLoggedInUser() {
+        let user = null;
+        await fetch(window.location.origin + "/action/current_user")
+            .then((response) => ((response.status == 200) ? response.text() : response.status))
+            .then((res) => {
+                if (isNaN(res)) {
+                    user = JSON.parse(res);
+                }
+            });
+        // THis localStorage param will be use in route file
+        window.current_user = user;
+        console.log(window.current_user);
+        return user;
+    }
+
     /** Load the list of Quiz instances in JSON */
     async loadQuizzesList() {
         let list = [];

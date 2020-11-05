@@ -15,6 +15,8 @@ import CreateExamComponent from '../components/form_component/exam/CreateExamCom
 import EditExamComponent from '../components/form_component/exam/EditExamComponent';
 import DeleteExamComponent from '../components/form_component/exam/DeleteExamComponent';
 import CreateAnswerComponent from "../components/form_component/answer/CreateAnswerComponent.vue";
+import { Controller } from "../controllers/controllers";
+
 
 const routes = [
     {
@@ -27,38 +29,18 @@ const routes = [
             { path: "answers", name: "answers", component: TableAnswersComponent },
         ]
     },
+    { path: "/vue/create_quiz", name: "create_quiz", component: CreateQuizComponent },
+    { path: "/vue/create_question", name: "create_question", component: CreateQuestionComponent },
+    { path: "/vue/create_exam", name: "create_exam", component: CreateExamComponent },
+    { path: "/vue/create_answer", name: "create_answer", component: CreateAnswerComponent },
+    { path: "/vue/edit_quiz/:id", name: "edit_quiz", component: EditQuizComponent },
+    { path: "/vue/edit_question/:id", name: "edit_question", component: EditQuestionComponent },
+    { path: "/vue/edit_exam/:id", name: "edit_exam", component: EditExamComponent },
+    { path: "/vue/delete_quiz/:id", name: "delete_quiz", component: DeleteQuizComponent },
+    { path: "/vue/delete_question/:id", name: "delete_question", component: DeleteQuestionComponent },
+    { path: "/vue/delete_exam/:id", name: "delete_exam", component: DeleteExamComponent },
     {
-        path: "/vue/create_quiz", name: "create_quiz", component: CreateQuizComponent
-    },
-    {
-        path: "/vue/create_question", name: "create_question", component: CreateQuestionComponent
-    },
-    {
-        path: "/vue/create_exam", name: "create_exam", component: CreateExamComponent
-    },
-    {
-        path: "/vue/create_answer", name: "create_answer", component: CreateAnswerComponent
-    },
-    {
-        path: "/vue/edit_quiz/:id", name: "edit_quiz", component: EditQuizComponent
-    },
-    {
-        path: "/vue/edit_question/:id", name: "edit_question", component: EditQuestionComponent
-    },
-    {
-        path: "/vue/edit_exam/:id", name: "edit_exam", component: EditExamComponent
-    },
-    {
-        path: "/vue/delete_quiz/:id", name: "delete_quiz", component: DeleteQuizComponent
-    },
-    {
-        path: "/vue/delete_question/:id", name: "delete_question", component: DeleteQuestionComponent
-    },
-    {
-        path: "/vue/delete_exam/:id", name: "delete_exam", component: DeleteExamComponent
-    },
-    {
-        path: "/home", redirect: "/vue/dashboard"
+        path: "/home", redirect: { name: "dashboard" }
     }
 ];
 
