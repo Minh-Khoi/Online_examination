@@ -5,6 +5,7 @@
  */
 import VueRouter from "vue-router";
 import { router } from "./routes/routes.js";
+import { router_for_user } from './routes/routes_for_user.js';
 import { Controller } from "./controllers/controllers.js";
 require('./bootstrap');
 
@@ -39,13 +40,14 @@ let viewAnswersElement = document.querySelector('.sidebar #view_answer');
 
 // Get Current Logged in user
 let controller = new Controller();
-let mixin = null;
 // THis is how I run an async function directly on a main JS file
 (async function () {
     let current_user = await controller.findLoggedInUser();
-    console.log(current_user);
+    let current_user_is_admin = current_user.is_admin == 1;
+
     // Then, append Event Handler for those HTMLElement objects
     // (createUserElement will invoke the ajax for register)
+    // if (current_user_is_admin) {
     dashboardElement.addEventListener('click', function (e) {
         e.preventDefault();
         router.push({ name: 'dashboard', params: { current_user: current_user } });
@@ -95,28 +97,27 @@ let mixin = null;
         e.preventDefault();
         router.push({ name: 'answers', params: { current_user: current_user } });
     });
-
-    // Set Global Variables with Vue.Mixin. These variables will be used to pass the Logging in User details
-    let mixin = {
-        data() {
-            return {
-                current_user: current_user
-            }
-        }
-    };
+    // }
 
     /**
      * Next, we will create a fresh Vue application instance and attach it to
      * the page. Then, you may begin adding components to this application
      * or customize the JavaScript scaffolding to fit your unique needs.
+     * This code and all the code above which use the object "window.current_user" must be located in
+     * async 's brackets, because the object "window.current_user" can only get its value after an asynchronous process
      */
 
+    /** THis Vue instance is for Admin Dashboard Template */
     const app = new Vue({
         el: '#app',
         router: router,
-        mixins: [mixin]
     });
 
+    /** This Vue instance is for User App Template */
+    const app_for_user = new Vue({
+        el: "#app_for_user",
+        router: router_for_user
+    })
 })();
 
 

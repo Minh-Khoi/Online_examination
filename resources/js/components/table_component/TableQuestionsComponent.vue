@@ -66,7 +66,8 @@ export default {
     return {
       questions_list: [],
       /** this variables will by loaded when user want to copy a question of this quiz to another quiz */
-      quiz_pending: this.$route.params.for_quiz
+      quiz_pending: this.$route.params.for_quiz,
+      quiz_in_reference: this.$route.params.quiz_in_reference
     };
   },
 
@@ -111,8 +112,15 @@ export default {
    * when this component is mounted. A list of all User instances will be loaded in JSON objec
    */
   async mounted() {
-    let controller = new Controller();
-    let questions_list = await controller.loadQuestionsList();
+    let controller = new Controller(),
+      question_list = null;
+    if (!this.quiz_in_reference) {
+      questions_list = await controller.loadQuestionsList();
+    } else {
+      questions_list = await controller.loadQuizzesListByUserID(
+        this.quiz_in_reference.id
+      );
+    }
 
     // add the attribute "quiz_name" for each question object of questions_list array
     for (let question of questions_list) {

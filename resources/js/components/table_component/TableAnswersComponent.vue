@@ -66,7 +66,8 @@ export default {
     return {
       answers_list: [],
       /** this variables will by loaded when user want to copy an answer of this question to another question */
-      question_pending: this.$route.params.for_question
+      question_pending: this.$route.params.for_question,
+      question_in_reference: this.$route.params.question_in_reference
     };
   },
 
@@ -112,7 +113,13 @@ export default {
    */
   async mounted() {
     let controller = new Controller();
-    let answers_list = await controller.loadAnswersList();
+    answers_list = null;
+
+    if (!this.question_in_reference) {
+      answers_list = await controller.loadAnswersList();
+    } else {
+      // answers_list = await controller.lo
+    }
 
     // add the attribute "question_name" for each answer object of answers_list array
     for (let answer of answers_list) {

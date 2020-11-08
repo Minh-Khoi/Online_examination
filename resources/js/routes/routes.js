@@ -15,9 +15,8 @@ import CreateExamComponent from '../components/form_component/exam/CreateExamCom
 import EditExamComponent from '../components/form_component/exam/EditExamComponent';
 import DeleteExamComponent from '../components/form_component/exam/DeleteExamComponent';
 import CreateAnswerComponent from "../components/form_component/answer/CreateAnswerComponent.vue";
-import { Controller } from "../controllers/controllers";
 
-
+/** THis Route is used For admin Dashboard Template */
 const routes = [
     {
         path: "/vue/dashboard", name: "dashboard", component: DashboardComponent,
@@ -39,9 +38,7 @@ const routes = [
     { path: "/vue/delete_quiz/:id", name: "delete_quiz", component: DeleteQuizComponent },
     { path: "/vue/delete_question/:id", name: "delete_question", component: DeleteQuestionComponent },
     { path: "/vue/delete_exam/:id", name: "delete_exam", component: DeleteExamComponent },
-    {
-        path: "/home", redirect: { name: "dashboard" }
-    }
+    { path: "/home", redirect: { name: "dashboard" } },
 ];
 
 export const router = new VueRouter({

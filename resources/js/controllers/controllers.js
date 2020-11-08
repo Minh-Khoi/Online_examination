@@ -81,6 +81,29 @@ export class Controller {
         return list;
     }
 
+    /** Load the list of Quiz instances which have the specified user_id in JSON */
+    async loadQuizzesListByUserID(user_id) {
+        let list = [];
+        await fetch(window.location.origin + "/action/all_quizzes_with_user_id/" + user_id)
+            .then((response) => response.text())
+            .then((res) => {
+                list = JSON.parse(res);
+            })
+        return list;
+    }
+
+    /** Load the list of Quiz instances which have the specified user_id in JSON */
+    async loadQuizzesListByQuizID(quiz_id) {
+        let list = [];
+        await fetch(window.location.origin + "/action/all_quizzes_with_user_id/" + quiz_id)
+            .then((response) => response.text())
+            .then((res) => {
+                list = JSON.parse(res);
+            })
+        return list;
+    }
+
+
     /**
      * send AJAX request to create new QUiz instance, the requests sent have method POST, PUT, DELETE
      * @param string path link path

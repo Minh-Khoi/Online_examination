@@ -63,7 +63,9 @@ export default {
   //
   data() {
     return {
-      exams_list: []
+      exams_list: [],
+      quiz_in_reference: this.$route.params.quiz_in_reference,
+      user_in_reference: this.$route.params.user_in_reference
     };
   },
 
@@ -109,7 +111,19 @@ export default {
    */
   async mounted() {
     let controller = new Controller();
-    let exams_list = await controller.loadExamsList();
+    let exams_list = null;
+
+    if (!this.quiz_in_reference) {
+      exams_list = await controller.loadQuizzesListByQuizID(
+        this.quiz_in_reference.id
+      );
+    } else if (!this.user_in_reference) {
+      exams_list = await controller.loadQuizzesListByUserID(
+        this.user_in_reference.id
+      );
+    } else {
+      exams_list = await controller.loadQuizzesList();
+    }
 
     for (let exam of exams_list) {
       let quiz = await controller.readQuizByID(exam.quiz_id);

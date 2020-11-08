@@ -116,6 +116,37 @@ Route::get('all_exams', function () {
 });
 
 /**
+ * This Route will get list of all QuizUsers instances which have the specified user_id (passed from client)
+ *  and convert them in JSON
+ */
+Route::get('all_exams_with_user_id/{user_id}', function ($user_id) {
+    // The variable below is a collection of QuizUsers instances, but we can convert it directly to JSON string.
+    // It 's not neccessary to convert it to array
+    $exams_list = QuizUser::where('user_id', $user_id)->get();
+    return json_encode(($exams_list));
+});
+
+/**
+ * This Route will get list of all QuizUsers instances which have the specified user_id (passed from client)
+ *  and convert them in JSON
+ */
+Route::get('all_exams_with_quiz_id/{quiz_id}', function ($quiz_id) {
+    // The variable below is a collection of QuizUsers instances, but we can convert it directly to JSON string.
+    // It 's not neccessary to convert it to array
+    $exams_list = QuizUser::where('quiz_id', $quiz_id)->get();
+    return json_encode(($exams_list));
+});
+
+/**
+ * Find QuizUser instance by specified id (pass through API)
+ * @param int $id question id
+ */
+Route::get('find_exam/{id}', function ($id) {
+    $quiz_user = QuizUser::find($id);
+    return json_encode($quiz_user);
+});
+
+/**
  * This Route will receive FormData object from Controller and Create new QuizUser instance
  */
 Route::post('create_quiz_user', function (Request $request) {
@@ -214,6 +245,29 @@ Route::get('all_answers', function () {
 });
 
 /**
+ * This Route will get list of all Answers instances which have the specified question_id (passed from client)
+ *  and convert them in JSON
+ */
+Route::get('all_answers_with_question_id/{question_id}', function ($question_id) {
+    // The variable below is a collection of Answer instances, but we can convert it directly to JSON string.
+    // It 's not neccessary to convert it to array
+    $answers_list = Answer::where('question_id', $question_id)->get();
+    return json_encode(($answers_list));
+});
+
+/**
+ * This Route will get list of all Answers instances
+ * which have the specified is_admin (passed from client, "True" or "false")
+ *  and convert them in JSON
+ */
+Route::get('all_answers_with_is_admin/{is_admin}', function ($is_admin) {
+    // The variable below is a collection of Answer instances, but we can convert it directly to JSON string.
+    // It 's not neccessary to convert it to array
+    $answers_list = Answer::where('is_admin', $is_admin)->get();
+    return json_encode(($answers_list));
+});
+
+/**
  * This Route will receive FormData object from Controller and create new a new Answer instance
  * The method of this Route is POST
  */
@@ -257,6 +311,17 @@ Route::get('all_results', function () {
     $results_list = Result::all();
     return json_encode(($results_list));
 });
+
+/**
+ * This Route will get list of all Result instances and convert them in JSON
+ */
+Route::get('all_results_with_user/{user_id}/and_quiz/{quiz_id}', function ($user_id, $quiz_id) {
+    // The variable below is a collection of Answer instances, but we can convert it directly to JSON string.
+    // It 's not neccessary to convert it to array
+    $results_list = Result::where("user_id", $user_id)->where('quiz_id', $quiz_id)->get();
+    return json_encode(($results_list));
+});
+
 
 /**
  * This Route will receive FormData object from Controller and create new a new Result instance

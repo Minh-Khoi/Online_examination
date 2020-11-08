@@ -63,7 +63,13 @@
                                 <li><a href="#">Edit Profile</a></li>
                                 <li><a href="#">Account Settings</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#">Logout</a></li>
+                                <li>
+                                    <form action="{{route("logout")}}"  method="post" >
+                                        @csrf
+                                        <input type="submit" value="Log Out"
+                                            class="btn btn-light" style="width: 100%" />
+                                    </form>
+                                </li>
                             </ul>
                         </li>
                     </ul>

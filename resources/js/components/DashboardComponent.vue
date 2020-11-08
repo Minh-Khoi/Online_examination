@@ -17,7 +17,7 @@
         </span>
         <span
           v-if="!current_user.is_admin"
-          @click="showExamsTable()"
+          @click="showQuizzesTable()"
           class="btn-box bg-success big span2"
           style="margin-left: 3.2vw; background-color: #FF7F50"
         >
@@ -34,9 +34,10 @@
           <b>See Question</b>
         </span>
 
-        <span class="btn-box big span2" style="margin-left: 3.2vw" v-if="current_user.is_admin">
+        <span class="btn-box big span2" style="margin-left: 3.2vw">
           <i class="icon-money"></i>
-          <b>See Question</b>
+          <b v-if="current_user.is_admin">See all Results</b>
+          <b v-if="!current_user.is_admin">See your Results</b>
         </span>
 
         <router-view></router-view>
@@ -79,7 +80,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.current_user.is_admin);
+    // console.log(window.current_user);
   }
 };
 </script>

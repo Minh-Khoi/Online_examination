@@ -19,13 +19,18 @@ class HomeController extends Controller
 
     /**
      * Show the application dashboard.
+     * If the user is an Admin (is_admin == 1) the site will go to the view "admin.admin"
+     * (file admin/admin.blade.php). Else, the site will go to the view "user.user" (file user/user.blade.php)
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
         $current_user = Auth::user();
-        return view('admin.admin')->with("current_user", $current_user);
+        if ($current_user->is_admin == 1) {
+            return view('admin.admin')->with("current_user", $current_user);
+        }
+        return view('user.user')->with('current_user', $current_user);
     }
 
     public function getFormData(Request $request)

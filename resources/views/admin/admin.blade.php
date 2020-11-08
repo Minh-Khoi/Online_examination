@@ -5,8 +5,5 @@
     <router-view></router-view>
 
 </div>
-<script>
-    window.current_user = {{$current_user}}
-</script>
 
 @endsection
