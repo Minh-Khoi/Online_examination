@@ -5,7 +5,7 @@
  */
 import VueRouter from "vue-router";
 import { router } from "./routes/routes.js";
-import { router_for_user } from './routes/routes_for_user.js';
+// import { router_for_user } from './routes/routes_for_user.js';
 import { Controller } from "./controllers/controllers.js";
 require('./bootstrap');
 
@@ -47,57 +47,60 @@ let controller = new Controller();
 
     // Then, append Event Handler for those HTMLElement objects
     // (createUserElement will invoke the ajax for register)
-    // if (current_user_is_admin) {
-    dashboardElement.addEventListener('click', function (e) {
-        e.preventDefault();
-        router.push({ name: 'dashboard', params: { current_user: current_user } });
-    });
+    if (current_user_is_admin) {
+        ;
+        dashboardElement.addEventListener('click', function (e) {
+            e.preventDefault();
+            router.push({ name: 'dashboard', params: { current_user: current_user } });
+        });
 
-    createQuizElement.addEventListener('click', function (e) {
-        e.preventDefault();
-        router.push({ name: "create_quiz", params: { current_user: current_user } });
-    });
+        createQuizElement.addEventListener('click', function (e) {
+            e.preventDefault();
+            router.push({ name: "create_quiz", params: { current_user: current_user } });
+        });
 
-    viewQuizzesElement.addEventListener('click', function (e) {
-        e.preventDefault();
-        router.push({ name: 'quizzes', params: { current_user: current_user } });
-    });
+        viewQuizzesElement.addEventListener('click', function (e) {
+            e.preventDefault();
+            router.push({ name: 'quizzes', params: { current_user: current_user } });
+        });
 
-    viewUsersElement.addEventListener('click', function (e) {
-        e.preventDefault();
-        router.push({ name: 'users', params: { current_user: current_user } });
-    });
+        viewUsersElement.addEventListener('click', function (e) {
+            e.preventDefault();
+            router.push({ name: 'users', params: { current_user: current_user } });
+        });
 
-    createExamElement.addEventListener('click', function (e) {
-        e.preventDefault();
-        router.push({ name: 'create_exam', params: { current_user: current_user } });
-    });
+        createExamElement.addEventListener('click', function (e) {
+            e.preventDefault();
+            router.push({ name: 'create_exam', params: { current_user: current_user } });
+        });
 
-    viewExamElement.addEventListener('click', function (e) {
-        e.preventDefault();
-        router.push({ name: 'exams', params: { current_user: current_user } });
-    });
+        viewExamElement.addEventListener('click', function (e) {
+            e.preventDefault();
+            router.push({ name: 'exams', params: { current_user: current_user } });
+        });
 
-    createQuestionElement.addEventListener('click', function (e) {
-        e.preventDefault();
-        router.push({ name: 'create_question', params: { current_user: current_user } });
-    });
+        createQuestionElement.addEventListener('click', function (e) {
+            e.preventDefault();
+            router.push({ name: 'create_question', params: { current_user: current_user } });
+        });
 
-    viewQuestionsElement.addEventListener('click', function (e) {
-        e.preventDefault();
-        router.push({ name: 'questions', params: { current_user: current_user } });
-    });
+        viewQuestionsElement.addEventListener('click', function (e) {
+            e.preventDefault();
+            router.push({ name: 'questions', params: { current_user: current_user } });
+        });
 
-    createAnswerElement.addEventListener('click', function (e) {
-        e.preventDefault();
-        router.push({ name: 'create_answer', params: { current_user: current_user } });
-    });
+        createAnswerElement.addEventListener('click', function (e) {
+            e.preventDefault();
+            router.push({ name: 'create_answer', params: { current_user: current_user } });
+        });
 
-    viewAnswersElement.addEventListener('click', function (e) {
-        e.preventDefault();
-        router.push({ name: 'answers', params: { current_user: current_user } });
-    });
-    // }
+        viewAnswersElement.addEventListener('click', function (e) {
+            e.preventDefault();
+            router.push({ name: 'answers', params: { current_user: current_user } });
+        });
+
+
+    };
 
     /**
      * Next, we will create a fresh Vue application instance and attach it to
@@ -114,10 +117,10 @@ let controller = new Controller();
     });
 
     /** This Vue instance is for User App Template */
-    const app_for_user = new Vue({
-        el: "#app_for_user",
-        router: router_for_user
-    })
+    // const app_for_user = new Vue({
+    //     el: "#app_for_user",
+    //     router: router_for_user
+    // })
 })();
 
 

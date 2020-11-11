@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\QuizUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,14 +28,20 @@ class HomeController extends Controller
     public function index()
     {
         $current_user = Auth::user();
-        if ($current_user->is_admin == 1) {
-            return view('admin.admin')->with("current_user", $current_user);
-        }
-        return view('user.user')->with('current_user', $current_user);
+        return view('admin.admin')->with("current_user", $current_user);
     }
 
     public function getFormData(Request $request)
     {
         return dd($request->all());
+    }
+
+    /**
+     * This function will escape the vue 's blade file (admin.admin) and go to the the blade file having the
+     * examination form (on_exam.on_exam)
+     */
+    public function go_to_exam(Request $request)
+    {
+        $json_rendering = [];
     }
 }

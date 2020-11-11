@@ -20,6 +20,7 @@
     <link type="text/css" href="{{asset('images/icons/css/font-awesome.css')}}" rel="stylesheet">
     <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
         rel='stylesheet'>
+    <!-- We cannot link to css/app.css because It will cause a version conflict between Bootstrap v2 and v4 -->
     <link rel="stylesheet" href=" {{asset('css/custom.css')}} ">
 </head>
 

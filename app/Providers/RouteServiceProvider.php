@@ -93,4 +93,19 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->namespace)
             ->group(base_path('routes/action.php'));
     }
+
+    /**
+     * Define "on_exam" routes (in file 'routes/on_exam.php') for the application,
+     * the Controller (class Controller in file controller.js on client side) call for executing
+     *  this route file through AJAX and be received a JSON Object returned.
+     */
+    protected function mapOnExamRoutes()
+    {
+        Route::prefix('on_exam')
+            // We need this middleware to use some helper class such as Auth
+            // This class is necessary to define Logging in user
+            ->middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/on_exam.php'));
+    }
 }

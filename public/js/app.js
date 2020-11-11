@@ -59590,8 +59590,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./routes/routes.js */ "./resources/js/routes/routes.js");
-/* harmony import */ var _routes_routes_for_user_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./routes/routes_for_user.js */ "./resources/js/routes/routes_for_user.js");
-/* harmony import */ var _controllers_controllers_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./controllers/controllers.js */ "./resources/js/controllers/controllers.js");
+/* harmony import */ var _controllers_controllers_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./controllers/controllers.js */ "./resources/js/controllers/controllers.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -59604,7 +59603,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-
+ // import { router_for_user } from './routes/routes_for_user.js';
 
 
 
@@ -59636,10 +59635,10 @@ var viewQuestionsElement = document.querySelector('.sidebar #view_questions');
 var createAnswerElement = document.querySelector('.sidebar #create_answer');
 var viewAnswersElement = document.querySelector('.sidebar #view_answer'); // Get Current Logged in user
 
-var controller = new _controllers_controllers_js__WEBPACK_IMPORTED_MODULE_4__["Controller"](); // THis is how I run an async function directly on a main JS file
+var controller = new _controllers_controllers_js__WEBPACK_IMPORTED_MODULE_3__["Controller"](); // THis is how I run an async function directly on a main JS file
 
 _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-  var current_user, current_user_is_admin, app, app_for_user;
+  var current_user, current_user_is_admin, app;
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
@@ -59651,99 +59650,102 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
           current_user = _context.sent;
           current_user_is_admin = current_user.is_admin == 1; // Then, append Event Handler for those HTMLElement objects
           // (createUserElement will invoke the ajax for register)
-          // if (current_user_is_admin) {
 
-          dashboardElement.addEventListener('click', function (e) {
-            e.preventDefault();
-            _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
-              name: 'dashboard',
-              params: {
-                current_user: current_user
-              }
+          if (current_user_is_admin) {
+            ;
+            dashboardElement.addEventListener('click', function (e) {
+              e.preventDefault();
+              _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                name: 'dashboard',
+                params: {
+                  current_user: current_user
+                }
+              });
             });
-          });
-          createQuizElement.addEventListener('click', function (e) {
-            e.preventDefault();
-            _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
-              name: "create_quiz",
-              params: {
-                current_user: current_user
-              }
+            createQuizElement.addEventListener('click', function (e) {
+              e.preventDefault();
+              _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                name: "create_quiz",
+                params: {
+                  current_user: current_user
+                }
+              });
             });
-          });
-          viewQuizzesElement.addEventListener('click', function (e) {
-            e.preventDefault();
-            _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
-              name: 'quizzes',
-              params: {
-                current_user: current_user
-              }
+            viewQuizzesElement.addEventListener('click', function (e) {
+              e.preventDefault();
+              _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                name: 'quizzes',
+                params: {
+                  current_user: current_user
+                }
+              });
             });
-          });
-          viewUsersElement.addEventListener('click', function (e) {
-            e.preventDefault();
-            _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
-              name: 'users',
-              params: {
-                current_user: current_user
-              }
+            viewUsersElement.addEventListener('click', function (e) {
+              e.preventDefault();
+              _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                name: 'users',
+                params: {
+                  current_user: current_user
+                }
+              });
             });
-          });
-          createExamElement.addEventListener('click', function (e) {
-            e.preventDefault();
-            _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
-              name: 'create_exam',
-              params: {
-                current_user: current_user
-              }
+            createExamElement.addEventListener('click', function (e) {
+              e.preventDefault();
+              _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                name: 'create_exam',
+                params: {
+                  current_user: current_user
+                }
+              });
             });
-          });
-          viewExamElement.addEventListener('click', function (e) {
-            e.preventDefault();
-            _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
-              name: 'exams',
-              params: {
-                current_user: current_user
-              }
+            viewExamElement.addEventListener('click', function (e) {
+              e.preventDefault();
+              _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                name: 'exams',
+                params: {
+                  current_user: current_user
+                }
+              });
             });
-          });
-          createQuestionElement.addEventListener('click', function (e) {
-            e.preventDefault();
-            _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
-              name: 'create_question',
-              params: {
-                current_user: current_user
-              }
+            createQuestionElement.addEventListener('click', function (e) {
+              e.preventDefault();
+              _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                name: 'create_question',
+                params: {
+                  current_user: current_user
+                }
+              });
             });
-          });
-          viewQuestionsElement.addEventListener('click', function (e) {
-            e.preventDefault();
-            _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
-              name: 'questions',
-              params: {
-                current_user: current_user
-              }
+            viewQuestionsElement.addEventListener('click', function (e) {
+              e.preventDefault();
+              _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                name: 'questions',
+                params: {
+                  current_user: current_user
+                }
+              });
             });
-          });
-          createAnswerElement.addEventListener('click', function (e) {
-            e.preventDefault();
-            _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
-              name: 'create_answer',
-              params: {
-                current_user: current_user
-              }
+            createAnswerElement.addEventListener('click', function (e) {
+              e.preventDefault();
+              _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                name: 'create_answer',
+                params: {
+                  current_user: current_user
+                }
+              });
             });
-          });
-          viewAnswersElement.addEventListener('click', function (e) {
-            e.preventDefault();
-            _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
-              name: 'answers',
-              params: {
-                current_user: current_user
-              }
+            viewAnswersElement.addEventListener('click', function (e) {
+              e.preventDefault();
+              _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                name: 'answers',
+                params: {
+                  current_user: current_user
+                }
+              });
             });
-          }); // }
+          }
 
+          ;
           /**
            * Next, we will create a fresh Vue application instance and attach it to
            * the page. Then, you may begin adding components to this application
@@ -59759,13 +59761,12 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
             router: _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"]
           });
           /** This Vue instance is for User App Template */
+          // const app_for_user = new Vue({
+          //     el: "#app_for_user",
+          //     router: router_for_user
+          // })
 
-          app_for_user = new Vue({
-            el: "#app_for_user",
-            router: _routes_routes_for_user_js__WEBPACK_IMPORTED_MODULE_3__["router_for_user"]
-          });
-
-        case 16:
+        case 7:
         case "end":
           return _context.stop();
       }
@@ -61780,31 +61781,6 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   // Mode 'history' to avoid the "#" showing on the path of route
   mode: 'history',
   routes: routes
-});
-
-/***/ }),
-
-/***/ "./resources/js/routes/routes_for_user.js":
-/*!************************************************!*\
-  !*** ./resources/js/routes/routes_for_user.js ***!
-  \************************************************/
-/*! exports provided: router_for_user */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "router_for_user", function() { return router_for_user; });
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-
-var routes_for_user = [{
-  path: "/home",
-  redirect: {
-    name: "dashboard"
-  }
-}];
-var router_for_user = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
-  mode: history,
-  routes: routes_for_user
 });
 
 /***/ }),
