@@ -28,6 +28,20 @@ Route::get('all_users', function () {
 });
 
 /**
+ * This Route will receive request from client which is an array of "user_id",
+ * then find the corresponding User instances and change the attribute "is_admin" to '1'
+ */
+Route::post('create_user_admin', function (Request $request) {
+    $array_of_user_id = $request->input('user_id');
+    foreach ($array_of_user_id as $k => $id) {
+        $user = User::find($id);
+        $user->is_admin = 1;
+        $user->save();
+    }
+    return "Update User successfully";
+});
+
+/**
  * THis Route will find the id-specified User instance and return it (in JSON) to Client
  * with method GET
  * @param int user_id

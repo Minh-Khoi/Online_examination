@@ -24,16 +24,17 @@ class OnExamController extends Controller
         $user = User::find($user_id);
 
         $questions_list = Question::where('quiz_id', $quiz_id)->get()->all();
+        // we will add the property "answers_list" for each Question instance of $question_list
         foreach ($questions_list as $k => $question) {
             $answers_list = Answer::where('question_id', $question->id)->get()->all();
             $question['answers_list'] = $answers_list;
         }
-
+        // add the property "question_list" for the Quiz 's instance: $quiz
         $quiz['questions_list'] = $questions_list;
-
+        // add the property "quiz" and "user" for the $object_returned and pass it to view
         $object_returned['quiz'] = $quiz;
         $object_returned['user'] = $user;
 
-        return json_encode($object_returned);
+        return view("on_exam.on_exam")->with('exam_details', $object_returned);
     }
 }

@@ -27,7 +27,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // find the user who are logging in
         $current_user = Auth::user();
+        $current_user_mark = 0;
         return view('admin.admin')->with("current_user", $current_user);
     }
 

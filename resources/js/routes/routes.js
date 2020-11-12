@@ -15,6 +15,7 @@ import CreateExamComponent from '../components/form_component/exam/CreateExamCom
 import EditExamComponent from '../components/form_component/exam/EditExamComponent';
 import DeleteExamComponent from '../components/form_component/exam/DeleteExamComponent';
 import CreateAnswerComponent from "../components/form_component/answer/CreateAnswerComponent.vue";
+import CreateAdminComponent from '../components/form_component/user_admin/CreateAdminComponent.vue';
 
 /** THis Route is used For admin Dashboard Template */
 const routes = [
@@ -32,6 +33,7 @@ const routes = [
     { path: "/vue/create_question", name: "create_question", component: CreateQuestionComponent },
     { path: "/vue/create_exam", name: "create_exam", component: CreateExamComponent },
     { path: "/vue/create_answer", name: "create_answer", component: CreateAnswerComponent },
+    { path: "/vue/create_admin", name: "create_admin", component: CreateAdminComponent },
     { path: "/vue/edit_quiz/:id", name: "edit_quiz", component: EditQuizComponent },
     { path: "/vue/edit_question/:id", name: "edit_question", component: EditQuestionComponent },
     { path: "/vue/edit_exam/:id", name: "edit_exam", component: EditExamComponent },

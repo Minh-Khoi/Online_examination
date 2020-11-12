@@ -30,6 +30,7 @@ Vue.component('dashboard-component', require('./components/DashboardComponent.vu
 let dashboardElement = document.querySelector('.sidebar #dashboard');
 let createQuizElement = document.querySelector('.sidebar #create_quiz');
 let viewQuizzesElement = document.querySelector('.sidebar #view_quizzes');
+let createUserAdminElement = document.querySelector('.sidebar #create_user_admin');
 let viewUsersElement = document.querySelector('.sidebar #view_users');
 let createExamElement = document.querySelector('.sidebar #create_exam');
 let viewExamElement = document.querySelector('.sidebar #view_exams');
@@ -48,7 +49,7 @@ let controller = new Controller();
     // Then, append Event Handler for those HTMLElement objects
     // (createUserElement will invoke the ajax for register)
     if (current_user_is_admin) {
-        ;
+
         dashboardElement.addEventListener('click', function (e) {
             e.preventDefault();
             router.push({ name: 'dashboard', params: { current_user: current_user } });
@@ -63,6 +64,11 @@ let controller = new Controller();
             e.preventDefault();
             router.push({ name: 'quizzes', params: { current_user: current_user } });
         });
+
+        createUserAdminElement.addEventListener('click', function (e) {
+            e.preventDefault();
+            router.push({ name: 'create_admin', params: { current_user: current_user } });
+        })
 
         viewUsersElement.addEventListener('click', function (e) {
             e.preventDefault();

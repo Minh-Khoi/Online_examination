@@ -15,8 +15,7 @@ class CreateResultsTable extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->integer('quiz_id')->unsigned();
+            $table->integer('quiz_user_id')->unsigned();
             $table->integer('question_id')->unsigned();
             $table->integer('answer_id')->unsigned();
             $table->timestamps();

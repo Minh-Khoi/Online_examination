@@ -3649,6 +3649,172 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/form_component/user_admin/CreateAdminComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/form_component/user_admin/CreateAdminComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _controllers_controllers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../controllers/controllers */ "./resources/js/controllers/controllers.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      /** This attributes is used for show (or hide) the ".alert" elements */
+      note_content: {
+        warning: "",
+        error: "",
+        success: ""
+      },
+      users_list: []
+    };
+  },
+  methods: {
+    /**
+     * This function use to handle the event onSubmit.
+     * The function e.preventDefault() DO NOT WORK with Vue.js framework.
+     * To prevent default handling, we @Submit.prevent on the HTML template above
+     */
+    onSummit: function onSummit() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var submit_form, form_datas, controller, submit_result;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                submit_form = document.querySelector("#form_create_exam");
+                form_datas = new FormData(submit_form);
+                controller = new _controllers_controllers__WEBPACK_IMPORTED_MODULE_1__["Controller"]();
+
+                if (form_datas.get("user_id[]")) {
+                  _context.next = 6;
+                  break;
+                }
+
+                _this.note_content.warning = "You HAVE NOT complete the form yet!! And It will make errors";
+                return _context.abrupt("return");
+
+              case 6:
+                _context.next = 8;
+                return controller.sendAPI("/action/create_user_admin", form_datas, "POST");
+
+              case 8:
+                submit_result = _context.sent;
+
+                if (!isNaN(submit_result)) {
+                  _this.note_content.error = "something wrong!! Summission failed";
+                } else {
+                  _this.note_content.success = submit_result;
+                  setTimeout(function () {
+                    router.push({
+                      name: "exams"
+                    });
+                  }, 1200);
+                }
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      var controller;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              // we must render the quizzes_list to "select" tag by method controller.loadQuizzesList()
+              controller = new _controllers_controllers__WEBPACK_IMPORTED_MODULE_1__["Controller"]();
+              _context2.next = 3;
+              return controller.loadUsersList();
+
+            case 3:
+              _this2.users_list = _context2.sent;
+
+            case 4:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/table_component/TableAnswersComponent.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/table_component/TableAnswersComponent.vue?vue&type=script&lang=js& ***!
@@ -43535,6 +43701,165 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/form_component/user_admin/CreateAdminComponent.vue?vue&type=template&id=2eb4aa1c&":
+/*!*************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/form_component/user_admin/CreateAdminComponent.vue?vue&type=template&id=2eb4aa1c& ***!
+  \*************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "module span9", staticStyle: { width: "70%" } },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "module-body" }, [
+        _vm.note_content.warning
+          ? _c("div", { staticClass: "alert" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "close",
+                  attrs: { type: "button", "data-dismiss": "alert" }
+                },
+                [_vm._v("×")]
+              ),
+              _vm._v(" "),
+              _c("strong", [_vm._v("Warning!")]),
+              _vm._v("\n      " + _vm._s(_vm.note_content.warning) + "\n    ")
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.note_content.error
+          ? _c("div", { staticClass: "alert alert-error" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "close",
+                  attrs: { type: "button", "data-dismiss": "alert" }
+                },
+                [_vm._v("×")]
+              ),
+              _vm._v(" "),
+              _c("strong", [_vm._v("Oh snap!")]),
+              _vm._v("\n      " + _vm._s(_vm.note_content.error) + "\n    ")
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.note_content.success
+          ? _c("div", { staticClass: "alert alert-success" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "close",
+                  attrs: { type: "button", "data-dismiss": "alert" }
+                },
+                [_vm._v("×")]
+              ),
+              _vm._v(" "),
+              _c("strong", [_vm._v("Well done!")]),
+              _vm._v("\n      " + _vm._s(_vm.note_content.success) + "\n    ")
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            staticClass: "form-horizontal row-fluid",
+            attrs: { id: "form_create_exam" },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.onSummit()
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "control-group" }, [
+              _c(
+                "label",
+                { staticClass: "control-label", attrs: { for: "user_id" } },
+                [_vm._v("Choose an user")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "controls" }, [
+                _c(
+                  "select",
+                  {
+                    attrs: {
+                      name: "user_id[]",
+                      id: "user_id",
+                      size: "10",
+                      multiple: ""
+                    }
+                  },
+                  _vm._l(_vm.users_list, function(user) {
+                    return _c(
+                      "option",
+                      { key: user.id, domProps: { value: user.id } },
+                      [
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(user.name) +
+                            " ----\n              "
+                        ),
+                        _c("strong", [_vm._v("(ID: " + _vm._s(user.id) + " )")])
+                      ]
+                    )
+                  }),
+                  0
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(1)
+          ]
+        )
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "module-head" }, [
+      _c("h3", [_vm._v("Forms")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "control-group" }, [
+      _c("div", { staticClass: "controls" }, [
+        _c(
+          "button",
+          { staticClass: "btn btn-success", attrs: { type: "submit" } },
+          [_vm._v("Submit Form")]
+        )
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/table_component/TableAnswersComponent.vue?vue&type=template&id=5b3209d0&":
 /*!****************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/table_component/TableAnswersComponent.vue?vue&type=template&id=5b3209d0& ***!
@@ -59627,6 +59952,7 @@ Vue.component('dashboard-component', __webpack_require__(/*! ./components/Dashbo
 var dashboardElement = document.querySelector('.sidebar #dashboard');
 var createQuizElement = document.querySelector('.sidebar #create_quiz');
 var viewQuizzesElement = document.querySelector('.sidebar #view_quizzes');
+var createUserAdminElement = document.querySelector('.sidebar #create_user_admin');
 var viewUsersElement = document.querySelector('.sidebar #view_users');
 var createExamElement = document.querySelector('.sidebar #create_exam');
 var viewExamElement = document.querySelector('.sidebar #view_exams');
@@ -59652,7 +59978,6 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
           // (createUserElement will invoke the ajax for register)
 
           if (current_user_is_admin) {
-            ;
             dashboardElement.addEventListener('click', function (e) {
               e.preventDefault();
               _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
@@ -59675,6 +60000,15 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
               e.preventDefault();
               _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
                 name: 'quizzes',
+                params: {
+                  current_user: current_user
+                }
+              });
+            });
+            createUserAdminElement.addEventListener('click', function (e) {
+              e.preventDefault();
+              _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                name: 'create_admin',
                 params: {
                   current_user: current_user
                 }
@@ -60611,6 +60945,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditQuizComponent_vue_vue_type_template_id_4d701496___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EditQuizComponent_vue_vue_type_template_id_4d701496___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/form_component/user_admin/CreateAdminComponent.vue":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/form_component/user_admin/CreateAdminComponent.vue ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CreateAdminComponent_vue_vue_type_template_id_2eb4aa1c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateAdminComponent.vue?vue&type=template&id=2eb4aa1c& */ "./resources/js/components/form_component/user_admin/CreateAdminComponent.vue?vue&type=template&id=2eb4aa1c&");
+/* harmony import */ var _CreateAdminComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateAdminComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/form_component/user_admin/CreateAdminComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CreateAdminComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CreateAdminComponent_vue_vue_type_template_id_2eb4aa1c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CreateAdminComponent_vue_vue_type_template_id_2eb4aa1c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/form_component/user_admin/CreateAdminComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/form_component/user_admin/CreateAdminComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************!*\
+  !*** ./resources/js/components/form_component/user_admin/CreateAdminComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateAdminComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateAdminComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/form_component/user_admin/CreateAdminComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateAdminComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/form_component/user_admin/CreateAdminComponent.vue?vue&type=template&id=2eb4aa1c&":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/components/form_component/user_admin/CreateAdminComponent.vue?vue&type=template&id=2eb4aa1c& ***!
+  \*******************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateAdminComponent_vue_vue_type_template_id_2eb4aa1c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateAdminComponent.vue?vue&type=template&id=2eb4aa1c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/form_component/user_admin/CreateAdminComponent.vue?vue&type=template&id=2eb4aa1c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateAdminComponent_vue_vue_type_template_id_2eb4aa1c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateAdminComponent_vue_vue_type_template_id_2eb4aa1c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -61687,6 +62090,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_form_component_exam_EditExamComponent__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../components/form_component/exam/EditExamComponent */ "./resources/js/components/form_component/exam/EditExamComponent.vue");
 /* harmony import */ var _components_form_component_exam_DeleteExamComponent__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../components/form_component/exam/DeleteExamComponent */ "./resources/js/components/form_component/exam/DeleteExamComponent.vue");
 /* harmony import */ var _components_form_component_answer_CreateAnswerComponent_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../components/form_component/answer/CreateAnswerComponent.vue */ "./resources/js/components/form_component/answer/CreateAnswerComponent.vue");
+/* harmony import */ var _components_form_component_user_admin_CreateAdminComponent_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../components/form_component/user_admin/CreateAdminComponent.vue */ "./resources/js/components/form_component/user_admin/CreateAdminComponent.vue");
+
 
 
 
@@ -61747,6 +62152,10 @@ var routes = [{
   path: "/vue/create_answer",
   name: "create_answer",
   component: _components_form_component_answer_CreateAnswerComponent_vue__WEBPACK_IMPORTED_MODULE_16__["default"]
+}, {
+  path: "/vue/create_admin",
+  name: "create_admin",
+  component: _components_form_component_user_admin_CreateAdminComponent_vue__WEBPACK_IMPORTED_MODULE_17__["default"]
 }, {
   path: "/vue/edit_quiz/:id",
   name: "edit_quiz",

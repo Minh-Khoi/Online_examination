@@ -2,4 +2,4 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::post('users/{id}', function ($id) { });
+Route::post('on_exam', "OnExamController@goToExam" );
