@@ -23,18 +23,16 @@
                         </ul>
                         <!--/.widget-nav-->
 
-
                         <ul class="widget widget-menu unstyled">
                             <li id="view_users">
                                 <a href="ui-typography.html"><i class="menu-icon icon-book"></i>View Users </a>
                             </li>
-                            <li id="create_user_admin">
+                            <li id="create_or_unset_user_admin">
                                 <a href="ui-button-icon.html">
                                     <i class="menu-icon icon-bold"></i>
-                                    Create ADMIN
+                                    Create/Unset ADMIN
                                 </a>
                             </li>
-
                         </ul>
                         <!--/.widget-nav-->
                         <ul class="widget widget-menu unstyled">

@@ -33,7 +33,8 @@
             <th>Occupation</th>
             <th>Address</th>
             <th>Phone</th>
-            <th>Is Admin</th>
+            <th>Role</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -44,6 +45,9 @@
             <td>{{user.address}}</td>
             <td>{{user.phone}}</td>
             <td>{{(user.is_admin==1) ? "Admin" : ""}}</td>
+            <td>
+              <button @click="goto_delete_form(user)" class="btn btn-danger">DELETE</button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -72,6 +76,14 @@ export default {
       let input = document.querySelector("#table_for_users #myInput");
       let table = document.querySelector("#table_for_users #myTable");
       helper.filterTable(input, table);
+    },
+
+    /**
+     * Event handler for button "delete".
+     */
+    goto_delete_form(user) {
+      console.log(user);
+      router.push({ name: "delete_user", params: { id: user.id, user: user } });
     }
   },
 

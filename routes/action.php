@@ -28,20 +28,6 @@ Route::get('all_users', function () {
 });
 
 /**
- * This Route will receive request from client which is an array of "user_id",
- * then find the corresponding User instances and change the attribute "is_admin" to '1'
- */
-Route::post('create_user_admin', function (Request $request) {
-    $array_of_user_id = $request->input('user_id');
-    foreach ($array_of_user_id as $k => $id) {
-        $user = User::find($id);
-        $user->is_admin = 1;
-        $user->save();
-    }
-    return "Update User successfully";
-});
-
-/**
  * THis Route will find the id-specified User instance and return it (in JSON) to Client
  * with method GET
  * @param int user_id
@@ -62,6 +48,44 @@ Route::get('current_user', function () {
     return false;
 });
 
+/**
+ * This Route will receive request from client which is an array of "user_id",
+ * then find the corresponding User instances and change the attribute "is_admin" to '1'
+ */
+Route::post('create_user_admin', function (Request $request) {
+    $array_of_user_id = $request->input('user_id');
+    foreach ($array_of_user_id as $k => $id) {
+        $user = User::find($id);
+        $user->is_admin = 1;
+        $user->save();
+    }
+    return "Update User successfully";
+});
+
+/**
+ * This Route will receive request from client which is an array of "user_id",
+ * then find the corresponding User instances and change the attribute "is_admin" to '0'
+ */
+Route::post('unset_user_admin', function (Request $request) {
+    $array_of_user_id = $request->input('user_id');
+    foreach ($array_of_user_id as $k => $id) {
+        $user = User::find($id);
+        $user->is_admin = 0;
+        $user->save();
+    }
+    return "Update User successfully";
+});
+
+/**
+ * This Route will receive request from client which is an array of "user_id",
+ * then find the corresponding User instances and DELETE it
+ */
+Route::post('delete_user', function (Request $request) {
+    $id = $request->input('user_id');
+    $user = User::find($id);
+    $user->delete();
+    return "Update User successfully";
+});
 
 /**
  * This Route will get list of all Quiz instances and convert them in JSON

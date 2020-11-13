@@ -26,15 +26,25 @@
           We should avoid changing the built code of the theme (use <form> tag instead of <div>)
           (Changing it might make it gotten some unwanted effects from CSS selectors);
           in the other hand, using <form> tag will make the work contructing  object FormData become easier
+            -----------------------
       -->
-      <form class="form-horizontal row-fluid" id="form_create_exam" @submit.prevent="onSummit()">
+
+      <!-- This form is unset the admin (set is_admin == 0) -->
+      <form
+        class="form-horizontal row-fluid"
+        id="form_unset_admin"
+        @submit.prevent="onSummit('unset_user_admin','#form_unset_admin')"
+      >
+        <h2>Unset an admin</h2>
         <div class="control-group">
           <label class="control-label" for="user_id">Choose an user</label>
           <div class="controls">
             <select name="user_id[]" id="user_id" size="10" multiple>
-              <option v-for="user in users_list" :key="user.id" :value="user.id">
-                {{user.name}} ----
-                <strong>(ID: {{user.id}} )</strong>
+              <option v-for="user in users_is_admin()" :key="user.id" :value="user.id">
+                <span>
+                  {{user.name}} ----
+                  <strong>(ID: {{user.id}} )</strong>
+                </span>
               </option>
             </select>
           </div>
@@ -42,7 +52,35 @@
 
         <div class="control-group">
           <div class="controls">
-            <button type="submit" class="btn btn-success">Submit Form</button>
+            <button type="submit" class="btn btn-success">Unset this/these admin</button>
+          </div>
+        </div>
+      </form>
+
+      <!-- This form is set an user as admin (set is_admin == 1) -->
+      <form
+        class="form-horizontal row-fluid"
+        id="form_create_admin"
+        @submit.prevent="onSummit('create_user_admin','#form_create_admin')"
+      >
+        <h2>Create an admin</h2>
+        <div class="control-group">
+          <label class="control-label" for="user_id">Choose an user</label>
+          <div class="controls">
+            <select name="user_id[]" id="user_id" size="10" multiple>
+              <option v-for="user in users_is_not_admin()" :key="user.id" :value="user.id">
+                <span>
+                  {{user.name}} ----
+                  <strong>(ID: {{user.id}} )</strong>
+                </span>
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="controls">
+            <button type="submit" class="btn btn-success">Set this/these user(s) as admin</button>
           </div>
         </div>
       </form>
@@ -52,6 +90,7 @@
 
 <script>
 import { Controller } from "../../../controllers/controllers";
+import { router } from "../../../routes/routes";
 
 export default {
   data() {
@@ -65,6 +104,7 @@ export default {
       users_list: []
     };
   },
+  computed: {},
 
   methods: {
     /**
@@ -72,8 +112,8 @@ export default {
      * The function e.preventDefault() DO NOT WORK with Vue.js framework.
      * To prevent default handling, we @Submit.prevent on the HTML template above
      */
-    async onSummit() {
-      let submit_form = document.querySelector("#form_create_exam");
+    async onSummit(string_in_path, domSelector) {
+      let submit_form = document.querySelector(domSelector);
       let form_datas = new FormData(submit_form);
       let controller = new Controller();
       if (!form_datas.get("user_id[]")) {
@@ -82,7 +122,7 @@ export default {
         return;
       }
       let submit_result = await controller.sendAPI(
-        "/action/create_user_admin",
+        "/action/" + string_in_path,
         form_datas,
         "POST"
       );
@@ -91,9 +131,19 @@ export default {
       } else {
         this.note_content.success = submit_result;
         setTimeout(() => {
-          router.push({ name: "exams" });
+          router.push({ name: "users" });
         }, 1200);
       }
+    },
+
+    /** Filter the admins in the users_list */
+    users_is_admin() {
+      return this.users_list.filter(user => user.is_admin == 1);
+    },
+
+    /** Filter the user who is not admin in the users_list */
+    users_is_not_admin() {
+      return this.users_list.filter(user => user.is_admin == 0);
     }
   },
 

@@ -30,7 +30,7 @@ Vue.component('dashboard-component', require('./components/DashboardComponent.vu
 let dashboardElement = document.querySelector('.sidebar #dashboard');
 let createQuizElement = document.querySelector('.sidebar #create_quiz');
 let viewQuizzesElement = document.querySelector('.sidebar #view_quizzes');
-let createUserAdminElement = document.querySelector('.sidebar #create_user_admin');
+let createUserAdminElement = document.querySelector('.sidebar #create_or_unset_user_admin');
 let viewUsersElement = document.querySelector('.sidebar #view_users');
 let createExamElement = document.querySelector('.sidebar #create_exam');
 let viewExamElement = document.querySelector('.sidebar #view_exams');
