@@ -57,6 +57,7 @@
 
 <script>
 import { Controller } from "../../controllers/controllers.js";
+import { router } from "../../routes/routes";
 
 export default {
   //

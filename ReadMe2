@@ -4,15 +4,16 @@ Chức năng của admin:
 	common user hoàn thành một Quiz_user được chỉ định).
 	- Riêng với instance User, Quản trị viên chỉ có thể
 	Thêm một thành viên với vai trò admin (set is_admin = 1)
-	hoặc giáng chức admin đó thành common user (is_admin =0)
-	hoặc xóa một tài khoản user (cả admin lẫn common_user)
+	hoặc giáng chức admin đó thành common user (đối vs admin)
+	hoặc xóa một tài khoản user (đối với common_user)
 	- Xem danh sách của mỗi loại instance.
 	- Copy instance Question cho Quiz mới; 
-	cũng như copy instance Answer cho Question mới
+	cũng như copy instance Answer cho Question mới 
+	(CHƯA HOÀNG THÀNH)
 	- Giao exam cho common user (tạo một Quiz_user mới)
 
 
-Chức năng của common user (is_admin == 0):
+Chức năng của common user (is_admin == 0): (CHƯA HOÀN THÀNH)
 	- Xem danh sách các Quiz và các common User khác
 	- làm bài thi được admin chỉ định (sẽ hiện thông báo trên 
 	Dashboard)
