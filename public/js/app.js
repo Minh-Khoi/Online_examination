@@ -3231,6 +3231,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _controllers_controllers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../controllers/controllers */ "./resources/js/controllers/controllers.js");
+/* harmony import */ var _routes_routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../routes/routes */ "./resources/js/routes/routes.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3315,6 +3316,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3324,7 +3331,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         warning: "",
         error: "",
         success: ""
-      }
+      },
+      next_ID: null
     };
   },
   methods: {
@@ -3333,11 +3341,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
      * The function e.preventDefault() DO NOT WORK with Vue.js framework.
      * To prevent default handling, we @Submit.prevent on the HTML template above
      */
-    onSummit: function onSummit() {
+    onSummit: function onSummit(event) {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var submit_form, form_datas, controller, submit_result;
+        var submit_form, form_datas, controller, going_copy, submit_result, next_quiz, route_parameters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -3355,24 +3363,56 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return");
 
               case 6:
-                _context.next = 8;
+                // if the submission was clicked by the button "#submit_and_go_copy",
+                // we set the value going_copy is true. And add value to attribute next_ID
+                going_copy = event ? true : false;
+
+                if (!event) {
+                  _context.next = 11;
+                  break;
+                }
+
+                _context.next = 10;
+                return controller.find_next_id("quizzes");
+
+              case 10:
+                _this.next_ID = _context.sent;
+
+              case 11:
+                _context.next = 13;
                 return controller.sendAPI("/action/create_quiz", form_datas, "POST");
 
-              case 8:
+              case 13:
                 submit_result = _context.sent;
 
                 if (!isNaN(submit_result)) {
                   _this.note_content.error = "something wrong!! Summission failed";
                 } else {
                   _this.note_content.success = submit_result;
+                  next_quiz = {
+                    id: _this.next_ID,
+                    name: form_datas.get("name"),
+                    description: form_datas.get("description"),
+                    minutes: form_datas.get("minutes")
+                  };
+                  route_parameters = going_copy ? {
+                    for_quiz: next_quiz
+                  } : {};
                   setTimeout(function () {
-                    router.push({
-                      name: "quizzes"
-                    });
+                    if (going_copy) {
+                      _routes_routes__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                        name: "questions",
+                        params: route_parameters
+                      });
+                    } else {
+                      _routes_routes__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                        name: "quizzes"
+                      });
+                    }
                   }, 1200);
                 }
 
-              case 10:
+              case 15:
               case "end":
                 return _context.stop();
             }
@@ -4533,6 +4573,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4541,8 +4583,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       questions_list: [],
 
-      /** this variables will by loaded when user want to copy a question of this quiz to another quiz */
+      /**
+       *  this variables will by loaded when user want to copy a question of this quiz to another quiz
+       */
       quiz_pending: this.$route.params.for_quiz,
+
+      /**
+       *  This variables used for filtering the question which have the same specified quiz_id attributes
+       * (which is passed through vue router)
+       */
       quiz_in_reference: this.$route.params.quiz_in_reference
     };
   },
@@ -4595,86 +4644,87 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _this = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var controller, question_list, _iterator, _step, question, quiz;
+      var controller, questions_list, _iterator, _step, question, quiz;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              controller = new _controllers_controllers_js__WEBPACK_IMPORTED_MODULE_1__["Controller"](), question_list = null;
+              controller = new _controllers_controllers_js__WEBPACK_IMPORTED_MODULE_1__["Controller"]();
+              questions_list = null;
 
               if (_this.quiz_in_reference) {
-                _context.next = 7;
+                _context.next = 8;
                 break;
               }
 
-              _context.next = 4;
+              _context.next = 5;
               return controller.loadQuestionsList();
 
-            case 4:
+            case 5:
               questions_list = _context.sent;
-              _context.next = 10;
+              _context.next = 11;
               break;
 
-            case 7:
-              _context.next = 9;
+            case 8:
+              _context.next = 10;
               return controller.loadQuizzesListByUserID(_this.quiz_in_reference.id);
 
-            case 9:
+            case 10:
               questions_list = _context.sent;
 
-            case 10:
+            case 11:
               // add the attribute "quiz_name" for each question object of questions_list array
               _iterator = _createForOfIteratorHelper(questions_list);
-              _context.prev = 11;
+              _context.prev = 12;
 
               _iterator.s();
 
-            case 13:
+            case 14:
               if ((_step = _iterator.n()).done) {
-                _context.next = 21;
+                _context.next = 22;
                 break;
               }
 
               question = _step.value;
-              _context.next = 17;
+              _context.next = 18;
               return controller.readQuizByID(question.quiz_id);
 
-            case 17:
+            case 18:
               quiz = _context.sent;
               //   console.log(quiz);
               question["quiz_name"] = quiz.name;
 
-            case 19:
-              _context.next = 13;
+            case 20:
+              _context.next = 14;
               break;
 
-            case 21:
-              _context.next = 26;
+            case 22:
+              _context.next = 27;
               break;
 
-            case 23:
-              _context.prev = 23;
-              _context.t0 = _context["catch"](11);
+            case 24:
+              _context.prev = 24;
+              _context.t0 = _context["catch"](12);
 
               _iterator.e(_context.t0);
 
-            case 26:
-              _context.prev = 26;
+            case 27:
+              _context.prev = 27;
 
               _iterator.f();
 
-              return _context.finish(26);
-
-            case 29:
-              _this.questions_list = questions_list;
+              return _context.finish(27);
 
             case 30:
+              _this.questions_list = questions_list;
+
+            case 31:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[11, 23, 26, 29]]);
+      }, _callee, null, [[12, 24, 27, 30]]);
     }))();
   }
 });
@@ -43548,7 +43598,30 @@ var render = function() {
             _vm._v(" "),
             _vm._m(3),
             _vm._v(" "),
-            _vm._m(4)
+            _c("div", { staticClass: "control-group" }, [
+              _c("div", { staticClass: "controls" }, [
+                _c(
+                  "button",
+                  { staticClass: "btn btn-success", attrs: { type: "submit" } },
+                  [_vm._v("Submit Form")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { id: "submit_and_go_copy" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.onSummit($event)
+                      }
+                    }
+                  },
+                  [_vm._v("Submit Form and go copying questions")]
+                )
+              ])
+            ])
           ]
         )
       ])
@@ -43635,20 +43708,6 @@ var staticRenderFns = [
             }
           })
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "control-group" }, [
-      _c("div", { staticClass: "controls" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-success", attrs: { type: "submit" } },
-          [_vm._v("Submit Form")]
-        )
       ])
     ])
   }
@@ -44717,22 +44776,31 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _vm.quiz_pending
-                    ? _c(
-                        "td",
-                        {
-                          staticClass: "btn btn-block",
-                          staticStyle: { "background-color": "#7FFFD4" }
-                        },
-                        [
-                          _vm._v(
-                            "Copy this question to Quiz: " +
-                              _vm._s(_vm.quiz_pending.name) +
-                              " (ID: " +
-                              _vm._s(_vm.quiz_pending.id) +
-                              " ) )"
-                          )
-                        ]
-                      )
+                    ? _c("td", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-block",
+                            staticStyle: {
+                              width: "100%",
+                              "background-color": "#7FFFD4"
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n              Copy this question to Quiz:\n              "
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              "\n              " +
+                                _vm._s(_vm.quiz_pending.name) +
+                                " (ID: " +
+                                _vm._s(_vm.quiz_pending.id) +
+                                " ) )\n            "
+                            )
+                          ]
+                        )
+                      ])
                     : _vm._e()
                 ])
               }),
@@ -62540,6 +62608,42 @@ var Controller = /*#__PURE__*/function () {
       }
 
       return readUserByID;
+    }()
+    /** Find the next (Auto Completed) ID */
+
+  }, {
+    key: "find_next_id",
+    value: function () {
+      var _find_next_id = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17(table_name) {
+        var next_id;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
+          while (1) {
+            switch (_context17.prev = _context17.next) {
+              case 0:
+                next_id = null;
+                _context17.next = 3;
+                return fetch(window.location.origin + "/action/find_next_id/" + table_name).then(function (response) {
+                  return response.status == 200 ? response.text() : 'fail';
+                }).then(function (res) {
+                  next_id = !isNaN(res) ? res : -1;
+                });
+
+              case 3:
+                return _context17.abrupt("return", next_id);
+
+              case 4:
+              case "end":
+                return _context17.stop();
+            }
+          }
+        }, _callee17);
+      }));
+
+      function find_next_id(_x11) {
+        return _find_next_id.apply(this, arguments);
+      }
+
+      return find_next_id;
     }()
   }]);
 

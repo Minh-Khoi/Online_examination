@@ -240,5 +240,15 @@ export class Controller {
         return user;
     }
 
+    /** Find the next (Auto Completed) ID */
+    async find_next_id(table_name) {
+        let next_id = null;
+        await fetch(window.location.origin + "/action/find_next_id/" + table_name)
+            .then(response => ((response.status == 200) ? response.text() : 'fail'))
+            .then((res) => {
+                next_id = (!isNaN(res)) ? res : -1;
+            })
+        return next_id;
+    }
 
 }

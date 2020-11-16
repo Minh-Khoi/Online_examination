@@ -44,11 +44,13 @@
               <button @click="goto_edit_form(question)" class="btn btn-warning">EDIT</button>
               <button @click="goto_delete_form(question)" class="btn btn-danger">DELETE</button>
             </td>
-            <td
-              v-if="quiz_pending"
-              class="btn btn-block"
-              style="background-color: #7FFFD4"
-            >Copy this question to Quiz: {{quiz_pending.name}} (ID: {{quiz_pending.id}} ) )</td>
+            <td v-if="quiz_pending">
+              <button class="btn btn-block" style="width: 100%; background-color: #7FFFD4;">
+                Copy this question to Quiz:
+                <br />
+                {{quiz_pending.name}} (ID: {{quiz_pending.id}} ) )
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -65,8 +67,16 @@ export default {
   data() {
     return {
       questions_list: [],
-      /** this variables will by loaded when user want to copy a question of this quiz to another quiz */
+
+      /**
+       *  this variables will by loaded when user want to copy a question of this quiz to another quiz
+       */
       quiz_pending: this.$route.params.for_quiz,
+
+      /**
+       *  This variables used for filtering the question which have the same specified quiz_id attributes
+       * (which is passed through vue router)
+       */
       quiz_in_reference: this.$route.params.quiz_in_reference
     };
   },
@@ -112,8 +122,8 @@ export default {
    * when this component is mounted. A list of all User instances will be loaded in JSON objec
    */
   async mounted() {
-    let controller = new Controller(),
-      question_list = null;
+    let controller = new Controller();
+    let questions_list = null;
     if (!this.quiz_in_reference) {
       questions_list = await controller.loadQuestionsList();
     } else {
@@ -121,7 +131,6 @@ export default {
         this.quiz_in_reference.id
       );
     }
-
     // add the attribute "quiz_name" for each question object of questions_list array
     for (let question of questions_list) {
       let quiz = await controller.readQuizByID(question.quiz_id);

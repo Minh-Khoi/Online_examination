@@ -14,6 +14,7 @@ use App\Result;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Console\Helper\Helper;
 
@@ -415,4 +416,18 @@ Route::get('find_result/user/{user_id}', function ($user_id) {
 Route::get('find_result/quiz/{quiz_id}', function ($quiz_id) {
     $results_list = Result::where("quiz_id", $quiz_id)->get();
     return json_encode($results_list);
+});
+
+/**
+ * Find the next (auto completed) id of the instance which is going to be created
+ * @param string $table_name passed through API,
+ * is the name of the table in which the instance will be recorded
+ */
+Route::get('find_next_id/{table_name}', function (string $table_name) {
+    $SQL_string = 'SELECT AUTO_INCREMENT
+                    FROM information_schema.TABLES
+                    WHERE TABLE_SCHEMA = "quiz_app"
+                    AND TABLE_NAME = "' . $table_name . '"';
+    $next_id = DB::select($SQL_string)[0]->AUTO_INCREMENT;
+    return $next_id;
 });
