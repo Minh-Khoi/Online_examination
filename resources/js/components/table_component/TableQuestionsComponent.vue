@@ -45,7 +45,11 @@
               <button @click="goto_delete_form(question)" class="btn btn-danger">DELETE</button>
             </td>
             <td v-if="quiz_pending">
-              <button class="btn btn-block" style="width: 100%; background-color: #7FFFD4;">
+              <button
+                class="btn btn-block"
+                style="width: 100%; background-color: #7FFFD4;"
+                @click="copy_question_to_quiz(question,quiz_pending)"
+              >
                 Copy this question to Quiz:
                 <br />
                 {{quiz_pending.name}} (ID: {{quiz_pending.id}} ) )
@@ -115,6 +119,30 @@ export default {
         name: "delete_question",
         params: { id: question.id, question: question }
       });
+    },
+
+    /**
+     * Copy an exiting question to a new one for "quiz_pending"
+     */
+    async copy_question_to_quiz(question, quiz) {
+      let controller = new Controller();
+      // get answers list of question
+      let answers_list = await controller.readAnswersByQuestionID(question.id);
+      let next_question_id = await controller.find_next_id("questions");
+      // Create FormData object
+      let form_datas = new FormData();
+      form_datas.append("id", next_question_id);
+      form_datas.append("question_content", question.question_content);
+      form_datas.append("quiz_id", quiz.id);
+      form_datas.append("answers_list", answers_list);
+      let submit_result = await controller.sendAPI(
+        "/action/copy_question",
+        form_datas,
+        "POST"
+      );
+      if (!isNaN(submit_result)) {
+        controller.tempAlert("copied 01 question successfully", 1200);
+      }
     }
   },
 

@@ -240,6 +240,17 @@ export class Controller {
         return user;
     }
 
+    /** Read Anwser by question_id */
+    async readAnswersByQuestionID(question_id) {
+        let answers = null;
+        await fetch(window.location.origin + "/action/find_answer/question/" + question_id)
+            .then(response => ((response.status == 200) ? response.text() : response.status))
+            .then((res) => {
+                answers = (isNaN(res)) ? JSON.parse(res) : res;
+            })
+        return answers;
+    }
+
     /** Find the next (Auto Completed) ID */
     async find_next_id(table_name) {
         let next_id = null;
@@ -250,5 +261,25 @@ export class Controller {
             })
         return next_id;
     }
+
+    /**
+     * This function create a autoclose annoucing dialog with:
+     *  "msg" is content of dialog,
+     *  "duration" is how long the dialog live
+     */
+    tempAlert(msg, duration) {
+        var el = document.createElement("div");
+        el.setAttribute(
+            "style",
+            "position:absolute;top:40%;left:20%;font-weight: 600"
+        );
+        el.setAttribute("class", "alert alert-info");
+        el.innerHTML = msg;
+        setTimeout(function () {
+            el.parentNode.removeChild(el);
+        }, duration);
+        document.body.appendChild(el);
+    }
+
 
 }

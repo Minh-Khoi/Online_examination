@@ -242,6 +242,32 @@ Route::post('create_question', function (Request $request) {
 });
 
 /**
+ * This Route will receive FormData object from Controller and create new a new Question instance
+ * which is copied from another question with new quiz_id. Concurrentl, the Route will create all the
+ * new Answer instances with is passed too.
+ * The method of this Route is POST
+ */
+Route::post('copy_question', function (Request $request) {
+    // create new Question instance with basic info
+    $question = new Question();
+    $question->id = $request->input('id');
+    $question->quiz_id = $request->input('quiz_id');
+    $question->question_content = $request->input('question_content');
+    $question->save();
+    // Now create Answer instances for newly created Question
+    $answers_list = $request->input('answers_list');
+    foreach ($answers_list as $k => $answer_info) {
+        $new_answer = new Answer();
+        $new_answer->question_id = $question->id;
+        $new_answer->answer_content = $answer_info->answer_content;
+        $new_answer->is_correct = $answer_info->is_correct;
+        $new_answer->save();
+    }
+
+    return "Create 01 Question successfully";
+});
+
+/**
  * Find Question instance by specified id (pass through API)
  * @param int $id question id
  */
@@ -287,22 +313,23 @@ Route::get('all_answers', function () {
  * This Route will get list of all Answers instances which have the specified question_id (passed from client)
  *  and convert them in JSON
  */
-Route::get('all_answers_with_question_id/{question_id}', function ($question_id) {
+Route::get('find_answer/question/{question_id}', function ($question_id) {
     // The variable below is a collection of Answer instances, but we can convert it directly to JSON string.
     // It 's not neccessary to convert it to array
     $answers_list = Answer::where('question_id', $question_id)->get();
     return json_encode(($answers_list));
 });
 
+
 /**
  * This Route will get list of all Answers instances
  * which have the specified is_admin (passed from client, "True" or "false")
  *  and convert them in JSON
  */
-Route::get('all_answers_with_is_admin/{is_admin}', function ($is_admin) {
+Route::get('find_answer/is_correct/{is_correct}', function ($is_correct) {
     // The variable below is a collection of Answer instances, but we can convert it directly to JSON string.
     // It 's not neccessary to convert it to array
-    $answers_list = Answer::where('is_admin', $is_admin)->get();
+    $answers_list = Answer::where('is_correct', $is_correct)->get();
     return json_encode(($answers_list));
 });
 

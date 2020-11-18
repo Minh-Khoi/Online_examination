@@ -78,6 +78,19 @@
         <div class="control-group">
           <div class="controls">
             <button type="submit" class="btn btn-success">Submit Form</button>
+            <button
+              @click.prevent="onSummit($event)"
+              id="submit_and_go_copy"
+              class="btn btn-primary"
+            >Submit Form and go copying questions</button>
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="controls">
+            <button
+              class="btn btn-danger"
+              @click.prevent="onSummit($event, true)"
+            >Submit Form and go deleting question</button>
           </div>
         </div>
       </form>
@@ -108,7 +121,7 @@ export default {
      * The function e.preventDefault() DO NOT WORK with Vue.js framework.
      * To prevent default handling, we @Submit.prevent on the HTML template above
      */
-    async onSummit() {
+    async onSummit(event = null, going_delete_or_update_question = false) {
       let submit_form = document.querySelector("#form_edit_quiz");
       let form_datas = new FormData(submit_form);
       form_datas.append("id", this.current_quiz.id);
@@ -123,6 +136,11 @@ export default {
           "You HAVE NOT field all the blanks yet!! And It will make errors";
         return;
       }
+
+      // if the submission was clicked by the button "#submit_and_go_copy",
+      // we set the value going_copy is true. And add value to attribute next_ID
+      let going_copy = event ? true : false;
+      // now let 's submit the form
       let submit_result = await controller.sendAPI(
         "/action/edit_quiz",
         form_datas,
@@ -132,8 +150,26 @@ export default {
         this.note_content.error = "something wrong!! Summission failed";
       } else {
         this.note_content.success = submit_result;
+        let updating_quiz = {
+          id: this.current_quiz.id,
+          name: form_datas.get("name"),
+          description: form_datas.get("description"),
+          minutes: form_datas.get("minutes")
+        };
+        let route_parameters = going_copy ? { for_quiz: updating_quiz } : {};
         setTimeout(() => {
-          router.push({ name: "quizzes" });
+          if (going_copy) {
+            router.push({ name: "questions", params: route_parameters });
+          } else {
+            if (going_delete_or_update_question) {
+              router.push({
+                name: "questions",
+                params: { quiz_in_reference: updating_quiz }
+              });
+            } else {
+              router.push({ name: "quizzes" });
+            }
+          }
         }, 1200);
       }
     }

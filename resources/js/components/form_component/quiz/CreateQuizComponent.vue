@@ -104,7 +104,7 @@ export default {
      * The function e.preventDefault() DO NOT WORK with Vue.js framework.
      * To prevent default handling, we @Submit.prevent on the HTML template above
      */
-    async onSummit(event) {
+    async onSummit(event = null) {
       let submit_form = document.querySelector("#form_create_quiz");
       let form_datas = new FormData(submit_form);
       let controller = new Controller();
