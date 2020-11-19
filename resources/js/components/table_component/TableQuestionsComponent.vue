@@ -155,10 +155,11 @@ export default {
     if (!this.quiz_in_reference) {
       questions_list = await controller.loadQuestionsList();
     } else {
-      questions_list = await controller.loadQuizzesListByUserID(
+      questions_list = await controller.loadQuestionsListByQuizID(
         this.quiz_in_reference.id
       );
     }
+    console.log(questions_list);
     // add the attribute "quiz_name" for each question object of questions_list array
     for (let question of questions_list) {
       let quiz = await controller.readQuizByID(question.quiz_id);

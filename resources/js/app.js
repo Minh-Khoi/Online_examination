@@ -92,7 +92,11 @@ let controller = new Controller();
 
         viewQuestionsElement.addEventListener('click', function (e) {
             e.preventDefault();
-            router.push({ name: 'questions', params: { current_user: current_user } });
+            router.push({ name: 'questions', params: { current_user: current_user } })
+                .catch(() => {
+                    router.push({ name: "loading", params: { direct_to: "questions" } });
+                    // router.push({ path: router.fullpath })
+                });
         });
 
         createAnswerElement.addEventListener('click', function (e) {
@@ -115,6 +119,17 @@ let controller = new Controller();
      * This code and all the code above which use the object "window.current_user" must be located in
      * async 's brackets, because the object "window.current_user" can only get its value after an asynchronous process
      */
+
+    // router.afterEach((to, from) => {
+    //     console.log(to.name + "\n");
+    //     console.log(from.name + "\n");
+    //     console.log(from.name == to.name);
+    //     if (to.name == from.name) {
+    //         next(false);
+    //     } else {
+    //         next();
+    //     }
+    // });
 
     /** THis Vue instance is for Admin Dashboard Template */
     const app = new Vue({

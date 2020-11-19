@@ -139,7 +139,8 @@ export default {
 
       // if the submission was clicked by the button "#submit_and_go_copy",
       // we set the value going_copy is true. And add value to attribute next_ID
-      let going_copy = event ? true : false;
+      let going_copy =
+        (event ? true : false) && !going_delete_or_update_question;
       // now let 's submit the form
       let submit_result = await controller.sendAPI(
         "/action/edit_quiz",

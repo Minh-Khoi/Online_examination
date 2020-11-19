@@ -92,41 +92,6 @@ export class Controller {
         return list;
     }
 
-    /** Load the list of Quiz instances which have the specified user_id in JSON */
-    async loadQuizzesListByQuizID(quiz_id) {
-        let list = [];
-        await fetch(window.location.origin + "/action/all_quizzes_with_user_id/" + quiz_id)
-            .then((response) => response.text())
-            .then((res) => {
-                list = JSON.parse(res);
-            })
-        return list;
-    }
-
-
-    /**
-     * send AJAX request to create new QUiz instance, the requests sent have method POST, PUT, DELETE
-     * @param string path link path
-     * @param FormData form_datas a FormData object is submit (if the method is POST or PUT or DELETE)
-     * @param string method is ( POST, PUT, DELETE); default is POST
-     */
-    async sendAPI(path, form_datas, method = "POST") {
-        let result = null;
-        // console.log(form_datas.get('name'));
-        await fetch(window.location.origin + path, {
-            body: form_datas,
-            method: method.toUpperCase(),
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            }
-        }).then((response) => ((response.status == 200) ? response.text() : response.status))
-            .then((res) => {
-                result = res;
-            });
-        return result;
-    }
-
-
     /** Load the list of Questions instances in JSON */
     async loadQuestionsList() {
         let list = [];
@@ -138,28 +103,37 @@ export class Controller {
         return list;
     }
 
-    /** Read Question by id (Question object in JSON) */
-    async readQuestionByID(id) {
-        let question = null;
-        // console.log(id);
-        await fetch(window.location.origin + "/action/find_question/" + id)
-            .then(response => ((response.status == 200) ? response.text() : response.status))
-            .then(res => {
-                question = (isNaN(res)) ? JSON.parse(res) : res;
+    /** Load the list of Question instances which have the specified quiz_id in JSON */
+    async loadQuestionsListByQuizID(quiz_id) {
+        let list = [];
+        await fetch(window.location.origin + "/action/all_questions_with_quiz_id/" + quiz_id)
+            .then((response) => response.text())
+            .then((res) => {
+                list = JSON.parse(res);
             })
-        return question;
+        return list;
     }
 
-    /** Read Quiz by id (Quiz object in JSON) */
-    async readQuizByID(id) {
-        let quiz = null;
-        // console.log(id);
-        await fetch(window.location.origin + "/action/find_quiz/" + id)
+    /**  Find the Result Object in JSON by its user 's id */
+    async loadResultByUserID(user_id) {
+        let result = null;
+        await fetch(window.location.origin + "/action/find_result/user/" + user_id)
             .then(response => ((response.status == 200) ? response.text() : response.status))
             .then(res => {
-                quiz = (isNaN(res)) ? JSON.parse(res) : res;
+                result = (isNaN(res)) ? JSON.parse(res) : res;
             })
-        return quiz;
+        return result;
+    }
+
+    /**  Find the Result Object in JSON by its quiz id */
+    async loadResultByQuizID(quiz_id) {
+        let result = null;
+        await fetch(window.location.origin + "/action/find_result/quiz/" + quiz_id)
+            .then(response => ((response.status == 200) ? response.text() : response.status))
+            .then(res => {
+                result = (isNaN(res)) ? JSON.parse(res) : res;
+            })
+        return result;
     }
 
     /** Load the list of Exams instances in JSON */
@@ -195,32 +169,57 @@ export class Controller {
         return list;
     }
 
+
+    /**
+     * send Fetch API request to create new QUiz instance, the requests sent have method POST, PUT, DELETE
+     * @param string path link path
+     * @param FormData form_datas a FormData object is submit (if the method is POST or PUT or DELETE)
+     * @param string method is ( POST, PUT, DELETE); default is POST
+     */
+    async sendAPI(path, form_datas, method = "POST") {
+        let result = null;
+        // console.log(form_datas.get('name'));
+        await fetch(window.location.origin + path, {
+            body: form_datas,
+            method: method.toUpperCase(),
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            }
+        }).then((response) => ((response.status == 200) ? response.text() : response.status))
+            .then((res) => {
+                result = res;
+            });
+        return result;
+    }
+
+    /** Read Question by id (Question object in JSON) */
+    async readQuestionByID(id) {
+        let question = null;
+        // console.log(id);
+        await fetch(window.location.origin + "/action/find_question/" + id)
+            .then(response => ((response.status == 200) ? response.text() : response.status))
+            .then(res => {
+                question = (isNaN(res)) ? JSON.parse(res) : res;
+            })
+        return question;
+    }
+
+    /** Read Quiz by id (Quiz object in JSON) */
+    async readQuizByID(id) {
+        let quiz = null;
+        // console.log(id);
+        await fetch(window.location.origin + "/action/find_quiz/" + id)
+            .then(response => ((response.status == 200) ? response.text() : response.status))
+            .then(res => {
+                quiz = (isNaN(res)) ? JSON.parse(res) : res;
+            })
+        return quiz;
+    }
+
     /**  Find the Result Object in JSON by its id */
     async readResultByID(id) {
         let result = null;
         await fetch(window.location.origin + "/action/find_result/" + id)
-            .then(response => ((response.status == 200) ? response.text() : response.status))
-            .then(res => {
-                result = (isNaN(res)) ? JSON.parse(res) : res;
-            })
-        return result;
-    }
-
-    /**  Find the Result Object in JSON by its user 's id */
-    async readResultByUserID(user_id) {
-        let result = null;
-        await fetch(window.location.origin + "/action/find_result/user/" + user_id)
-            .then(response => ((response.status == 200) ? response.text() : response.status))
-            .then(res => {
-                result = (isNaN(res)) ? JSON.parse(res) : res;
-            })
-        return result;
-    }
-
-    /**  Find the Result Object in JSON by its quiz id */
-    async readResultByQuizID(quiz_id) {
-        let result = null;
-        await fetch(window.location.origin + "/action/find_result/quiz/" + quiz_id)
             .then(response => ((response.status == 200) ? response.text() : response.status))
             .then(res => {
                 result = (isNaN(res)) ? JSON.parse(res) : res;

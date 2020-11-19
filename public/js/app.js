@@ -1977,7 +1977,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       /** User who are logging in */
-      current_user: window.current_user
+      current_user: window.current_user,
+      keep_direct_to: this.$route.params.direct_to
     };
   },
   methods: {
@@ -2009,7 +2010,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  mounted: function mounted() {// console.log(window.current_user);
+  mounted: function mounted() {//
   }
 });
 
@@ -3679,7 +3680,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 9:
                 // if the submission was clicked by the button "#submit_and_go_copy",
                 // we set the value going_copy is true. And add value to attribute next_ID
-                going_copy = event ? true : false; // now let 's submit the form
+                going_copy = (event ? true : false) && !going_delete_or_update_question; // now let 's submit the form
 
                 _context.next = 12;
                 return controller.sendAPI("/action/edit_quiz", form_datas, "POST");
@@ -4059,6 +4060,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       }, _callee2);
     }))();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/table_component/LoadingComponent.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/table_component/LoadingComponent.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _routes_routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../routes/routes */ "./resources/js/routes/routes.js");
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    console.log(this.$route.params.direct_to);
+    _routes_routes__WEBPACK_IMPORTED_MODULE_0__["router"].push({
+      name: this.$route.params.direct_to
+    });
   }
 });
 
@@ -4766,63 +4796,64 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
             case 8:
               _context2.next = 10;
-              return controller.loadQuizzesListByUserID(_this.quiz_in_reference.id);
+              return controller.loadQuestionsListByQuizID(_this.quiz_in_reference.id);
 
             case 10:
               questions_list = _context2.sent;
 
             case 11:
-              // add the attribute "quiz_name" for each question object of questions_list array
+              console.log(questions_list); // add the attribute "quiz_name" for each question object of questions_list array
+
               _iterator = _createForOfIteratorHelper(questions_list);
-              _context2.prev = 12;
+              _context2.prev = 13;
 
               _iterator.s();
 
-            case 14:
+            case 15:
               if ((_step = _iterator.n()).done) {
-                _context2.next = 22;
+                _context2.next = 23;
                 break;
               }
 
               question = _step.value;
-              _context2.next = 18;
+              _context2.next = 19;
               return controller.readQuizByID(question.quiz_id);
 
-            case 18:
+            case 19:
               quiz = _context2.sent;
               //   console.log(quiz);
               question["quiz_name"] = quiz.name;
 
-            case 20:
-              _context2.next = 14;
+            case 21:
+              _context2.next = 15;
               break;
 
-            case 22:
-              _context2.next = 27;
+            case 23:
+              _context2.next = 28;
               break;
 
-            case 24:
-              _context2.prev = 24;
-              _context2.t0 = _context2["catch"](12);
+            case 25:
+              _context2.prev = 25;
+              _context2.t0 = _context2["catch"](13);
 
               _iterator.e(_context2.t0);
 
-            case 27:
-              _context2.prev = 27;
+            case 28:
+              _context2.prev = 28;
 
               _iterator.f();
 
-              return _context2.finish(27);
-
-            case 30:
-              _this.questions_list = questions_list;
+              return _context2.finish(28);
 
             case 31:
+              _this.questions_list = questions_list;
+
+            case 32:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[12, 24, 27, 30]]);
+      }, _callee2, null, [[13, 25, 28, 31]]);
     }))();
   }
 });
@@ -4925,7 +4956,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
      * Event handler for button "edit".
      */
     goto_edit_form: function goto_edit_form(quiz) {
-      console.log(quiz);
       _routes_routes__WEBPACK_IMPORTED_MODULE_2__["router"].push({
         name: "edit_quiz",
         params: {
@@ -4939,7 +4969,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
      * Event handler for button "delete".
      */
     goto_delete_form: function goto_delete_form(quiz) {
-      console.log(quiz);
       _routes_routes__WEBPACK_IMPORTED_MODULE_2__["router"].push({
         name: "delete_quiz",
         params: {
@@ -4968,9 +4997,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
             case 3:
               _this.quizzes_list = _context.sent;
-              console.log(_this.quizzes_list);
 
-            case 5:
+            case 4:
             case "end":
               return _context.stop();
           }
@@ -44425,6 +44453,37 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/table_component/LoadingComponent.vue?vue&type=template&id=6d71536f&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/table_component/LoadingComponent.vue?vue&type=template&id=6d71536f& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [_c("br"), _vm._v(" "), _c("b", [_vm._v("LOADING ....")])])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/table_component/TableAnswersComponent.vue?vue&type=template&id=5b3209d0&":
 /*!****************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/table_component/TableAnswersComponent.vue?vue&type=template&id=5b3209d0& ***!
@@ -60656,6 +60715,13 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
                 params: {
                   current_user: current_user
                 }
+              })["catch"](function () {
+                _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                  name: "loading",
+                  params: {
+                    direct_to: "questions"
+                  }
+                }); // router.push({ path: router.fullpath })
               });
             });
             createAnswerElement.addEventListener('click', function (e) {
@@ -60686,6 +60752,16 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
            * This code and all the code above which use the object "window.current_user" must be located in
            * async 's brackets, because the object "window.current_user" can only get its value after an asynchronous process
            */
+          // router.afterEach((to, from) => {
+          //     console.log(to.name + "\n");
+          //     console.log(from.name + "\n");
+          //     console.log(from.name == to.name);
+          //     if (to.name == from.name) {
+          //         next(false);
+          //     } else {
+          //         next();
+          //     }
+          // });
 
           /** THis Vue instance is for Admin Dashboard Template */
 
@@ -61705,6 +61781,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/table_component/LoadingComponent.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/table_component/LoadingComponent.vue ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _LoadingComponent_vue_vue_type_template_id_6d71536f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LoadingComponent.vue?vue&type=template&id=6d71536f& */ "./resources/js/components/table_component/LoadingComponent.vue?vue&type=template&id=6d71536f&");
+/* harmony import */ var _LoadingComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LoadingComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/table_component/LoadingComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _LoadingComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _LoadingComponent_vue_vue_type_template_id_6d71536f___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _LoadingComponent_vue_vue_type_template_id_6d71536f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/table_component/LoadingComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/table_component/LoadingComponent.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/table_component/LoadingComponent.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LoadingComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./LoadingComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/table_component/LoadingComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LoadingComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/table_component/LoadingComponent.vue?vue&type=template&id=6d71536f&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/table_component/LoadingComponent.vue?vue&type=template&id=6d71536f& ***!
+  \*****************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LoadingComponent_vue_vue_type_template_id_6d71536f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./LoadingComponent.vue?vue&type=template&id=6d71536f& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/table_component/LoadingComponent.vue?vue&type=template&id=6d71536f&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LoadingComponent_vue_vue_type_template_id_6d71536f___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LoadingComponent_vue_vue_type_template_id_6d71536f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/table_component/TableAnswersComponent.vue":
 /*!***************************************************************************!*\
   !*** ./resources/js/components/table_component/TableAnswersComponent.vue ***!
@@ -62292,12 +62437,12 @@ var Controller = /*#__PURE__*/function () {
 
       return loadQuizzesListByUserID;
     }()
-    /** Load the list of Quiz instances which have the specified user_id in JSON */
+    /** Load the list of Questions instances in JSON */
 
   }, {
-    key: "loadQuizzesListByQuizID",
+    key: "loadQuestionsList",
     value: function () {
-      var _loadQuizzesListByQuizID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(quiz_id) {
+      var _loadQuestionsList = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var list;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
@@ -62305,7 +62450,7 @@ var Controller = /*#__PURE__*/function () {
               case 0:
                 list = [];
                 _context5.next = 3;
-                return fetch(window.location.origin + "/action/all_quizzes_with_user_id/" + quiz_id).then(function (response) {
+                return fetch(window.location.origin + "/action/all_questions").then(function (response) {
                   return response.text();
                 }).then(function (res) {
                   list = JSON.parse(res);
@@ -62322,50 +62467,35 @@ var Controller = /*#__PURE__*/function () {
         }, _callee5);
       }));
 
-      function loadQuizzesListByQuizID(_x2) {
-        return _loadQuizzesListByQuizID.apply(this, arguments);
+      function loadQuestionsList() {
+        return _loadQuestionsList.apply(this, arguments);
       }
 
-      return loadQuizzesListByQuizID;
+      return loadQuestionsList;
     }()
-    /**
-     * send AJAX request to create new QUiz instance, the requests sent have method POST, PUT, DELETE
-     * @param string path link path
-     * @param FormData form_datas a FormData object is submit (if the method is POST or PUT or DELETE)
-     * @param string method is ( POST, PUT, DELETE); default is POST
-     */
+    /** Load the list of Question instances which have the specified quiz_id in JSON */
 
   }, {
-    key: "sendAPI",
+    key: "loadQuestionsListByQuizID",
     value: function () {
-      var _sendAPI = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(path, form_datas) {
-        var method,
-            result,
-            _args6 = arguments;
+      var _loadQuestionsListByQuizID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(quiz_id) {
+        var list;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                method = _args6.length > 2 && _args6[2] !== undefined ? _args6[2] : "POST";
-                result = null; // console.log(form_datas.get('name'));
-
-                _context6.next = 4;
-                return fetch(window.location.origin + path, {
-                  body: form_datas,
-                  method: method.toUpperCase(),
-                  headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-                  }
-                }).then(function (response) {
-                  return response.status == 200 ? response.text() : response.status;
+                list = [];
+                _context6.next = 3;
+                return fetch(window.location.origin + "/action/all_questions_with_quiz_id/" + quiz_id).then(function (response) {
+                  return response.text();
                 }).then(function (res) {
-                  result = res;
+                  list = JSON.parse(res);
                 });
 
-              case 4:
-                return _context6.abrupt("return", result);
+              case 3:
+                return _context6.abrupt("return", list);
 
-              case 5:
+              case 4:
               case "end":
                 return _context6.stop();
             }
@@ -62373,33 +62503,33 @@ var Controller = /*#__PURE__*/function () {
         }, _callee6);
       }));
 
-      function sendAPI(_x3, _x4) {
-        return _sendAPI.apply(this, arguments);
+      function loadQuestionsListByQuizID(_x2) {
+        return _loadQuestionsListByQuizID.apply(this, arguments);
       }
 
-      return sendAPI;
+      return loadQuestionsListByQuizID;
     }()
-    /** Load the list of Questions instances in JSON */
+    /**  Find the Result Object in JSON by its user 's id */
 
   }, {
-    key: "loadQuestionsList",
+    key: "loadResultByUserID",
     value: function () {
-      var _loadQuestionsList = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        var list;
+      var _loadResultByUserID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(user_id) {
+        var result;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
-                list = [];
+                result = null;
                 _context7.next = 3;
-                return fetch(window.location.origin + "/action/all_questions").then(function (response) {
-                  return response.text();
+                return fetch(window.location.origin + "/action/find_result/user/" + user_id).then(function (response) {
+                  return response.status == 200 ? response.text() : response.status;
                 }).then(function (res) {
-                  list = JSON.parse(res);
+                  result = isNaN(res) ? JSON.parse(res) : res;
                 });
 
               case 3:
-                return _context7.abrupt("return", list);
+                return _context7.abrupt("return", result);
 
               case 4:
               case "end":
@@ -62409,34 +62539,33 @@ var Controller = /*#__PURE__*/function () {
         }, _callee7);
       }));
 
-      function loadQuestionsList() {
-        return _loadQuestionsList.apply(this, arguments);
+      function loadResultByUserID(_x3) {
+        return _loadResultByUserID.apply(this, arguments);
       }
 
-      return loadQuestionsList;
+      return loadResultByUserID;
     }()
-    /** Read Question by id (Question object in JSON) */
+    /**  Find the Result Object in JSON by its quiz id */
 
   }, {
-    key: "readQuestionByID",
+    key: "loadResultByQuizID",
     value: function () {
-      var _readQuestionByID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(id) {
-        var question;
+      var _loadResultByQuizID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(quiz_id) {
+        var result;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
-                question = null; // console.log(id);
-
+                result = null;
                 _context8.next = 3;
-                return fetch(window.location.origin + "/action/find_question/" + id).then(function (response) {
+                return fetch(window.location.origin + "/action/find_result/quiz/" + quiz_id).then(function (response) {
                   return response.status == 200 ? response.text() : response.status;
                 }).then(function (res) {
-                  question = isNaN(res) ? JSON.parse(res) : res;
+                  result = isNaN(res) ? JSON.parse(res) : res;
                 });
 
               case 3:
-                return _context8.abrupt("return", question);
+                return _context8.abrupt("return", result);
 
               case 4:
               case "end":
@@ -62446,34 +62575,33 @@ var Controller = /*#__PURE__*/function () {
         }, _callee8);
       }));
 
-      function readQuestionByID(_x5) {
-        return _readQuestionByID.apply(this, arguments);
+      function loadResultByQuizID(_x4) {
+        return _loadResultByQuizID.apply(this, arguments);
       }
 
-      return readQuestionByID;
+      return loadResultByQuizID;
     }()
-    /** Read Quiz by id (Quiz object in JSON) */
+    /** Load the list of Exams instances in JSON */
 
   }, {
-    key: "readQuizByID",
+    key: "loadExamsList",
     value: function () {
-      var _readQuizByID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(id) {
-        var quiz;
+      var _loadExamsList = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+        var list;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
             switch (_context9.prev = _context9.next) {
               case 0:
-                quiz = null; // console.log(id);
-
+                list = [];
                 _context9.next = 3;
-                return fetch(window.location.origin + "/action/find_quiz/" + id).then(function (response) {
-                  return response.status == 200 ? response.text() : response.status;
+                return fetch(window.location.origin + "/action/all_exams").then(function (response) {
+                  return response.text();
                 }).then(function (res) {
-                  quiz = isNaN(res) ? JSON.parse(res) : res;
+                  list = JSON.parse(res);
                 });
 
               case 3:
-                return _context9.abrupt("return", quiz);
+                return _context9.abrupt("return", list);
 
               case 4:
               case "end":
@@ -62483,18 +62611,18 @@ var Controller = /*#__PURE__*/function () {
         }, _callee9);
       }));
 
-      function readQuizByID(_x6) {
-        return _readQuizByID.apply(this, arguments);
+      function loadExamsList() {
+        return _loadExamsList.apply(this, arguments);
       }
 
-      return readQuizByID;
+      return loadExamsList;
     }()
-    /** Load the list of Exams instances in JSON */
+    /** Load the list of Answer instances in JSON */
 
   }, {
-    key: "loadExamsList",
+    key: "loadAnswersList",
     value: function () {
-      var _loadExamsList = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
+      var _loadAnswersList = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
         var list;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
@@ -62502,7 +62630,7 @@ var Controller = /*#__PURE__*/function () {
               case 0:
                 list = [];
                 _context10.next = 3;
-                return fetch(window.location.origin + "/action/all_exams").then(function (response) {
+                return fetch(window.location.origin + "/action/all_answers").then(function (response) {
                   return response.text();
                 }).then(function (res) {
                   list = JSON.parse(res);
@@ -62519,18 +62647,18 @@ var Controller = /*#__PURE__*/function () {
         }, _callee10);
       }));
 
-      function loadExamsList() {
-        return _loadExamsList.apply(this, arguments);
+      function loadAnswersList() {
+        return _loadAnswersList.apply(this, arguments);
       }
 
-      return loadExamsList;
+      return loadAnswersList;
     }()
     /** Load the list of Answer instances in JSON */
 
   }, {
-    key: "loadAnswersList",
+    key: "loadResultsList",
     value: function () {
-      var _loadAnswersList = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
+      var _loadResultsList = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
         var list;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
           while (1) {
@@ -62538,7 +62666,7 @@ var Controller = /*#__PURE__*/function () {
               case 0:
                 list = [];
                 _context11.next = 3;
-                return fetch(window.location.origin + "/action/all_answers").then(function (response) {
+                return fetch(window.location.origin + "/action/all_results").then(function (response) {
                   return response.text();
                 }).then(function (res) {
                   list = JSON.parse(res);
@@ -62555,35 +62683,50 @@ var Controller = /*#__PURE__*/function () {
         }, _callee11);
       }));
 
-      function loadAnswersList() {
-        return _loadAnswersList.apply(this, arguments);
+      function loadResultsList() {
+        return _loadResultsList.apply(this, arguments);
       }
 
-      return loadAnswersList;
+      return loadResultsList;
     }()
-    /** Load the list of Answer instances in JSON */
+    /**
+     * send Fetch API request to create new QUiz instance, the requests sent have method POST, PUT, DELETE
+     * @param string path link path
+     * @param FormData form_datas a FormData object is submit (if the method is POST or PUT or DELETE)
+     * @param string method is ( POST, PUT, DELETE); default is POST
+     */
 
   }, {
-    key: "loadResultsList",
+    key: "sendAPI",
     value: function () {
-      var _loadResultsList = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
-        var list;
+      var _sendAPI = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(path, form_datas) {
+        var method,
+            result,
+            _args12 = arguments;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
           while (1) {
             switch (_context12.prev = _context12.next) {
               case 0:
-                list = [];
-                _context12.next = 3;
-                return fetch(window.location.origin + "/action/all_results").then(function (response) {
-                  return response.text();
+                method = _args12.length > 2 && _args12[2] !== undefined ? _args12[2] : "POST";
+                result = null; // console.log(form_datas.get('name'));
+
+                _context12.next = 4;
+                return fetch(window.location.origin + path, {
+                  body: form_datas,
+                  method: method.toUpperCase(),
+                  headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                  }
+                }).then(function (response) {
+                  return response.status == 200 ? response.text() : response.status;
                 }).then(function (res) {
-                  list = JSON.parse(res);
+                  result = res;
                 });
 
-              case 3:
-                return _context12.abrupt("return", list);
-
               case 4:
+                return _context12.abrupt("return", result);
+
+              case 5:
               case "end":
                 return _context12.stop();
             }
@@ -62591,33 +62734,34 @@ var Controller = /*#__PURE__*/function () {
         }, _callee12);
       }));
 
-      function loadResultsList() {
-        return _loadResultsList.apply(this, arguments);
+      function sendAPI(_x5, _x6) {
+        return _sendAPI.apply(this, arguments);
       }
 
-      return loadResultsList;
+      return sendAPI;
     }()
-    /**  Find the Result Object in JSON by its id */
+    /** Read Question by id (Question object in JSON) */
 
   }, {
-    key: "readResultByID",
+    key: "readQuestionByID",
     value: function () {
-      var _readResultByID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13(id) {
-        var result;
+      var _readQuestionByID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13(id) {
+        var question;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
           while (1) {
             switch (_context13.prev = _context13.next) {
               case 0:
-                result = null;
+                question = null; // console.log(id);
+
                 _context13.next = 3;
-                return fetch(window.location.origin + "/action/find_result/" + id).then(function (response) {
+                return fetch(window.location.origin + "/action/find_question/" + id).then(function (response) {
                   return response.status == 200 ? response.text() : response.status;
                 }).then(function (res) {
-                  result = isNaN(res) ? JSON.parse(res) : res;
+                  question = isNaN(res) ? JSON.parse(res) : res;
                 });
 
               case 3:
-                return _context13.abrupt("return", result);
+                return _context13.abrupt("return", question);
 
               case 4:
               case "end":
@@ -62627,33 +62771,34 @@ var Controller = /*#__PURE__*/function () {
         }, _callee13);
       }));
 
-      function readResultByID(_x7) {
-        return _readResultByID.apply(this, arguments);
+      function readQuestionByID(_x7) {
+        return _readQuestionByID.apply(this, arguments);
       }
 
-      return readResultByID;
+      return readQuestionByID;
     }()
-    /**  Find the Result Object in JSON by its user 's id */
+    /** Read Quiz by id (Quiz object in JSON) */
 
   }, {
-    key: "readResultByUserID",
+    key: "readQuizByID",
     value: function () {
-      var _readResultByUserID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(user_id) {
-        var result;
+      var _readQuizByID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(id) {
+        var quiz;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
           while (1) {
             switch (_context14.prev = _context14.next) {
               case 0:
-                result = null;
+                quiz = null; // console.log(id);
+
                 _context14.next = 3;
-                return fetch(window.location.origin + "/action/find_result/user/" + user_id).then(function (response) {
+                return fetch(window.location.origin + "/action/find_quiz/" + id).then(function (response) {
                   return response.status == 200 ? response.text() : response.status;
                 }).then(function (res) {
-                  result = isNaN(res) ? JSON.parse(res) : res;
+                  quiz = isNaN(res) ? JSON.parse(res) : res;
                 });
 
               case 3:
-                return _context14.abrupt("return", result);
+                return _context14.abrupt("return", quiz);
 
               case 4:
               case "end":
@@ -62663,18 +62808,18 @@ var Controller = /*#__PURE__*/function () {
         }, _callee14);
       }));
 
-      function readResultByUserID(_x8) {
-        return _readResultByUserID.apply(this, arguments);
+      function readQuizByID(_x8) {
+        return _readQuizByID.apply(this, arguments);
       }
 
-      return readResultByUserID;
+      return readQuizByID;
     }()
-    /**  Find the Result Object in JSON by its quiz id */
+    /**  Find the Result Object in JSON by its id */
 
   }, {
-    key: "readResultByQuizID",
+    key: "readResultByID",
     value: function () {
-      var _readResultByQuizID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15(quiz_id) {
+      var _readResultByID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15(id) {
         var result;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
           while (1) {
@@ -62682,7 +62827,7 @@ var Controller = /*#__PURE__*/function () {
               case 0:
                 result = null;
                 _context15.next = 3;
-                return fetch(window.location.origin + "/action/find_result/quiz/" + quiz_id).then(function (response) {
+                return fetch(window.location.origin + "/action/find_result/" + id).then(function (response) {
                   return response.status == 200 ? response.text() : response.status;
                 }).then(function (res) {
                   result = isNaN(res) ? JSON.parse(res) : res;
@@ -62699,11 +62844,11 @@ var Controller = /*#__PURE__*/function () {
         }, _callee15);
       }));
 
-      function readResultByQuizID(_x9) {
-        return _readResultByQuizID.apply(this, arguments);
+      function readResultByID(_x9) {
+        return _readResultByID.apply(this, arguments);
       }
 
-      return readResultByQuizID;
+      return readResultByID;
     }()
     /** Read User by id (User object from Backend in JSON) */
 
@@ -62851,23 +62996,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "router", function() { return router; });
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _components_DashboardComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/DashboardComponent.vue */ "./resources/js/components/DashboardComponent.vue");
-/* harmony import */ var _components_table_component_TableQuizzesComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/table_component/TableQuizzesComponent.vue */ "./resources/js/components/table_component/TableQuizzesComponent.vue");
-/* harmony import */ var _components_table_component_TableExamsComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/table_component/TableExamsComponent.vue */ "./resources/js/components/table_component/TableExamsComponent.vue");
-/* harmony import */ var _components_table_component_TableUsersComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/table_component/TableUsersComponent.vue */ "./resources/js/components/table_component/TableUsersComponent.vue");
-/* harmony import */ var _components_table_component_TableQuestionsComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/table_component/TableQuestionsComponent.vue */ "./resources/js/components/table_component/TableQuestionsComponent.vue");
-/* harmony import */ var _components_table_component_TableAnswersComponent_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components//table_component/TableAnswersComponent.vue */ "./resources/js/components/table_component/TableAnswersComponent.vue");
-/* harmony import */ var _components_form_component_quiz_CreateQuizComponent_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/form_component/quiz/CreateQuizComponent.vue */ "./resources/js/components/form_component/quiz/CreateQuizComponent.vue");
-/* harmony import */ var _components_form_component_quiz_EditQuizComponent_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/form_component/quiz/EditQuizComponent.vue */ "./resources/js/components/form_component/quiz/EditQuizComponent.vue");
-/* harmony import */ var _components_form_component_quiz_DeleteQuizComponent_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/form_component/quiz/DeleteQuizComponent.vue */ "./resources/js/components/form_component/quiz/DeleteQuizComponent.vue");
-/* harmony import */ var _components_form_component_question_DeleteQuestionComponent_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/form_component/question/DeleteQuestionComponent.vue */ "./resources/js/components/form_component/question/DeleteQuestionComponent.vue");
-/* harmony import */ var _components_form_component_question_EditQuestionComponent_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/form_component/question/EditQuestionComponent.vue */ "./resources/js/components/form_component/question/EditQuestionComponent.vue");
-/* harmony import */ var _components_form_component_question_CreateQuestionComponent_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/form_component/question/CreateQuestionComponent.vue */ "./resources/js/components/form_component/question/CreateQuestionComponent.vue");
-/* harmony import */ var _components_form_component_exam_CreateExamComponent_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../components/form_component/exam/CreateExamComponent.vue */ "./resources/js/components/form_component/exam/CreateExamComponent.vue");
-/* harmony import */ var _components_form_component_exam_EditExamComponent__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../components/form_component/exam/EditExamComponent */ "./resources/js/components/form_component/exam/EditExamComponent.vue");
-/* harmony import */ var _components_form_component_exam_DeleteExamComponent__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../components/form_component/exam/DeleteExamComponent */ "./resources/js/components/form_component/exam/DeleteExamComponent.vue");
-/* harmony import */ var _components_form_component_answer_CreateAnswerComponent_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../components/form_component/answer/CreateAnswerComponent.vue */ "./resources/js/components/form_component/answer/CreateAnswerComponent.vue");
-/* harmony import */ var _components_form_component_user_admin_CreateAdminComponent_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../components/form_component/user_admin/CreateAdminComponent.vue */ "./resources/js/components/form_component/user_admin/CreateAdminComponent.vue");
-/* harmony import */ var _components_form_component_user_admin_DeleteUserComponent_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../components/form_component/user_admin/DeleteUserComponent.vue */ "./resources/js/components/form_component/user_admin/DeleteUserComponent.vue");
+/* harmony import */ var _components_table_component_LoadingComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/table_component/LoadingComponent.vue */ "./resources/js/components/table_component/LoadingComponent.vue");
+/* harmony import */ var _components_table_component_TableQuizzesComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/table_component/TableQuizzesComponent.vue */ "./resources/js/components/table_component/TableQuizzesComponent.vue");
+/* harmony import */ var _components_table_component_TableExamsComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/table_component/TableExamsComponent.vue */ "./resources/js/components/table_component/TableExamsComponent.vue");
+/* harmony import */ var _components_table_component_TableUsersComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/table_component/TableUsersComponent.vue */ "./resources/js/components/table_component/TableUsersComponent.vue");
+/* harmony import */ var _components_table_component_TableQuestionsComponent_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/table_component/TableQuestionsComponent.vue */ "./resources/js/components/table_component/TableQuestionsComponent.vue");
+/* harmony import */ var _components_table_component_TableAnswersComponent_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components//table_component/TableAnswersComponent.vue */ "./resources/js/components/table_component/TableAnswersComponent.vue");
+/* harmony import */ var _components_form_component_quiz_CreateQuizComponent_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/form_component/quiz/CreateQuizComponent.vue */ "./resources/js/components/form_component/quiz/CreateQuizComponent.vue");
+/* harmony import */ var _components_form_component_quiz_EditQuizComponent_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/form_component/quiz/EditQuizComponent.vue */ "./resources/js/components/form_component/quiz/EditQuizComponent.vue");
+/* harmony import */ var _components_form_component_quiz_DeleteQuizComponent_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/form_component/quiz/DeleteQuizComponent.vue */ "./resources/js/components/form_component/quiz/DeleteQuizComponent.vue");
+/* harmony import */ var _components_form_component_question_DeleteQuestionComponent_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/form_component/question/DeleteQuestionComponent.vue */ "./resources/js/components/form_component/question/DeleteQuestionComponent.vue");
+/* harmony import */ var _components_form_component_question_EditQuestionComponent_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/form_component/question/EditQuestionComponent.vue */ "./resources/js/components/form_component/question/EditQuestionComponent.vue");
+/* harmony import */ var _components_form_component_question_CreateQuestionComponent_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../components/form_component/question/CreateQuestionComponent.vue */ "./resources/js/components/form_component/question/CreateQuestionComponent.vue");
+/* harmony import */ var _components_form_component_exam_CreateExamComponent_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../components/form_component/exam/CreateExamComponent.vue */ "./resources/js/components/form_component/exam/CreateExamComponent.vue");
+/* harmony import */ var _components_form_component_exam_EditExamComponent__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../components/form_component/exam/EditExamComponent */ "./resources/js/components/form_component/exam/EditExamComponent.vue");
+/* harmony import */ var _components_form_component_exam_DeleteExamComponent__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../components/form_component/exam/DeleteExamComponent */ "./resources/js/components/form_component/exam/DeleteExamComponent.vue");
+/* harmony import */ var _components_form_component_answer_CreateAnswerComponent_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../components/form_component/answer/CreateAnswerComponent.vue */ "./resources/js/components/form_component/answer/CreateAnswerComponent.vue");
+/* harmony import */ var _components_form_component_user_admin_CreateAdminComponent_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../components/form_component/user_admin/CreateAdminComponent.vue */ "./resources/js/components/form_component/user_admin/CreateAdminComponent.vue");
+/* harmony import */ var _components_form_component_user_admin_DeleteUserComponent_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../components/form_component/user_admin/DeleteUserComponent.vue */ "./resources/js/components/form_component/user_admin/DeleteUserComponent.vue");
+
 
 
 
@@ -62896,72 +63043,76 @@ var routes = [{
   children: [{
     path: "quizzes",
     name: "quizzes",
-    component: _components_table_component_TableQuizzesComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    component: _components_table_component_TableQuizzesComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, {
     path: "users",
     name: "users",
-    component: _components_table_component_TableUsersComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+    component: _components_table_component_TableUsersComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   }, {
     path: "questions",
     name: "questions",
-    component: _components_table_component_TableQuestionsComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+    component: _components_table_component_TableQuestionsComponent_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
   }, {
     path: "exams",
     name: "exams",
-    component: _components_table_component_TableExamsComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    component: _components_table_component_TableExamsComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
     path: "answers",
     name: "answers",
-    component: _components_table_component_TableAnswersComponent_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+    component: _components_table_component_TableAnswersComponent_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+  }, {
+    path: "loading",
+    name: "loading",
+    component: _components_table_component_LoadingComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   }]
 }, {
   path: "/vue/create_quiz",
   name: "create_quiz",
-  component: _components_form_component_quiz_CreateQuizComponent_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+  component: _components_form_component_quiz_CreateQuizComponent_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
 }, {
   path: "/vue/create_question",
   name: "create_question",
-  component: _components_form_component_question_CreateQuestionComponent_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
+  component: _components_form_component_question_CreateQuestionComponent_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
 }, {
   path: "/vue/create_exam",
   name: "create_exam",
-  component: _components_form_component_exam_CreateExamComponent_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
+  component: _components_form_component_exam_CreateExamComponent_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
 }, {
   path: "/vue/create_answer",
   name: "create_answer",
-  component: _components_form_component_answer_CreateAnswerComponent_vue__WEBPACK_IMPORTED_MODULE_16__["default"]
+  component: _components_form_component_answer_CreateAnswerComponent_vue__WEBPACK_IMPORTED_MODULE_17__["default"]
 }, {
   path: "/vue/create_admin",
   name: "create_admin",
-  component: _components_form_component_user_admin_CreateAdminComponent_vue__WEBPACK_IMPORTED_MODULE_17__["default"]
+  component: _components_form_component_user_admin_CreateAdminComponent_vue__WEBPACK_IMPORTED_MODULE_18__["default"]
 }, {
   path: "/vue/edit_quiz/:id",
   name: "edit_quiz",
-  component: _components_form_component_quiz_EditQuizComponent_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
+  component: _components_form_component_quiz_EditQuizComponent_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
 }, {
   path: "/vue/edit_question/:id",
   name: "edit_question",
-  component: _components_form_component_question_EditQuestionComponent_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
+  component: _components_form_component_question_EditQuestionComponent_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
 }, {
   path: "/vue/edit_exam/:id",
   name: "edit_exam",
-  component: _components_form_component_exam_EditExamComponent__WEBPACK_IMPORTED_MODULE_14__["default"]
+  component: _components_form_component_exam_EditExamComponent__WEBPACK_IMPORTED_MODULE_15__["default"]
 }, {
   path: "/vue/delete_quiz/:id",
   name: "delete_quiz",
-  component: _components_form_component_quiz_DeleteQuizComponent_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
+  component: _components_form_component_quiz_DeleteQuizComponent_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
 }, {
   path: "/vue/delete_question/:id",
   name: "delete_question",
-  component: _components_form_component_question_DeleteQuestionComponent_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
+  component: _components_form_component_question_DeleteQuestionComponent_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
 }, {
   path: "/vue/delete_exam/:id",
   name: "delete_exam",
-  component: _components_form_component_exam_DeleteExamComponent__WEBPACK_IMPORTED_MODULE_15__["default"]
+  component: _components_form_component_exam_DeleteExamComponent__WEBPACK_IMPORTED_MODULE_16__["default"]
 }, {
   path: "/vue/delete_user/:id",
   name: "delete_user",
-  component: _components_form_component_user_admin_DeleteUserComponent_vue__WEBPACK_IMPORTED_MODULE_18__["default"]
+  component: _components_form_component_user_admin_DeleteUserComponent_vue__WEBPACK_IMPORTED_MODULE_19__["default"]
 }, {
   path: "/home",
   redirect: {
@@ -62972,7 +63123,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   // Mode 'history' to avoid the "#" showing on the path of route
   mode: 'history',
   routes: routes
-});
+}); //     .beforeEach((to, from, next) => {
+//     if (to.name == from.name) {
+//         next(false);
+//     }
+// });
 
 /***/ }),
 

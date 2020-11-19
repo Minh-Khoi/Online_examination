@@ -1,5 +1,6 @@
 import VueRouter from "vue-router";
 import DashboardComponent from '../components/DashboardComponent.vue';
+import LoadingComponent from '../components/table_component/LoadingComponent.vue';
 import TableQuizzesComponent from '../components/table_component/TableQuizzesComponent.vue';
 import TableExamsComponent from '../components/table_component/TableExamsComponent.vue';
 import TableUsersComponent from '../components/table_component/TableUsersComponent.vue';
@@ -28,6 +29,7 @@ const routes = [
             { path: "questions", name: "questions", component: TableQuestionsComponent },
             { path: "exams", name: "exams", component: TableExamsComponent },
             { path: "answers", name: "answers", component: TableAnswersComponent },
+            { path: "loading", name: "loading", component: LoadingComponent }
         ]
     },
     { path: "/vue/create_quiz", name: "create_quiz", component: CreateQuizComponent },
@@ -49,4 +51,9 @@ export const router = new VueRouter({
     // Mode 'history' to avoid the "#" showing on the path of route
     mode: 'history',
     routes: routes
-});
+})
+//     .beforeEach((to, from, next) => {
+//     if (to.name == from.name) {
+//         next(false);
+//     }
+// });

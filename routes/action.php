@@ -229,6 +229,17 @@ Route::get('all_questions', function () {
 });
 
 /**
+ * This Route will get list of all Questions instances which have the same specified-passed $quiz_id
+ * and convert them in JSON
+ */
+Route::get('all_questions_with_quiz_id/{quiz_id}', function ($quiz_id) {
+    // The variable below is a collection of Questions instances, but we can convert it directly to JSON string.
+    // It 's not neccessary to convert it to array
+    $questions_list = Question::where('quiz_id', $quiz_id)->get();
+    return json_encode(($questions_list));
+});
+
+/**
  * This Route will receive FormData object from Controller and create new a new Question instance
  * The method of this Route is POST
  */
@@ -263,7 +274,6 @@ Route::post('copy_question', function (Request $request) {
         $new_answer->is_correct = $answer_info->is_correct;
         $new_answer->save();
     }
-
     return "Create 01 Question successfully";
 });
 
@@ -431,7 +441,7 @@ Route::get('find_result/{id}', function ($id) {
  * Find Result instance by specified user id (pass through API)
  * @param int $user_id user 's id who do exam
  */
-Route::get('find_result/user/{user_id}', function ($user_id) {
+Route::get('all_results_with_user_id/user/{user_id}', function ($user_id) {
     $results_list = Result::where("user_id", $user_id)->get();
     return json_encode($results_list);
 });
@@ -440,7 +450,7 @@ Route::get('find_result/user/{user_id}', function ($user_id) {
  * Find Result instance by specified quiz id (pass through API)
  * @param int $quiz_id quiz 's id with which the user do exam
  */
-Route::get('find_result/quiz/{quiz_id}', function ($quiz_id) {
+Route::get('all_results_with_quiz_id/quiz/{quiz_id}', function ($quiz_id) {
     $results_list = Result::where("quiz_id", $quiz_id)->get();
     return json_encode($results_list);
 });

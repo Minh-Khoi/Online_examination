@@ -55,7 +55,8 @@ export default {
   data() {
     return {
       /** User who are logging in */
-      current_user: window.current_user
+      current_user: window.current_user,
+      keep_direct_to: this.$route.params.direct_to
     };
   },
   methods: {
@@ -79,8 +80,9 @@ export default {
       router.push({ name: "questions" });
     }
   },
+
   mounted() {
-    // console.log(window.current_user);
+    //
   }
 };
 </script>

@@ -78,7 +78,6 @@ export default {
      * Event handler for button "edit".
      */
     goto_edit_form(quiz) {
-      console.log(quiz);
       router.push({ name: "edit_quiz", params: { id: quiz.id, quiz: quiz } });
     },
 
@@ -86,7 +85,6 @@ export default {
      * Event handler for button "delete".
      */
     goto_delete_form(quiz) {
-      console.log(quiz);
       router.push({ name: "delete_quiz", params: { id: quiz.id, quiz: quiz } });
     }
   },
@@ -97,7 +95,6 @@ export default {
   async mounted() {
     let helper = new Controller();
     this.quizzes_list = await helper.loadQuizzesList();
-    console.log(this.quizzes_list);
   }
 };
 </script>
