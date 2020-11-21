@@ -29,7 +29,6 @@ const routes = [
             { path: "questions", name: "questions", component: TableQuestionsComponent },
             { path: "exams", name: "exams", component: TableExamsComponent },
             { path: "answers", name: "answers", component: TableAnswersComponent },
-            { path: "loading", name: "loading", component: LoadingComponent }
         ]
     },
     { path: "/vue/create_quiz", name: "create_quiz", component: CreateQuizComponent },
@@ -44,6 +43,7 @@ const routes = [
     { path: "/vue/delete_question/:id", name: "delete_question", component: DeleteQuestionComponent },
     { path: "/vue/delete_exam/:id", name: "delete_exam", component: DeleteExamComponent },
     { path: "/vue/delete_user/:id", name: "delete_user", component: DeleteUserComponent },
+    { path: "/vue/loading", name: "loading", component: LoadingComponent },
     { path: "/home", redirect: { name: "dashboard" } },
 ];
 

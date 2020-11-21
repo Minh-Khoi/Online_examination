@@ -90,7 +90,7 @@
             <button
               class="btn btn-danger"
               @click.prevent="onSummit($event, true)"
-            >Submit Form and go deleting question</button>
+            >Submit Form and go deleting (or updating) question</button>
           </div>
         </div>
       </form>
@@ -125,7 +125,6 @@ export default {
       let submit_form = document.querySelector("#form_edit_quiz");
       let form_datas = new FormData(submit_form);
       form_datas.append("id", this.current_quiz.id);
-
       let controller = new Controller();
       if (
         !form_datas.get("name") ||

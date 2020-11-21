@@ -62,7 +62,11 @@ let controller = new Controller();
 
         viewQuizzesElement.addEventListener('click', function (e) {
             e.preventDefault();
-            router.push({ name: 'quizzes', params: { current_user: current_user } });
+            router.push({ name: 'quizzes', params: { current_user: current_user } })
+                .catch(() => {
+                    router.push({ name: "loading", params: { direct_to: "quizzes" } });
+                    // router.push({ path: router.fullpath })
+                });
         });
 
         createUserAdminElement.addEventListener('click', function (e) {
@@ -72,7 +76,11 @@ let controller = new Controller();
 
         viewUsersElement.addEventListener('click', function (e) {
             e.preventDefault();
-            router.push({ name: 'users', params: { current_user: current_user } });
+            router.push({ name: 'users', params: { current_user: current_user } })
+                .catch(() => {
+                    router.push({ name: "loading", params: { direct_to: "users" } });
+                    // router.push({ path: router.fullpath })
+                });
         });
 
         createExamElement.addEventListener('click', function (e) {
@@ -82,7 +90,11 @@ let controller = new Controller();
 
         viewExamElement.addEventListener('click', function (e) {
             e.preventDefault();
-            router.push({ name: 'exams', params: { current_user: current_user } });
+            router.push({ name: 'exams', params: { current_user: current_user } })
+                .catch(() => {
+                    router.push({ name: "loading", params: { direct_to: "exams" } });
+                    // router.push({ path: router.fullpath })
+                });
         });
 
         createQuestionElement.addEventListener('click', function (e) {
@@ -106,7 +118,11 @@ let controller = new Controller();
 
         viewAnswersElement.addEventListener('click', function (e) {
             e.preventDefault();
-            router.push({ name: 'answers', params: { current_user: current_user } });
+            router.push({ name: 'answers', params: { current_user: current_user } })
+                .catch(() => {
+                    router.push({ name: "loading", params: { direct_to: "answers" } });
+                    // router.push({ path: router.fullpath })
+                });
         });
 
 
@@ -119,17 +135,6 @@ let controller = new Controller();
      * This code and all the code above which use the object "window.current_user" must be located in
      * async 's brackets, because the object "window.current_user" can only get its value after an asynchronous process
      */
-
-    // router.afterEach((to, from) => {
-    //     console.log(to.name + "\n");
-    //     console.log(from.name + "\n");
-    //     console.log(from.name == to.name);
-    //     if (to.name == from.name) {
-    //         next(false);
-    //     } else {
-    //         next();
-    //     }
-    // });
 
     /** THis Vue instance is for Admin Dashboard Template */
     const app = new Vue({

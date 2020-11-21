@@ -59,6 +59,20 @@
         <div class="control-group">
           <div class="controls">
             <button type="submit" class="btn btn-success">Submit Form</button>
+            <button
+              @click.prevent="onSummit($event)"
+              id="submit_and_go_copy"
+              class="btn btn-primary"
+            >Submit Form and go copying answers</button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="controls">
+            <button
+              class="btn btn-danger"
+              @click.prevent="onSummit($event, true)"
+            >Submit Form and go deleting (or updating) answers</button>
           </div>
         </div>
       </form>
@@ -80,7 +94,7 @@ export default {
         success: ""
       },
       quizzes_list: [],
-      current_question: null
+      current_question: this.$route.params.question
     };
   },
 
@@ -90,7 +104,7 @@ export default {
      * The function e.preventDefault() DO NOT WORK with Vue.js framework.
      * To prevent default handling, we @Submit.prevent on the HTML template above
      */
-    async onSummit() {
+    async onSummit(event, going_delete_or_update = false) {
       let submit_form = document.querySelector("#form_edit_question");
       let form_datas = new FormData(submit_form);
       form_datas.append("id", this.current_question.id);
@@ -100,6 +114,10 @@ export default {
           "You HAVE NOT fill all the blanks yet!! And It will make errors";
         return;
       }
+      // if the submission was clicked by the button "#submit_and_go_copy",
+      // we set the value going_copy is true. And add value to attribute next_ID
+      let going_copy = (event ? true : false) && !going_delete_or_update;
+      // now let 's submit the form
       let submit_result = await controller.sendAPI(
         "/action/edit_question",
         form_datas,
@@ -109,8 +127,27 @@ export default {
         this.note_content.error = "something wrong!! Summission failed";
       } else {
         this.note_content.success = submit_result;
+        let updating_question = {
+          id: this.current_question.id,
+          question_content: form_datas.get("question_content"),
+          quiz_id: form_datas.get("quiz_id")
+        };
+        let route_parameters = going_copy
+          ? { for_question: updating_question }
+          : {};
         setTimeout(() => {
-          router.push({ name: "questions" });
+          if (going_copy) {
+            router.push({ name: "answers", params: route_parameters });
+          } else {
+            if (going_delete_or_update) {
+              router.push({
+                name: "answers",
+                params: { question_in_reference: updating_question }
+              });
+            } else {
+              router.push({ name: "questions" });
+            }
+          }
         }, 1200);
       }
     }
@@ -120,7 +157,6 @@ export default {
     // we must render the quizzes_list to "select" tag by method controller.loadQuizzesList()
     let controller = new Controller();
     this.quizzes_list = await controller.loadQuizzesList();
-    this.current_question = this.$route.params.question;
   }
 };
 </script>

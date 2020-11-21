@@ -62,6 +62,11 @@
         <div class="control-group">
           <div class="controls">
             <button type="submit" class="btn btn-success">Submit Form</button>
+            <button
+              @click.prevent="onSummit($event)"
+              id="submit_and_go_copy"
+              class="btn btn-primary"
+            >Submit Form and go copying answers</button>
           </div>
         </div>
       </form>
@@ -82,7 +87,8 @@ export default {
         error: "",
         success: ""
       },
-      quizzes_list: []
+      quizzes_list: [],
+      next_ID: null
     };
   },
 
@@ -92,7 +98,7 @@ export default {
      * The function e.preventDefault() DO NOT WORK with Vue.js framework.
      * To prevent default handling, we @Submit.prevent on the HTML template above
      */
-    async onSummit() {
+    async onSummit(event = null) {
       let submit_form = document.querySelector("#form_create_question");
       let form_datas = new FormData(submit_form);
       let controller = new Controller();
@@ -101,6 +107,13 @@ export default {
           "You HAVE NOT fill all the blanks yet!! And It will make errors";
         return;
       }
+      // if the submission was clicked by the button "#submit_and_go_copy",
+      // we set the value going_copy is true. And add value to attribute next_ID
+      let going_copy = event ? true : false;
+      if (event) {
+        this.next_ID = await controller.find_next_id("questions");
+      }
+      // now let 's submit the form
       let submit_result = await controller.sendAPI(
         "/action/create_question",
         form_datas,
@@ -110,8 +123,20 @@ export default {
         this.note_content.error = "something wrong!! Summission failed";
       } else {
         this.note_content.success = submit_result;
+        let next_question = {
+          id: this.next_ID,
+          question_content: form_datas.get("question_content"),
+          quiz_id: form_datas.get("quiz_id")
+        };
+        let route_parameters = going_copy
+          ? { for_question: next_question }
+          : {};
         setTimeout(() => {
-          router.push({ name: "questions" });
+          if (going_copy) {
+            router.push({ name: "answers", params: route_parameters });
+          } else {
+            router.push({ name: "questions" });
+          }
         }, 1200);
       }
     }

@@ -2846,6 +2846,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2857,7 +2862,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         error: "",
         success: ""
       },
-      quizzes_list: []
+      quizzes_list: [],
+      next_ID: null
     };
   },
   methods: {
@@ -2867,45 +2873,78 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
      * To prevent default handling, we @Submit.prevent on the HTML template above
      */
     onSummit: function onSummit() {
-      var _this = this;
+      var _arguments = arguments,
+          _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var submit_form, form_datas, controller, submit_result;
+        var event, submit_form, form_datas, controller, going_copy, submit_result, next_question, route_parameters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                event = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : null;
                 submit_form = document.querySelector("#form_create_question");
                 form_datas = new FormData(submit_form);
                 controller = new _controllers_controllers__WEBPACK_IMPORTED_MODULE_1__["Controller"]();
 
                 if (!(!form_datas.get("quiz_id") || !form_datas.get("question_content"))) {
-                  _context.next = 6;
+                  _context.next = 7;
                   break;
                 }
 
                 _this.note_content.warning = "You HAVE NOT fill all the blanks yet!! And It will make errors";
                 return _context.abrupt("return");
 
-              case 6:
-                _context.next = 8;
+              case 7:
+                // if the submission was clicked by the button "#submit_and_go_copy",
+                // we set the value going_copy is true. And add value to attribute next_ID
+                going_copy = event ? true : false;
+
+                if (!event) {
+                  _context.next = 12;
+                  break;
+                }
+
+                _context.next = 11;
+                return controller.find_next_id("questions");
+
+              case 11:
+                _this.next_ID = _context.sent;
+
+              case 12:
+                _context.next = 14;
                 return controller.sendAPI("/action/create_question", form_datas, "POST");
 
-              case 8:
+              case 14:
                 submit_result = _context.sent;
 
                 if (!isNaN(submit_result)) {
                   _this.note_content.error = "something wrong!! Summission failed";
                 } else {
                   _this.note_content.success = submit_result;
+                  next_question = {
+                    id: _this.next_ID,
+                    question_content: form_datas.get("question_content"),
+                    quiz_id: form_datas.get("quiz_id")
+                  };
+                  route_parameters = going_copy ? {
+                    for_question: next_question
+                  } : {};
                   setTimeout(function () {
-                    _routes_routes__WEBPACK_IMPORTED_MODULE_2__["router"].push({
-                      name: "questions"
-                    });
+                    if (going_copy) {
+                      _routes_routes__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                        name: "answers",
+                        params: route_parameters
+                      });
+                    } else {
+                      _routes_routes__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                        name: "questions"
+                      });
+                    }
                   }, 1200);
                 }
 
-              case 10:
+              case 16:
               case "end":
                 return _context.stop();
             }
@@ -3120,6 +3159,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3132,7 +3185,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         success: ""
       },
       quizzes_list: [],
-      current_question: null
+      current_question: this.$route.params.question
     };
   },
   methods: {
@@ -3141,47 +3194,77 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
      * The function e.preventDefault() DO NOT WORK with Vue.js framework.
      * To prevent default handling, we @Submit.prevent on the HTML template above
      */
-    onSummit: function onSummit() {
-      var _this = this;
+    onSummit: function onSummit(event) {
+      var _arguments = arguments,
+          _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var submit_form, form_datas, controller, submit_result;
+        var going_delete_or_update, submit_form, form_datas, controller, going_copy, submit_result, updating_question, route_parameters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                going_delete_or_update = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : false;
                 submit_form = document.querySelector("#form_edit_question");
                 form_datas = new FormData(submit_form);
                 form_datas.append("id", _this.current_question.id);
                 controller = new _controllers_controllers__WEBPACK_IMPORTED_MODULE_1__["Controller"]();
 
                 if (!(!form_datas.get("quiz_id") || !form_datas.get("question_content"))) {
-                  _context.next = 7;
+                  _context.next = 8;
                   break;
                 }
 
                 _this.note_content.warning = "You HAVE NOT fill all the blanks yet!! And It will make errors";
                 return _context.abrupt("return");
 
-              case 7:
-                _context.next = 9;
+              case 8:
+                // if the submission was clicked by the button "#submit_and_go_copy",
+                // we set the value going_copy is true. And add value to attribute next_ID
+                going_copy = (event ? true : false) && !going_delete_or_update; // now let 's submit the form
+
+                _context.next = 11;
                 return controller.sendAPI("/action/edit_question", form_datas, "POST");
 
-              case 9:
+              case 11:
                 submit_result = _context.sent;
 
                 if (!isNaN(submit_result)) {
                   _this.note_content.error = "something wrong!! Summission failed";
                 } else {
                   _this.note_content.success = submit_result;
+                  updating_question = {
+                    id: _this.current_question.id,
+                    question_content: form_datas.get("question_content"),
+                    quiz_id: form_datas.get("quiz_id")
+                  };
+                  route_parameters = going_copy ? {
+                    for_question: updating_question
+                  } : {};
                   setTimeout(function () {
-                    _routes_routes__WEBPACK_IMPORTED_MODULE_2__["router"].push({
-                      name: "questions"
-                    });
+                    if (going_copy) {
+                      _routes_routes__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                        name: "answers",
+                        params: route_parameters
+                      });
+                    } else {
+                      if (going_delete_or_update) {
+                        _routes_routes__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                          name: "answers",
+                          params: {
+                            question_in_reference: updating_question
+                          }
+                        });
+                      } else {
+                        _routes_routes__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                          name: "questions"
+                        });
+                      }
+                    }
                   }, 1200);
                 }
 
-              case 11:
+              case 13:
               case "end":
                 return _context.stop();
             }
@@ -3206,9 +3289,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
             case 3:
               _this2.quizzes_list = _context2.sent;
-              _this2.current_question = _this2.$route.params.question;
 
-            case 5:
+            case 4:
             case "end":
               return _context2.stop();
           }
@@ -43276,7 +43358,30 @@ var render = function() {
             _vm._v(" "),
             _vm._m(1),
             _vm._v(" "),
-            _vm._m(2)
+            _c("div", { staticClass: "control-group" }, [
+              _c("div", { staticClass: "controls" }, [
+                _c(
+                  "button",
+                  { staticClass: "btn btn-success", attrs: { type: "submit" } },
+                  [_vm._v("Submit Form")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { id: "submit_and_go_copy" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.onSummit($event)
+                      }
+                    }
+                  },
+                  [_vm._v("Submit Form and go copying answers")]
+                )
+              ])
+            ])
           ]
         )
       ])
@@ -43315,20 +43420,6 @@ var staticRenderFns = [
             placeholder: "Content"
           }
         })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "control-group" }, [
-      _c("div", { staticClass: "controls" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-success", attrs: { type: "submit" } },
-          [_vm._v("Submit Form")]
-        )
       ])
     ])
   }
@@ -43596,7 +43687,48 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm._m(1)
+            _c("div", { staticClass: "control-group" }, [
+              _c("div", { staticClass: "controls" }, [
+                _c(
+                  "button",
+                  { staticClass: "btn btn-success", attrs: { type: "submit" } },
+                  [_vm._v("Submit Form")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { id: "submit_and_go_copy" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.onSummit($event)
+                      }
+                    }
+                  },
+                  [_vm._v("Submit Form and go copying answers")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "control-group" }, [
+              _c("div", { staticClass: "controls" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.onSummit($event, true)
+                      }
+                    }
+                  },
+                  [_vm._v("Submit Form and go deleting (or updating) answers")]
+                )
+              ])
+            ])
           ]
         )
       ])
@@ -43610,20 +43742,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "module-head" }, [
       _c("h3", [_vm._v("Forms")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "control-group" }, [
-      _c("div", { staticClass: "controls" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-success", attrs: { type: "submit" } },
-          [_vm._v("Submit Form")]
-        )
-      ])
     ])
   }
 ]
@@ -44118,7 +44236,7 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("Submit Form and go deleting question")]
+                  [_vm._v("Submit Form and go deleting (or updating) question")]
                 )
               ])
             ])
@@ -60661,6 +60779,13 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
                 params: {
                   current_user: current_user
                 }
+              })["catch"](function () {
+                _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                  name: "loading",
+                  params: {
+                    direct_to: "quizzes"
+                  }
+                }); // router.push({ path: router.fullpath })
               });
             });
             createUserAdminElement.addEventListener('click', function (e) {
@@ -60679,6 +60804,13 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
                 params: {
                   current_user: current_user
                 }
+              })["catch"](function () {
+                _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                  name: "loading",
+                  params: {
+                    direct_to: "users"
+                  }
+                }); // router.push({ path: router.fullpath })
               });
             });
             createExamElement.addEventListener('click', function (e) {
@@ -60697,6 +60829,13 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
                 params: {
                   current_user: current_user
                 }
+              })["catch"](function () {
+                _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                  name: "loading",
+                  params: {
+                    direct_to: "exams"
+                  }
+                }); // router.push({ path: router.fullpath })
               });
             });
             createQuestionElement.addEventListener('click', function (e) {
@@ -60740,6 +60879,13 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
                 params: {
                   current_user: current_user
                 }
+              })["catch"](function () {
+                _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                  name: "loading",
+                  params: {
+                    direct_to: "answers"
+                  }
+                }); // router.push({ path: router.fullpath })
               });
             });
           }
@@ -60752,16 +60898,6 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
            * This code and all the code above which use the object "window.current_user" must be located in
            * async 's brackets, because the object "window.current_user" can only get its value after an asynchronous process
            */
-          // router.afterEach((to, from) => {
-          //     console.log(to.name + "\n");
-          //     console.log(from.name + "\n");
-          //     console.log(from.name == to.name);
-          //     if (to.name == from.name) {
-          //         next(false);
-          //     } else {
-          //         next();
-          //     }
-          // });
 
           /** THis Vue instance is for Admin Dashboard Template */
 
@@ -63060,10 +63196,6 @@ var routes = [{
     path: "answers",
     name: "answers",
     component: _components_table_component_TableAnswersComponent_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
-  }, {
-    path: "loading",
-    name: "loading",
-    component: _components_table_component_LoadingComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   }]
 }, {
   path: "/vue/create_quiz",
@@ -63113,6 +63245,10 @@ var routes = [{
   path: "/vue/delete_user/:id",
   name: "delete_user",
   component: _components_form_component_user_admin_DeleteUserComponent_vue__WEBPACK_IMPORTED_MODULE_19__["default"]
+}, {
+  path: "/vue/loading",
+  name: "loading",
+  component: _components_table_component_LoadingComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
 }, {
   path: "/home",
   redirect: {
