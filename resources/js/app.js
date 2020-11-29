@@ -30,10 +30,13 @@ Vue.component('dashboard-component', require('./components/DashboardComponent.vu
 let dashboardElement = document.querySelector('.sidebar #dashboard');
 let createQuizElement = document.querySelector('.sidebar #create_quiz');
 let viewQuizzesElement = document.querySelector('.sidebar #view_quizzes');
+let viewQuizzesAsAdminElement = document.querySelector('.sidebar #view_quizzes_non_admin');
 let createUserAdminElement = document.querySelector('.sidebar #create_or_unset_user_admin');
 let viewUsersElement = document.querySelector('.sidebar #view_users');
+let viewUsersAsAdminElement = document.querySelector('.sidebar #view_users_non_admin');
 let createExamElement = document.querySelector('.sidebar #create_exam');
 let viewExamElement = document.querySelector('.sidebar #view_exams');
+let viewResultsAsAdminElement = document.querySelector('.sidebar #view_results_non_admin');
 let createQuestionElement = document.querySelector('.sidebar #create_question');
 let viewQuestionsElement = document.querySelector('.sidebar #view_questions');
 let createAnswerElement = document.querySelector('.sidebar #create_answer');
@@ -69,6 +72,11 @@ let controller = new Controller();
                 });
         });
 
+        viewQuizzesAsAdminElement.addEventListener('click', function (e) {
+            e.preventDefault();
+            router.push({ name: 'quizzes', params: { current_user: current_user } });
+        });
+
         createUserAdminElement.addEventListener('click', function (e) {
             e.preventDefault();
             router.push({ name: 'create_admin', params: { current_user: current_user } });
@@ -83,6 +91,11 @@ let controller = new Controller();
                 });
         });
 
+        viewUsersAsAdminElement.addEventListener('click', function (e) {
+            e.preventDefault();
+            router.push({ name: 'users', params: { current_user: current_user } });
+        });
+
         createExamElement.addEventListener('click', function (e) {
             e.preventDefault();
             router.push({ name: 'create_exam', params: { current_user: current_user } });
@@ -95,6 +108,11 @@ let controller = new Controller();
                     router.push({ name: "loading", params: { direct_to: "exams" } });
                     // router.push({ path: router.fullpath })
                 });
+        });
+
+        viewResultsAsAdminElement.addEventListener('click', function (e) {
+            e.preventDefault();
+            router.push({ name: 'exams', params: { current_user: current_user } });
         });
 
         createQuestionElement.addEventListener('click', function (e) {
@@ -133,7 +151,8 @@ let controller = new Controller();
      * the page. Then, you may begin adding components to this application
      * or customize the JavaScript scaffolding to fit your unique needs.
      * This code and all the code above which use the object "window.current_user" must be located in
-     * async 's brackets, because the object "window.current_user" can only get its value after an asynchronous process
+     * async 's brackets, because the object "window.current_user"
+     * can only get its value after an asynchronous process
      */
 
     /** THis Vue instance is for Admin Dashboard Template */

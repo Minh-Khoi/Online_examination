@@ -72,20 +72,20 @@
                         <p>{{$current_user->address}}</p>
                         <p><button>Contact: Phone {{$current_user->phone}}</button></p>
                     </div>
-                    <div class="side-bar">
+                    <div class="sidebar ">
                         <ul class="widget widget-menu unstyled">
-                            <li id="view_quizzes">
+                            <li id="view_quizzes_non_admin">
                                 <a><i class="menu-icon icon-inbox"></i>View Quizzes <b
                                         class="label green pull-right"> 11</b> </a>
                             </li>
                         </ul>
                         <ul class="widget widget-menu unstyled">
-                            <li id="view_users">
+                            <li id="view_users_non_admin">
                                 <a href="ui-typography.html"><i class="menu-icon icon-book"></i>View Users </a>
                             </li>
                         </ul>
                         <ul class="widget widget-menu unstyled">
-                            <li id="view_results">
+                            <li id="view_results_non_admin">
                                 <a href="ui-typography.html"><i class="menu-icon icon-book"></i>View Results </a>
                             </li>
                         </ul>

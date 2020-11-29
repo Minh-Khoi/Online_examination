@@ -17,8 +17,6 @@ class OnExamController extends Controller
     {
         $user_id = $request->input('user_id');
         $quiz_id = $request->input('quiz_id');
-        // This variable will be pass to the view
-        $object_returned = null;
 
         $quiz = Quiz::find($quiz_id);
         $user = User::find($user_id);
@@ -31,10 +29,7 @@ class OnExamController extends Controller
         }
         // add the property "question_list" for the Quiz 's instance: $quiz
         $quiz['questions_list'] = $questions_list;
-        // add the property "quiz" and "user" for the $object_returned and pass it to view
-        $object_returned['quiz'] = $quiz;
-        $object_returned['user'] = $user;
 
-        return view("on_exam.on_exam")->with('exam_details', $object_returned);
+        return view("on_exam.on_exam")->with('quiz_object', $quiz)->with('user_object', $user);
     }
 }

@@ -60728,10 +60728,13 @@ Vue.component('dashboard-component', __webpack_require__(/*! ./components/Dashbo
 var dashboardElement = document.querySelector('.sidebar #dashboard');
 var createQuizElement = document.querySelector('.sidebar #create_quiz');
 var viewQuizzesElement = document.querySelector('.sidebar #view_quizzes');
+var viewQuizzesAsAdminElement = document.querySelector('.sidebar #view_quizzes_non_admin');
 var createUserAdminElement = document.querySelector('.sidebar #create_or_unset_user_admin');
 var viewUsersElement = document.querySelector('.sidebar #view_users');
+var viewUsersAsAdminElement = document.querySelector('.sidebar #view_users_non_admin');
 var createExamElement = document.querySelector('.sidebar #create_exam');
 var viewExamElement = document.querySelector('.sidebar #view_exams');
+var viewResultsAsAdminElement = document.querySelector('.sidebar #view_results_non_admin');
 var createQuestionElement = document.querySelector('.sidebar #create_question');
 var viewQuestionsElement = document.querySelector('.sidebar #view_questions');
 var createAnswerElement = document.querySelector('.sidebar #create_answer');
@@ -60788,6 +60791,15 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
                 }); // router.push({ path: router.fullpath })
               });
             });
+            viewQuizzesAsAdminElement.addEventListener('click', function (e) {
+              e.preventDefault();
+              _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                name: 'quizzes',
+                params: {
+                  current_user: current_user
+                }
+              });
+            });
             createUserAdminElement.addEventListener('click', function (e) {
               e.preventDefault();
               _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
@@ -60813,6 +60825,15 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
                 }); // router.push({ path: router.fullpath })
               });
             });
+            viewUsersAsAdminElement.addEventListener('click', function (e) {
+              e.preventDefault();
+              _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                name: 'users',
+                params: {
+                  current_user: current_user
+                }
+              });
+            });
             createExamElement.addEventListener('click', function (e) {
               e.preventDefault();
               _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
@@ -60836,6 +60857,15 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
                     direct_to: "exams"
                   }
                 }); // router.push({ path: router.fullpath })
+              });
+            });
+            viewResultsAsAdminElement.addEventListener('click', function (e) {
+              e.preventDefault();
+              _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                name: 'exams',
+                params: {
+                  current_user: current_user
+                }
               });
             });
             createQuestionElement.addEventListener('click', function (e) {
@@ -60896,7 +60926,8 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
            * the page. Then, you may begin adding components to this application
            * or customize the JavaScript scaffolding to fit your unique needs.
            * This code and all the code above which use the object "window.current_user" must be located in
-           * async 's brackets, because the object "window.current_user" can only get its value after an asynchronous process
+           * async 's brackets, because the object "window.current_user"
+           * can only get its value after an asynchronous process
            */
 
           /** THis Vue instance is for Admin Dashboard Template */
