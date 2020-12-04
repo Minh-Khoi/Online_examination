@@ -53,7 +53,8 @@ export class Controller {
     }
 
     /**
-     * Find the user who are Logging in
+     * Find the user who are Logging in, and concurrently, set value for the window 's variable "current_user".
+     * This function will be called before all the Vue components 's mountation
      */
     async findLoggedInUser() {
         let user = null;
@@ -115,7 +116,7 @@ export class Controller {
     }
 
     /**  Find the Result Object in JSON by its user 's id */
-    async loadResultByUserID(user_id) {
+    async loadResultsByUserID(user_id) {
         let result = null;
         await fetch(window.location.origin + "/action/find_result/user/" + user_id)
             .then(response => ((response.status == 200) ? response.text() : response.status))
@@ -126,7 +127,7 @@ export class Controller {
     }
 
     /**  Find the Result Object in JSON by its quiz id */
-    async loadResultByQuizID(quiz_id) {
+    async loadResultsByQuizID(quiz_id) {
         let result = null;
         await fetch(window.location.origin + "/action/find_result/quiz/" + quiz_id)
             .then(response => ((response.status == 200) ? response.text() : response.status))
@@ -136,7 +137,7 @@ export class Controller {
         return result;
     }
 
-    /** Load the list of Exams instances in JSON */
+    /** Load the list of Exams instances, return value in JSON */
     async loadExamsList() {
         let list = [];
         await fetch(window.location.origin + "/action/all_exams")
@@ -145,6 +146,41 @@ export class Controller {
                 list = JSON.parse(res);
             })
         return list;
+    }
+
+    /** Load the list of Exams instances which have specified "user_id" attribute, return value in JSON */
+    async loadExamsListByUserID(user_id) {
+        let list = [];
+        await fetch(window.location.origin + "/action/all_exams_with_user_id/" + user_id)
+            .then((response) => response.text())
+            .then((res) => {
+                list = JSON.parse(res);
+            })
+        return list;
+    }
+
+    /** Load the list of Exams instances which have specified "quiz_id" attribute, return value in JSON */
+    async loadExamsListByQuizID(quiz_id) {
+        let list = [];
+        await fetch(window.location.origin + "/action/all_exams_with_quiz_id/" + quiz_id)
+            .then((response) => response.text())
+            .then((res) => {
+                list = JSON.parse(res);
+            })
+        return list;
+    }
+
+    /**
+     * Load the list of pending Exams (QuizUser instances) which have specified "user_id" attribute,
+     * pending Exams is the exam (QuizUser instances) which have not been done (is_done == false)
+     * return value in JSON
+    */
+    async loadPendingExamsListByUserID(user_id) {
+        let exams_list_total = await this.loadExamsListByUserID(user_id);
+        let exam_list_not_done = exams_list_total.filter((exam) => {
+            return exam.is_done == false;
+        })
+        return exam_list_not_done;
     }
 
     /** Load the list of Answer instances in JSON */
@@ -172,9 +208,9 @@ export class Controller {
 
     /**
      * send Fetch API request to create new QUiz instance, the requests sent have method POST, PUT, DELETE
-     * @param string path link path
-     * @param FormData form_datas a FormData object is submit (if the method is POST or PUT or DELETE)
-     * @param string method is ( POST, PUT, DELETE); default is POST
+     * @param string "path" link path
+     * @param FormData "form_datas" a FormData object is submit (if the method is POST or PUT or DELETE)
+     * @param string "method" is ( POST, PUT, DELETE); default is POST
      */
     async sendAPI(path, form_datas, method = "POST") {
         let result = null;

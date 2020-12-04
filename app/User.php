@@ -41,6 +41,29 @@ class User extends Authenticatable
     ];
 
     /**
+     * We use this protected $appends variable to assign one more attribute to User instance
+     */
+    protected $appends = ['average_point'];
+
+    /**
+     * ACCESSOR
+     * --------
+     * Use Laravel Eloquent ' Accessor to set value for attribute "average_point"
+     */
+    public function getAveragePointAttribute()
+    {
+        $point = 0;
+        $quizzes_user_list = QuizUser::where('user_id', $this->id)->get();
+        if ($quizzes_user_list->count() == 0) {
+            return 0;
+        }
+        foreach ($quizzes_user_list as $k => $quizzes_user) {
+            $point += $quizzes_user->point;
+        }
+        return round($point / $quizzes_user_list->count(), 2);
+    }
+
+    /**
      * this function set the attributes $visible_password and $password (enscrypted form of $visible_password)
      * concurrently. I DO NOT use Mutator because Mutator can set ONLY ONE attribute
      *  which is called by function name. See link below

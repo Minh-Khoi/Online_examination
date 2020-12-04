@@ -31,6 +31,7 @@
             <th>EXAM ID</th>
             <th>QUIZ --- (ID)</th>
             <th>USER --- (ID)</th>
+            <th>IS DONE</th>
           </tr>
         </thead>
         <tbody>
@@ -44,6 +45,7 @@
               {{exam.user_name}} ---
               <b>(ID: {{exam.user_id}} )</b>
             </td>
+            <td>{{exam.is_done}}</td>
             <td>
               <button @click="goto_edit_form(exam)" class="btn btn-warning">EDIT</button>
               <button @click="goto_delete_form(exam)" class="btn btn-danger">DELETE</button>
@@ -64,8 +66,12 @@ export default {
   data() {
     return {
       exams_list: [],
+      /** if we need to load exams list using a specified quiz we need */
       quiz_in_reference: this.$route.params.quiz_in_reference,
-      user_in_reference: this.$route.params.user_in_reference
+      /** if we need to load exams list of a specified user we need */
+      user_in_reference: this.$route.params.user_in_reference,
+      /** this variable will define the table to load done exam or pending exam  */
+      exams_is_done: this.$route.params.exams_is_done
     };
   },
 
@@ -112,17 +118,23 @@ export default {
   async mounted() {
     let controller = new Controller();
     let exams_list = null;
-
-    if (!this.quiz_in_reference) {
-      exams_list = await controller.loadQuizzesListByQuizID(
-        this.quiz_in_reference.id
-      );
-    } else if (!this.user_in_reference) {
-      exams_list = await controller.loadQuizzesListByUserID(
-        this.user_in_reference.id
-      );
+    // load the exams list
+    if (window.current_user.is_admin == 1) {
+      if (!this.quiz_in_reference) {
+        exams_list = await controller.loadExamsListByQuizID(
+          this.quiz_in_reference.id
+        );
+      } else if (!this.user_in_reference) {
+        exams_list = await controller.loadExamsListByUserID(
+          this.user_in_reference.id
+        );
+      } else {
+        exams_list = await controller.loadExamsList();
+      }
     } else {
-      exams_list = await controller.loadQuizzesList();
+      exams_list = await controller.loadPendingExamsListByUserID(
+        window.current_user.id
+      );
     }
 
     for (let exam of exams_list) {
@@ -131,6 +143,14 @@ export default {
       exam["user_name"] = user.name;
       exam["quiz_name"] = quiz.name;
     }
+
+    // now filter exams list depend on variable "exam_is_done"
+    let only_done_exam_loaded = this.exams_is_done;
+    exams_list = exams_list.filter(exam => {
+      return only_done_exam_loaded ? exam.is_done : !exams.is_done;
+    });
+
+    // now assign value for "this.exam_list"
     this.exams_list = exams_list;
   }
 };

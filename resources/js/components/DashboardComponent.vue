@@ -17,12 +17,12 @@
         </span>
         <span
           v-if="!current_user.is_admin"
-          @click="showQuizzesTable()"
+          @click="showExamsTable()"
           class="btn-box bg-success big span2"
           style="margin-left: 3.2vw; background-color: #FF7F50"
         >
           <i class="icon-money"></i>
-          <b>DO An Exam</b>
+          <b>DO An Exam (you have)</b>
         </span>
         <span
           @click="showQuestionsTable()"
@@ -34,7 +34,7 @@
           <b>See Question</b>
         </span>
 
-        <span class="btn-box big span2" style="margin-left: 3.2vw">
+        <span class="btn-box big span2" style="margin-left: 3.2vw" @click="showExamsTable(true)">
           <i class="icon-money"></i>
           <b v-if="current_user.is_admin">See all Results</b>
           <b v-if="!current_user.is_admin">See your Results</b>
@@ -67,12 +67,19 @@ export default {
 
     /** show the TableQuizzesComponent by calling routes */
     showQuizzesTable() {
-      router.push({ name: "quizzes" });
+      router.push({ name: "exams" });
     },
 
     /** show the TableExamsComponent by calling routes */
-    showExamsTable() {
-      router.push({ name: "exams" });
+    showExamsTable(exams_is_done = false) {
+      let params = null;
+      if (!this.current_user.is_admin) {
+        params = {
+          user_in_reference: this.current_user,
+          exams_is_done: exams_is_done
+        };
+      }
+      router.push({ name: "exams", params: params });
     },
 
     /** show the TableQuestionsComponent by calling routes */

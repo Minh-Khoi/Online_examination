@@ -11,7 +11,10 @@ import { router } from "../../routes/routes";
 export default {
   mounted() {
     console.log(this.$route.params.direct_to);
-    router.push({ name: this.$route.params.direct_to });
+    router.push({
+      name: this.$route.params.direct_to,
+      other_params: this.$route.params.other_params
+    });
   }
 };
 </script>

@@ -52,8 +52,3 @@ export const router = new VueRouter({
     mode: 'history',
     routes: routes
 })
-//     .beforeEach((to, from, next) => {
-//     if (to.name == from.name) {
-//         next(false);
-//     }
-// });

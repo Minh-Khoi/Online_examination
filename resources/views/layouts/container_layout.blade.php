@@ -55,7 +55,9 @@
 
                         <ul class="widget widget-menu unstyled">
                             <li id="create_answer">
-                                <a href="ui-button-icon.html"><i class="menu-icon icon-bold"></i> Create Answer </a>
+                                <a href="ui-button-icon.html">
+                                    <i class="menu-icon icon-bold"></i> Create Answer
+                                </a>
                             </li>
                             <li id="view_answer">
                                 <a href="ui-typography.html"><i class="menu-icon icon-book"></i>View Answer </a>
@@ -66,7 +68,9 @@
                     <!--/.sidebar-->
                 @else
                     <div class="profile-card">
-                        <h1 style="font-size: 5em; color: green; padding-top: 0.5em">216</h1>
+                        <h1 style="font-size: 5em; color: green; padding-top: 0.5em">
+                            {{$current_user->average_point}}
+                        </h1>
                         <h1> {{$current_user->name}} </h1>
                         <p class="profile-title"> {{$current_user->occupation}} </p>
                         <p>{{$current_user->address}}</p>
@@ -85,8 +89,8 @@
                             </li>
                         </ul>
                         <ul class="widget widget-menu unstyled">
-                            <li id="view_results_non_admin">
-                                <a href="ui-typography.html"><i class="menu-icon icon-book"></i>View Results </a>
+                            <li id="view_exams_non_admin">
+                                <a href="ui-typography.html"><i class="menu-icon icon-book"></i>View Exam </a>
                             </li>
                         </ul>
                     </div>
