@@ -17,7 +17,7 @@ class QuizUser extends Model
      */
     public function getPointAttribute()
     {
-        $results_list = Result::where('quiz_user_id', $this->id)->get()->all();
+        $results_list = Result::where('quiz_user_id', $this->id)->get();
         if ($results_list->count() == 0) {
             return 0;
         }

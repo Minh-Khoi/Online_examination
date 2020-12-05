@@ -1985,14 +1985,20 @@ __webpack_require__.r(__webpack_exports__);
     /** show the TableUsersComponent by calling routes */
     showUserTable: function showUserTable() {
       _routes_routes_js__WEBPACK_IMPORTED_MODULE_0__["router"].push({
-        name: "users"
+        name: "loading",
+        params: {
+          direct_to: "exams"
+        }
       });
     },
 
     /** show the TableQuizzesComponent by calling routes */
     showQuizzesTable: function showQuizzesTable() {
       _routes_routes_js__WEBPACK_IMPORTED_MODULE_0__["router"].push({
-        name: "exams"
+        name: "loading",
+        params: {
+          direct_to: "quizzes"
+        }
       });
     },
 
@@ -2009,15 +2015,21 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       _routes_routes_js__WEBPACK_IMPORTED_MODULE_0__["router"].push({
-        name: "exams",
-        params: params
+        name: "loading",
+        params: {
+          direct_to: "exams",
+          other_params: params
+        }
       });
     },
 
     /** show the TableQuestionsComponent by calling routes */
     showQuestionsTable: function showQuestionsTable() {
       _routes_routes_js__WEBPACK_IMPORTED_MODULE_0__["router"].push({
-        name: "questions"
+        name: "loading",
+        params: {
+          direct_to: "questions"
+        }
       });
     }
   },
@@ -4181,7 +4193,7 @@ __webpack_require__.r(__webpack_exports__);
     console.log(this.$route.params.direct_to);
     _routes_routes__WEBPACK_IMPORTED_MODULE_0__["router"].push({
       name: this.$route.params.direct_to,
-      other_params: this.$route.params.other_params
+      params: this.$route.params.other_params
     });
   }
 });
@@ -4565,127 +4577,129 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _this = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var controller, exams_list, _iterator, _step, exam, quiz, user, only_done_exam_loaded;
+      var controller, exams_list, only_done_exam_loaded, _iterator, _step, exam, quiz, user;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               controller = new _controllers_controllers_js__WEBPACK_IMPORTED_MODULE_1__["Controller"]();
-              exams_list = null; // load the exams list
+              exams_list = null;
+              console.log(_this.exams_is_done); // load the exams list
 
               if (!(window.current_user.is_admin == 1)) {
-                _context.next = 20;
+                _context.next = 23;
                 break;
               }
 
               if (_this.quiz_in_reference) {
-                _context.next = 9;
+                _context.next = 10;
                 break;
               }
 
-              _context.next = 6;
+              _context.next = 7;
               return controller.loadExamsListByQuizID(_this.quiz_in_reference.id);
 
-            case 6:
+            case 7:
               exams_list = _context.sent;
-              _context.next = 18;
+              _context.next = 19;
               break;
 
-            case 9:
+            case 10:
               if (_this.user_in_reference) {
-                _context.next = 15;
+                _context.next = 16;
                 break;
               }
 
-              _context.next = 12;
+              _context.next = 13;
               return controller.loadExamsListByUserID(_this.user_in_reference.id);
 
-            case 12:
+            case 13:
               exams_list = _context.sent;
-              _context.next = 18;
+              _context.next = 19;
               break;
 
-            case 15:
-              _context.next = 17;
+            case 16:
+              _context.next = 18;
               return controller.loadExamsList();
 
-            case 17:
+            case 18:
               exams_list = _context.sent;
 
-            case 18:
-              _context.next = 23;
+            case 19:
+              // now filter exams_list depends on variable "this.exam_is_done"
+              only_done_exam_loaded = _this.exams_is_done;
+              exams_list = exams_list.filter(function (exam) {
+                return only_done_exam_loaded ? exam.is_done : !exams.is_done;
+              });
+              _context.next = 26;
               break;
 
-            case 20:
-              _context.next = 22;
+            case 23:
+              _context.next = 25;
               return controller.loadPendingExamsListByUserID(window.current_user.id);
 
-            case 22:
+            case 25:
               exams_list = _context.sent;
 
-            case 23:
+            case 26:
+              // add "user_name" and "quiz_name" fields
               _iterator = _createForOfIteratorHelper(exams_list);
-              _context.prev = 24;
+              _context.prev = 27;
 
               _iterator.s();
 
-            case 26:
+            case 29:
               if ((_step = _iterator.n()).done) {
-                _context.next = 38;
+                _context.next = 41;
                 break;
               }
 
               exam = _step.value;
-              _context.next = 30;
+              _context.next = 33;
               return controller.readQuizByID(exam.quiz_id);
 
-            case 30:
+            case 33:
               quiz = _context.sent;
-              _context.next = 33;
+              _context.next = 36;
               return controller.readUserByID(exam.user_id);
 
-            case 33:
+            case 36:
               user = _context.sent;
               exam["user_name"] = user.name;
               exam["quiz_name"] = quiz.name;
 
-            case 36:
-              _context.next = 26;
+            case 39:
+              _context.next = 29;
               break;
 
-            case 38:
-              _context.next = 43;
+            case 41:
+              _context.next = 46;
               break;
-
-            case 40:
-              _context.prev = 40;
-              _context.t0 = _context["catch"](24);
-
-              _iterator.e(_context.t0);
 
             case 43:
               _context.prev = 43;
+              _context.t0 = _context["catch"](27);
+
+              _iterator.e(_context.t0);
+
+            case 46:
+              _context.prev = 46;
 
               _iterator.f();
 
-              return _context.finish(43);
-
-            case 46:
-              // now filter exams list depend on variable "exam_is_done"
-              only_done_exam_loaded = _this.exams_is_done;
-              exams_list = exams_list.filter(function (exam) {
-                return only_done_exam_loaded ? exam.is_done : !exams.is_done;
-              }); // now assign value for "this.exam_list"
-
-              _this.exams_list = exams_list;
+              return _context.finish(46);
 
             case 49:
+              // now assign value for "this.exam_list"
+              _this.exams_list = exams_list;
+
+            case 50:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[24, 40, 43, 46]]);
+      }, _callee, null, [[27, 43, 46, 49]]);
     }))();
   }
 });
@@ -5217,6 +5231,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   //
   data: function data() {
     return {
+      current_user: window.current_user,
       users_list: []
     };
   },
@@ -45419,7 +45434,25 @@ var render = function() {
             }
           },
           [
-            _vm._m(1),
+            _c("thead", [
+              _c("tr", [
+                _c("th", [_vm._v("Name")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Email")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Occupation")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Address")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Phone")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Role")]),
+                _vm._v(" "),
+                _vm.current_user.is_admin
+                  ? _c("th", [_vm._v("Delete")])
+                  : _vm._e()
+              ])
+            ]),
             _vm._v(" "),
             _c(
               "tbody",
@@ -45437,20 +45470,22 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(user.is_admin == 1 ? "Admin" : ""))]),
                   _vm._v(" "),
-                  _c("td", [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        on: {
-                          click: function($event) {
-                            return _vm.goto_delete_form(user)
-                          }
-                        }
-                      },
-                      [_vm._v("DELETE")]
-                    )
-                  ])
+                  _vm.current_user.is_admin
+                    ? _c("td", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger",
+                            on: {
+                              click: function($event) {
+                                return _vm.goto_delete_form(user)
+                              }
+                            }
+                          },
+                          [_vm._v("DELETE")]
+                        )
+                      ])
+                    : _vm._e()
                 ])
               }),
               0
@@ -45468,28 +45503,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "module-head" }, [
       _c("h3", [_vm._v("Users 's Table")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Email")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Occupation")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Address")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Phone")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Role")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Delete")])
-      ])
     ])
   }
 ]
@@ -60771,7 +60784,8 @@ Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
  *
  * Eg. ./components/DashboardComponent.vue -> <dashboard-component></dashboard-component>
  */
-// const files = require.context('./', true, /\.vue$/i)
+
+console.log("fuck you"); // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('dashboard-component', __webpack_require__(/*! ./components/DashboardComponent.vue */ "./resources/js/components/DashboardComponent.vue")["default"]); // Add event listener for the DOM element on the Sidebar
@@ -60780,13 +60794,13 @@ Vue.component('dashboard-component', __webpack_require__(/*! ./components/Dashbo
 var dashboardElement = document.querySelector('.sidebar #dashboard');
 var createQuizElement = document.querySelector('.sidebar #create_quiz');
 var viewQuizzesElement = document.querySelector('.sidebar #view_quizzes');
-var viewQuizzesAsAdminElement = document.querySelector('.sidebar #view_quizzes_non_admin');
+var viewQuizzesAsNonAdminElement = document.querySelector('.sidebar #view_quizzes_non_admin');
 var createUserAdminElement = document.querySelector('.sidebar #create_or_unset_user_admin');
 var viewUsersElement = document.querySelector('.sidebar #view_users');
 var viewUsersAsNonAdminElement = document.querySelector('.sidebar #view_users_non_admin');
 var createExamElement = document.querySelector('.sidebar #create_exam');
 var viewExamElement = document.querySelector('.sidebar #view_exams');
-var viewExamsAsNonAdminElement = document.querySelector('.sidebar #view_exams_non_admin');
+var viewExamsAsNonAdminElement = document.querySelector(".sidebar #view_exams_non_admin");
 var createQuestionElement = document.querySelector('.sidebar #create_question');
 var viewQuestionsElement = document.querySelector('.sidebar #view_questions');
 var createAnswerElement = document.querySelector('.sidebar #create_answer');
@@ -60843,22 +60857,6 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
                 }); // router.push({ path: router.fullpath })
               });
             });
-            viewQuizzesAsAdminElement.addEventListener('click', function (e) {
-              e.preventDefault();
-              _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
-                name: 'quizzes',
-                params: {
-                  current_user: current_user
-                }
-              })["catch"](function () {
-                _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
-                  name: "loading",
-                  params: {
-                    direct_to: "exams"
-                  }
-                }); // router.push({ path: router.fullpath })
-              });
-            });
             createUserAdminElement.addEventListener('click', function (e) {
               e.preventDefault();
               _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
@@ -60880,22 +60878,6 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
                   name: "loading",
                   params: {
                     direct_to: "users"
-                  }
-                }); // router.push({ path: router.fullpath })
-              });
-            });
-            viewUsersAsNonAdminElement.addEventListener('click', function (e) {
-              e.preventDefault();
-              _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
-                name: 'users',
-                params: {
-                  current_user: current_user
-                }
-              })["catch"](function () {
-                _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
-                  name: "loading",
-                  params: {
-                    direct_to: "exams"
                   }
                 }); // router.push({ path: router.fullpath })
               });
@@ -60923,22 +60905,6 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
                     direct_to: "exams"
                   }
                 }); // router.push({ path: router.fullpath })
-              });
-            });
-            viewExamsAsNonAdminElement.addEventListener('click', function (e) {
-              e.preventDefault();
-              _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
-                name: 'exams',
-                params: {
-                  current_user: current_user
-                }
-              })["catch"](function () {
-                _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
-                  name: "loading",
-                  params: {
-                    direct_to: "exams"
-                  }
-                });
               });
             });
             createQuestionElement.addEventListener('click', function (e) {
@@ -60987,6 +60953,55 @@ _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MOD
                   name: "loading",
                   params: {
                     direct_to: "answers"
+                  }
+                }); // router.push({ path: router.fullpath })
+              });
+            });
+          } else {
+            viewExamsAsNonAdminElement.addEventListener('click', function (e) {
+              e.preventDefault();
+              _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                name: 'exams',
+                params: {
+                  current_user: current_user
+                }
+              })["catch"](function () {
+                _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                  name: "loading",
+                  params: {
+                    direct_to: "exams"
+                  }
+                });
+              });
+            });
+            viewUsersAsNonAdminElement.addEventListener('click', function (e) {
+              e.preventDefault();
+              _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                name: 'users',
+                params: {
+                  current_user: current_user
+                }
+              })["catch"](function () {
+                _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                  name: "loading",
+                  params: {
+                    direct_to: "users"
+                  }
+                }); // router.push({ path: router.fullpath })
+              });
+            });
+            viewQuizzesAsNonAdminElement.addEventListener('click', function (e) {
+              e.preventDefault();
+              _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                name: 'quizzes',
+                params: {
+                  current_user: current_user
+                }
+              })["catch"](function () {
+                _routes_routes_js__WEBPACK_IMPORTED_MODULE_2__["router"].push({
+                  name: "loading",
+                  params: {
+                    direct_to: "quizzes"
                   }
                 }); // router.push({ path: router.fullpath })
               });

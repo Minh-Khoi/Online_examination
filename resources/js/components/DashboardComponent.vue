@@ -62,12 +62,12 @@ export default {
   methods: {
     /** show the TableUsersComponent by calling routes */
     showUserTable() {
-      router.push({ name: "users" });
+      router.push({ name: "loading", params: { direct_to: "exams" } });
     },
 
     /** show the TableQuizzesComponent by calling routes */
     showQuizzesTable() {
-      router.push({ name: "exams" });
+      router.push({ name: "loading", params: { direct_to: "quizzes" } });
     },
 
     /** show the TableExamsComponent by calling routes */
@@ -79,12 +79,15 @@ export default {
           exams_is_done: exams_is_done
         };
       }
-      router.push({ name: "exams", params: params });
+      router.push({
+        name: "loading",
+        params: { direct_to: "exams", other_params: params }
+      });
     },
 
     /** show the TableQuestionsComponent by calling routes */
     showQuestionsTable() {
-      router.push({ name: "questions" });
+      router.push({ name: "loading", params: { direct_to: "questions" } });
     }
   },
 

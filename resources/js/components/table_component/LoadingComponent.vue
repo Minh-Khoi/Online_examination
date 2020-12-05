@@ -13,7 +13,7 @@ export default {
     console.log(this.$route.params.direct_to);
     router.push({
       name: this.$route.params.direct_to,
-      other_params: this.$route.params.other_params
+      params: this.$route.params.other_params
     });
   }
 };

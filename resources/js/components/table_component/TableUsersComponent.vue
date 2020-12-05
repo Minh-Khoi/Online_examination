@@ -34,7 +34,7 @@
             <th>Address</th>
             <th>Phone</th>
             <th>Role</th>
-            <th>Delete</th>
+            <th v-if="current_user.is_admin">Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -45,7 +45,7 @@
             <td>{{user.address}}</td>
             <td>{{user.phone}}</td>
             <td>{{(user.is_admin==1) ? "Admin" : ""}}</td>
-            <td>
+            <td v-if="current_user.is_admin">
               <button @click="goto_delete_form(user)" class="btn btn-danger">DELETE</button>
             </td>
           </tr>
@@ -63,6 +63,7 @@ export default {
   //
   data() {
     return {
+      current_user: window.current_user,
       users_list: []
     };
   },

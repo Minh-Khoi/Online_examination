@@ -90,7 +90,9 @@
                         </ul>
                         <ul class="widget widget-menu unstyled">
                             <li id="view_exams_non_admin">
-                                <a href="ui-typography.html"><i class="menu-icon icon-book"></i>View Exam </a>
+                                <a href="ui-typography.html">
+                                    <i class="menu-icon icon-book"></i>View Exam
+                                </a>
                             </li>
                         </ul>
                     </div>

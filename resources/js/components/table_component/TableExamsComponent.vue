@@ -118,6 +118,7 @@ export default {
   async mounted() {
     let controller = new Controller();
     let exams_list = null;
+    console.log(this.exams_is_done);
     // load the exams list
     if (window.current_user.is_admin == 1) {
       if (!this.quiz_in_reference) {
@@ -131,24 +132,24 @@ export default {
       } else {
         exams_list = await controller.loadExamsList();
       }
+      // now filter exams_list depends on variable "this.exam_is_done"
+      let only_done_exam_loaded = this.exams_is_done;
+      exams_list = exams_list.filter(exam => {
+        return only_done_exam_loaded ? exam.is_done : !exams.is_done;
+      });
     } else {
       exams_list = await controller.loadPendingExamsListByUserID(
         window.current_user.id
       );
     }
 
+    // add "user_name" and "quiz_name" fields
     for (let exam of exams_list) {
       let quiz = await controller.readQuizByID(exam.quiz_id);
       let user = await controller.readUserByID(exam.user_id);
       exam["user_name"] = user.name;
       exam["quiz_name"] = quiz.name;
     }
-
-    // now filter exams list depend on variable "exam_is_done"
-    let only_done_exam_loaded = this.exams_is_done;
-    exams_list = exams_list.filter(exam => {
-      return only_done_exam_loaded ? exam.is_done : !exams.is_done;
-    });
 
     // now assign value for "this.exam_list"
     this.exams_list = exams_list;

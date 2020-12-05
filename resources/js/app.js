@@ -19,7 +19,7 @@ Vue.use(VueRouter);
  *
  * Eg. ./components/DashboardComponent.vue -> <dashboard-component></dashboard-component>
  */
-
+console.log("fuck you");
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
@@ -30,13 +30,13 @@ Vue.component('dashboard-component', require('./components/DashboardComponent.vu
 let dashboardElement = document.querySelector('.sidebar #dashboard');
 let createQuizElement = document.querySelector('.sidebar #create_quiz');
 let viewQuizzesElement = document.querySelector('.sidebar #view_quizzes');
-let viewQuizzesAsAdminElement = document.querySelector('.sidebar #view_quizzes_non_admin');
+let viewQuizzesAsNonAdminElement = document.querySelector('.sidebar #view_quizzes_non_admin');
 let createUserAdminElement = document.querySelector('.sidebar #create_or_unset_user_admin');
 let viewUsersElement = document.querySelector('.sidebar #view_users');
 let viewUsersAsNonAdminElement = document.querySelector('.sidebar #view_users_non_admin');
 let createExamElement = document.querySelector('.sidebar #create_exam');
 let viewExamElement = document.querySelector('.sidebar #view_exams');
-let viewExamsAsNonAdminElement = document.querySelector('.sidebar #view_exams_non_admin');
+let viewExamsAsNonAdminElement = document.querySelector(".sidebar #view_exams_non_admin");
 let createQuestionElement = document.querySelector('.sidebar #create_question');
 let viewQuestionsElement = document.querySelector('.sidebar #view_questions');
 let createAnswerElement = document.querySelector('.sidebar #create_answer');
@@ -52,7 +52,6 @@ let controller = new Controller();
     // Then, append Event Handler for those HTMLElement objects
     // (createUserElement will invoke the ajax for register)
     if (current_user_is_admin) {
-
         dashboardElement.addEventListener('click', function (e) {
             e.preventDefault();
             router.push({ name: 'dashboard', params: { current_user: current_user } });
@@ -72,15 +71,6 @@ let controller = new Controller();
                 });
         });
 
-        viewQuizzesAsAdminElement.addEventListener('click', function (e) {
-            e.preventDefault();
-            router.push({ name: 'quizzes', params: { current_user: current_user } })
-                .catch(() => {
-                    router.push({ name: "loading", params: { direct_to: "exams" } });
-                    // router.push({ path: router.fullpath })
-                });
-        });
-
         createUserAdminElement.addEventListener('click', function (e) {
             e.preventDefault();
             router.push({ name: 'create_admin', params: { current_user: current_user } });
@@ -91,15 +81,6 @@ let controller = new Controller();
             router.push({ name: 'users', params: { current_user: current_user } })
                 .catch(() => {
                     router.push({ name: "loading", params: { direct_to: "users" } });
-                    // router.push({ path: router.fullpath })
-                });
-        });
-
-        viewUsersAsNonAdminElement.addEventListener('click', function (e) {
-            e.preventDefault();
-            router.push({ name: 'users', params: { current_user: current_user } })
-                .catch(() => {
-                    router.push({ name: "loading", params: { direct_to: "exams" } });
                     // router.push({ path: router.fullpath })
                 });
         });
@@ -115,14 +96,6 @@ let controller = new Controller();
                 .catch(() => {
                     router.push({ name: "loading", params: { direct_to: "exams" } });
                     // router.push({ path: router.fullpath })
-                });
-        });
-
-        viewExamsAsNonAdminElement.addEventListener('click', function (e) {
-            e.preventDefault();
-            router.push({ name: 'exams', params: { current_user: current_user } })
-                .catch(() => {
-                    router.push({ name: "loading", params: { direct_to: "exams" } });
                 });
         });
 
@@ -153,8 +126,32 @@ let controller = new Controller();
                     // router.push({ path: router.fullpath })
                 });
         });
+    } else {
+        viewExamsAsNonAdminElement.addEventListener('click', function (e) {
+            e.preventDefault();
+            router.push({ name: 'exams', params: { current_user: current_user } })
+                .catch(() => {
+                    router.push({ name: "loading", params: { direct_to: "exams" } });
+                });
+        });
 
+        viewUsersAsNonAdminElement.addEventListener('click', function (e) {
+            e.preventDefault();
+            router.push({ name: 'users', params: { current_user: current_user } })
+                .catch(() => {
+                    router.push({ name: "loading", params: { direct_to: "users" } });
+                    // router.push({ path: router.fullpath })
+                });
+        });
 
+        viewQuizzesAsNonAdminElement.addEventListener('click', function (e) {
+            e.preventDefault();
+            router.push({ name: 'quizzes', params: { current_user: current_user } })
+                .catch(() => {
+                    router.push({ name: "loading", params: { direct_to: "quizzes" } });
+                    // router.push({ path: router.fullpath })
+                });
+        });
     };
 
     /**

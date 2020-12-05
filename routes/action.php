@@ -68,6 +68,9 @@ Route::post('create_user_admin', function (Request $request) {
  * then find the corresponding User instances and change the attribute "is_admin" to '0'
  */
 Route::post('unset_user_admin', function (Request $request) {
+    if (!(Auth::user()->is_admin)) {
+        return "You have no permission to delete or update data";
+    }
     $array_of_user_id = $request->input('user_id');
     foreach ($array_of_user_id as $k => $id) {
         $user = User::find($id);
@@ -82,10 +85,14 @@ Route::post('unset_user_admin', function (Request $request) {
  * then find the corresponding User instances and DELETE it
  */
 Route::post('delete_user', function (Request $request) {
-    $id = $request->input('user_id');
-    $user = User::find($id);
-    $user->delete();
-    return "Update User successfully";
+    if (Auth::user()->is_admin) {
+        $id = $request->input('user_id');
+        $user = User::find($id);
+        $user->delete();
+        return "Update User successfully";
+    } else {
+        return "You have no permission to delete or update data";
+    }
 });
 
 /**
@@ -126,6 +133,9 @@ Route::post('create_quiz', function (Request $request) {
  * The method of this Route is POST
  */
 Route::post('edit_quiz', function (Request $request) {
+    if (!(Auth::user()->is_admin)) {
+        return "You have no permission to delete or update data";
+    }
     $quiz = Quiz::find($request->input('id'));
     $quiz->name = $request->input('name');
     $quiz->description = $request->input('description');
@@ -139,6 +149,9 @@ Route::post('edit_quiz', function (Request $request) {
  * The method of this Route is POST
  */
 Route::post('delete_quiz', function (Request $request) {
+    if (!(Auth::user()->is_admin)) {
+        return "You have no permission to delete or update data";
+    }
     $quiz = Quiz::find($request->input('id'));
     $quiz->delete();
     return "Delete 01 Quiz successfully";
@@ -200,6 +213,9 @@ Route::post('create_quiz_user', function (Request $request) {
  * This Route will receive FormData object from Controller and Update detail of id-specified QuizUser instance
  */
 Route::post('edit_quiz_user', function (Request $request) {
+    if (!(Auth::user()->is_admin)) {
+        return "You have no permission to delete or update data";
+    }
     $quiz_user = QuizUser::find($request->input('id'));
     $quiz_user->quiz_id = $request->input('quiz_id');
     $quiz_user->user_id = $request->input('user_id');
@@ -212,6 +228,9 @@ Route::post('edit_quiz_user', function (Request $request) {
  * The method of this Route is POST
  */
 Route::post('delete_quiz_user', function (Request $request) {
+    if (!(Auth::user()->is_admin)) {
+        return "You have no permission to delete or update data";
+    }
     $quiz_user = QuizUser::find($request->input('id'));
     $quiz_user->delete();
     return "Delete 01 Exam successfully";
@@ -292,6 +311,9 @@ Route::get('find_question/{id}', function ($id) {
  *  Question instance. The method of this Route is POST
  */
 Route::post('edit_question', function (Request $request) {
+    if (!(Auth::user()->is_admin)) {
+        return "You have no permission to delete or update data";
+    }
     $question = Question::find($request->input('id'));
     $question->quiz_id = $request->input('quiz_id');
     $question->question_content = $request->input('question_content');
@@ -304,6 +326,9 @@ Route::post('edit_question', function (Request $request) {
  * The method of this Route is POST
  */
 Route::post('delete_question', function (Request $request) {
+    if (!(Auth::user()->is_admin)) {
+        return "You have no permission to delete or update data";
+    }
     $question = Question::find($request->input('id'));
     $question->delete();
     return "Delete 01 Quiz successfully";
@@ -361,6 +386,9 @@ Route::post('create_answer', function (Request $request) {
  * Answer instance. The method of this Route is POST
  */
 Route::post('edit_answer', function (Request $request) {
+    if (!(Auth::user()->is_admin)) {
+        return "You have no permission to delete or update data";
+    }
     $answer = Answer::find($request->input('id'));
     $answer->question_id = $request->input('question_id');
     $answer->answern_content = $request->input('answer_content');
@@ -373,6 +401,9 @@ Route::post('edit_answer', function (Request $request) {
  * The method of this Route is POST
  */
 Route::post('delete_answer', function (Request $request) {
+    if (!(Auth::user()->is_admin)) {
+        return "You have no permission to delete or update data";
+    }
     $answer = Answer::find($request->input('id'));
     $answer->delete();
     return "Delete 01 Answer successfully";
@@ -418,15 +449,18 @@ Route::post('create_result', function (Request $request) {
  * This Route will receive FormData object from Controller and edit a id-specified Result instance
  * The method of this Route is POST
  */
-Route::post('edit_result', function (Request $request) {
-    $result = Result::find($request->input('id'));
-    $result->user_id = $request->input('user_id');
-    $result->quiz_id = $request->input('quiz_id');
-    $result->question_id = $request->input('question_id');
-    $result->answern_id = $request->input('answer_id');
-    $result->save();
-    return "edit 01 result successfully";
-});
+// Route::post('edit_result', function (Request $request) {
+//     if (!(Auth::user()->is_admin)) {
+//         return "You have no permission to delete or update data";
+//     }
+//     $result = Result::find($request->input('id'));
+//     $result->user_id = $request->input('user_id');
+//     $result->quiz_id = $request->input('quiz_id');
+//     $result->question_id = $request->input('question_id');
+//     $result->answern_id = $request->input('answer_id');
+//     $result->save();
+//     return "edit 01 result successfully";
+// });
 
 /**
  * Find Result instance by result 's  id (pass through API)
