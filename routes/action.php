@@ -54,6 +54,9 @@ Route::get('current_user', function () {
  * then find the corresponding User instances and change the attribute "is_admin" to '1'
  */
 Route::post('create_user_admin', function (Request $request) {
+    if (!(Auth::user()->is_admin)) {
+        return "You have no permission to delete or update data";
+    }
     $array_of_user_id = $request->input('user_id');
     foreach ($array_of_user_id as $k => $id) {
         $user = User::find($id);
@@ -119,6 +122,9 @@ Route::get('find_quiz/{id}', function ($id) {
  * The method of this Route is POST
  */
 Route::post('create_quiz', function (Request $request) {
+    if (!(Auth::user()->is_admin)) {
+        return "You have no permission to delete or update data";
+    }
     $quiz = new Quiz();
     $quiz->id = 0;
     $quiz->name = $request->input('name');
@@ -202,6 +208,9 @@ Route::get('find_exam/{id}', function ($id) {
  * This Route will receive FormData object from Controller and Create new QuizUser instance
  */
 Route::post('create_quiz_user', function (Request $request) {
+    if (!(Auth::user()->is_admin)) {
+        return "You have no permission to delete or update data";
+    }
     $quiz_user = new QuizUser();
     $quiz_user->quiz_id = $request->input('quiz_id');
     $quiz_user->user_id = $request->input('user_id');
@@ -263,6 +272,9 @@ Route::get('all_questions_with_quiz_id/{quiz_id}', function ($quiz_id) {
  * The method of this Route is POST
  */
 Route::post('create_question', function (Request $request) {
+    if (!(Auth::user()->is_admin)) {
+        return "You have no permission to delete or update data";
+    }
     $question = new Question();
     $question->id = 0;
     $question->quiz_id = $request->input('quiz_id');
@@ -373,6 +385,9 @@ Route::get('find_answer/is_correct/{is_correct}', function ($is_correct) {
  * The method of this Route is POST
  */
 Route::post('create_answer', function (Request $request) {
+    if (!(Auth::user()->is_admin)) {
+        return "You have no permission to delete or update data";
+    }
     $answer = new Answer();
     $answer->id = 0;
     $answer->question_id = $request->input('question_id');
@@ -435,6 +450,9 @@ Route::get('all_results_with_user/{user_id}/and_quiz/{quiz_id}', function ($user
  * The method of this Route is POST
  */
 Route::post('create_result', function (Request $request) {
+    if (!(Auth::user()->is_admin)) {
+        return "You have no permission to delete or update data";
+    }
     $result = new Result();
     $result->id = 0;
     $result->user_id = $request->input('user_id');
@@ -444,23 +462,6 @@ Route::post('create_result', function (Request $request) {
     $result->save();
     return "Create 01 result successfully";
 });
-
-/**
- * This Route will receive FormData object from Controller and edit a id-specified Result instance
- * The method of this Route is POST
- */
-// Route::post('edit_result', function (Request $request) {
-//     if (!(Auth::user()->is_admin)) {
-//         return "You have no permission to delete or update data";
-//     }
-//     $result = Result::find($request->input('id'));
-//     $result->user_id = $request->input('user_id');
-//     $result->quiz_id = $request->input('quiz_id');
-//     $result->question_id = $request->input('question_id');
-//     $result->answern_id = $request->input('answer_id');
-//     $result->save();
-//     return "edit 01 result successfully";
-// });
 
 /**
  * Find Result instance by result 's  id (pass through API)

@@ -2,7 +2,7 @@
 <div data-spy="scroll" data-target="#form_exam_submit">
 
     @section('content')
-    <h1>This is an exam {{$exam_details->quiz->name}} </h1>
+    <h1>This is an exam number {{$exam_id}} : {{$quiz_object->name}} </h1>
 
     <div>
         @foreach ($quiz_object->question_list as $k=>$question)
@@ -10,9 +10,9 @@
         @endforeach
     </div>
 
-    <form action="" method="POST" id="form_exam_submit">
+    <form action=" {{ url('/on_exam/submit_exam/' . $exam_id)}} " method="POST" id="form_exam_submit">
         @csrf
-        {!! Form::hidden($time_of_exam, $quiz_object->minutes) !!}
+        <span data-time="time_of_exam" hidden> {{ $quiz_object->minutes }} </span>
         @foreach ($quiz_object->question_list as $k=>$question)
             <ul class="nav nav-tabs nav-stacked" id=" {{$question->id}} " style="background-color: aqua">
                 <li style="background-color: blueviolet">
@@ -37,7 +37,7 @@
         window.onload = () => {
             let form_submitted = document.getElementById('form_exam_submit');
             let form_datas = new FormData(form_submitted);
-            let time_of_exam = form_datas.get('time_of_exam');
+            let time_of_exam = document.querySelector('span[data-time=time_of_exam]').innerHTML;
             setTimeout(()=>{
                 form_submitted.submit();
             },time_of_exam*60*1000);

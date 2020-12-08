@@ -1970,6 +1970,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1977,6 +1982,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       /** User who are logging in */
+      announce: document.querySelector("span[data-role=alert]").innerHTML,
       current_user: window.current_user,
       keep_direct_to: this.$route.params.direct_to
     };
@@ -4509,12 +4515,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   //
   data: function data() {
     return {
+      current_user: window.current_user,
       exams_list: [],
 
       /** if we need to load exams list using a specified quiz we need */
@@ -4524,7 +4539,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       user_in_reference: this.$route.params.user_in_reference,
 
       /** this variable will define the table to load done exam or pending exam  */
-      exams_is_done: this.$route.params.exams_is_done
+      load_done_exam: this.$route.params.exams_is_done,
+      // variables for Form go to exam
+      host: window.location.host,
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content")
     };
   },
   methods: {
@@ -4585,7 +4603,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 0:
               controller = new _controllers_controllers_js__WEBPACK_IMPORTED_MODULE_1__["Controller"]();
               exams_list = null;
-              console.log(_this.exams_is_done); // load the exams list
+              console.log(_this.load_done_exam); // load the exams list
 
               if (!(window.current_user.is_admin == 1)) {
                 _context.next = 23;
@@ -4628,7 +4646,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
             case 19:
               // now filter exams_list depends on variable "this.exam_is_done"
-              only_done_exam_loaded = _this.exams_is_done;
+              only_done_exam_loaded = _this.load_done_exam;
               exams_list = exams_list.filter(function (exam) {
                 return only_done_exam_loaded ? exam.is_done : !exams.is_done;
               });
@@ -42436,6 +42454,20 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "dashboard" }, [
+    _c("div", { staticClass: "alert alert-block" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: { type: "button", "data-dismiss": "alert" }
+        },
+        [_vm._v("×")]
+      ),
+      _vm._v(" "),
+      _c("h4", [_vm._v("Announce")]),
+      _vm._v("\n    " + _vm._s(_vm.announce) + "\n  ")
+    ]),
+    _vm._v(" "),
     _c("div", { staticClass: "btn-controls" }, [
       _c(
         "div",
@@ -44944,33 +44976,69 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(exam.is_done))]),
                   _vm._v(" "),
-                  _c("td", [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-warning",
-                        on: {
-                          click: function($event) {
-                            return _vm.goto_edit_form(exam)
-                          }
-                        }
-                      },
-                      [_vm._v("EDIT")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        on: {
-                          click: function($event) {
-                            return _vm.goto_delete_form(exam)
-                          }
-                        }
-                      },
-                      [_vm._v("DELETE")]
-                    )
-                  ])
+                  _vm.current_user.is_admin
+                    ? _c("td", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-warning",
+                            on: {
+                              click: function($event) {
+                                return _vm.goto_edit_form(exam)
+                              }
+                            }
+                          },
+                          [_vm._v("EDIT")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger",
+                            on: {
+                              click: function($event) {
+                                return _vm.goto_delete_form(exam)
+                              }
+                            }
+                          },
+                          [_vm._v("DELETE")]
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  !_vm.current_user.is_admin
+                    ? _c("td", [
+                        _c(
+                          "form",
+                          {
+                            attrs: {
+                              action: _vm.host + "/on_exam/on_exam",
+                              method: "post"
+                            }
+                          },
+                          [
+                            _c("input", {
+                              attrs: { type: "hidden", name: "_token" },
+                              domProps: { value: _vm.csrf }
+                            }),
+                            _vm._v(" "),
+                            _c("input", {
+                              attrs: { type: "hidden", name: "exam_id" },
+                              domProps: { value: exam.id }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-warning",
+                                attrs: { type: "submit" }
+                              },
+                              [_vm._v("DO THIS EXAM")]
+                            )
+                          ]
+                        )
+                      ])
+                    : _vm._e()
                 ])
               }),
               0
@@ -45002,7 +45070,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("USER --- (ID)")]),
         _vm._v(" "),
-        _c("th", [_vm._v("IS DONE")])
+        _c("th", [_vm._v("IS DONE")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("action")])
       ])
     ])
   }

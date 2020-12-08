@@ -1,5 +1,10 @@
 <template>
   <div class="dashboard">
+    <div class="alert alert-block">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4>Announce</h4>
+      {{announce}}
+    </div>
     <div class="btn-controls">
       <div class="btn-box-row row-fluid">
         <span @click="showUserTable()" class="btn-box big span2" style="margin-left: 3.2vw">
@@ -55,6 +60,7 @@ export default {
   data() {
     return {
       /** User who are logging in */
+      announce: document.querySelector("span[data-role=alert]").innerHTML,
       current_user: window.current_user,
       keep_direct_to: this.$route.params.direct_to
     };
