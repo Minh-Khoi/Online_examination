@@ -19,7 +19,6 @@ Vue.use(VueRouter);
  *
  * Eg. ./components/DashboardComponent.vue -> <dashboard-component></dashboard-component>
  */
-console.log("fuck you");
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 

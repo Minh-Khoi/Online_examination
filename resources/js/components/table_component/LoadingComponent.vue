@@ -10,10 +10,10 @@ import { router } from "../../routes/routes";
 
 export default {
   mounted() {
-    console.log(this.$route.params.direct_to);
+    // console.log(this.$route.params);
     router.push({
       name: this.$route.params.direct_to,
-      params: this.$route.params.other_params
+      params: this.$route.params.other_params | null
     });
   }
 };

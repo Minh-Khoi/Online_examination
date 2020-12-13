@@ -47,6 +47,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapWebRoutes();
 
         $this->mapActiondRoutes();
+
+        $this->mapOnExamRoutes();
     }
 
     /**

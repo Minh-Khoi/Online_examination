@@ -44,7 +44,7 @@ const routes = [
     { path: "/vue/delete_exam/:id", name: "delete_exam", component: DeleteExamComponent },
     { path: "/vue/delete_user/:id", name: "delete_user", component: DeleteUserComponent },
     { path: "/vue/loading", name: "loading", component: LoadingComponent },
-    { path: "/home", redirect: { name: "dashboard" } },
+    { path: "/home", alias: "/home/*", redirect: { name: "dashboard" } },
 ];
 
 export const router = new VueRouter({

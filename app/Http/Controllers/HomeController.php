@@ -25,12 +25,12 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index($announce = null)
     {
         // find the user who are logging in
         $current_user = Auth::user();
         $current_user_mark = 0;
-        return view('admin.admin')->with("current_user", $current_user);
+        return view('admin.admin')->with("current_user", $current_user)->with('announce', $announce);
     }
 
     public function getFormData(Request $request)

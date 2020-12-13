@@ -1982,7 +1982,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       /** User who are logging in */
-      announce: document.querySelector("span[data-role=alert]").innerHTML,
+      announce: document.querySelector("span[data-role=alert]") ? document.querySelector("span[data-role=alert]").innerHTML : null,
       current_user: window.current_user,
       keep_direct_to: this.$route.params.direct_to
     };
@@ -1993,7 +1993,7 @@ __webpack_require__.r(__webpack_exports__);
       _routes_routes_js__WEBPACK_IMPORTED_MODULE_0__["router"].push({
         name: "loading",
         params: {
-          direct_to: "exams"
+          direct_to: "users"
         }
       });
     },
@@ -2039,7 +2039,9 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  mounted: function mounted() {//
+  mounted: function mounted() {
+    //
+    console.log(this.current_user);
   }
 });
 
@@ -4196,10 +4198,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    console.log(this.$route.params.direct_to);
+    // console.log(this.$route.params);
     _routes_routes__WEBPACK_IMPORTED_MODULE_0__["router"].push({
       name: this.$route.params.direct_to,
-      params: this.$route.params.other_params
+      params: this.$route.params.other_params | null
     });
   }
 });
@@ -4523,6 +4525,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4541,7 +4545,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       /** this variable will define the table to load done exam or pending exam  */
       load_done_exam: this.$route.params.exams_is_done,
       // variables for Form go to exam
-      host: window.location.host,
       csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content")
     };
   },
@@ -4585,7 +4588,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           exam: exam
         }
       });
-    }
+    } // go_to_exam() {
+    //   document.body.innerHTML = "<a> FUCK YOU </a>";
+    // }
+
   },
 
   /** *
@@ -4602,122 +4608,122 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           switch (_context.prev = _context.next) {
             case 0:
               controller = new _controllers_controllers_js__WEBPACK_IMPORTED_MODULE_1__["Controller"]();
-              exams_list = null;
-              console.log(_this.load_done_exam); // load the exams list
+              exams_list = null; // console.log(this.quiz_in_reference);
+              // load the exams list
 
               if (!(window.current_user.is_admin == 1)) {
-                _context.next = 23;
+                _context.next = 22;
                 break;
               }
 
-              if (_this.quiz_in_reference) {
-                _context.next = 10;
+              if (!_this.quiz_in_reference) {
+                _context.next = 9;
                 break;
               }
 
-              _context.next = 7;
+              _context.next = 6;
               return controller.loadExamsListByQuizID(_this.quiz_in_reference.id);
 
-            case 7:
+            case 6:
               exams_list = _context.sent;
-              _context.next = 19;
+              _context.next = 18;
               break;
 
-            case 10:
-              if (_this.user_in_reference) {
-                _context.next = 16;
+            case 9:
+              if (!_this.user_in_reference) {
+                _context.next = 15;
                 break;
               }
 
-              _context.next = 13;
+              _context.next = 12;
               return controller.loadExamsListByUserID(_this.user_in_reference.id);
 
-            case 13:
+            case 12:
               exams_list = _context.sent;
-              _context.next = 19;
+              _context.next = 18;
               break;
 
-            case 16:
-              _context.next = 18;
+            case 15:
+              _context.next = 17;
               return controller.loadExamsList();
 
-            case 18:
+            case 17:
               exams_list = _context.sent;
 
-            case 19:
+            case 18:
               // now filter exams_list depends on variable "this.exam_is_done"
               only_done_exam_loaded = _this.load_done_exam;
               exams_list = exams_list.filter(function (exam) {
-                return only_done_exam_loaded ? exam.is_done : !exams.is_done;
+                return only_done_exam_loaded ? exam.is_done : !exam.is_done;
               });
-              _context.next = 26;
+              _context.next = 25;
               break;
 
-            case 23:
-              _context.next = 25;
+            case 22:
+              _context.next = 24;
               return controller.loadPendingExamsListByUserID(window.current_user.id);
 
-            case 25:
+            case 24:
               exams_list = _context.sent;
 
-            case 26:
+            case 25:
               // add "user_name" and "quiz_name" fields
               _iterator = _createForOfIteratorHelper(exams_list);
-              _context.prev = 27;
+              _context.prev = 26;
 
               _iterator.s();
 
-            case 29:
+            case 28:
               if ((_step = _iterator.n()).done) {
-                _context.next = 41;
+                _context.next = 40;
                 break;
               }
 
               exam = _step.value;
-              _context.next = 33;
+              _context.next = 32;
               return controller.readQuizByID(exam.quiz_id);
 
-            case 33:
+            case 32:
               quiz = _context.sent;
-              _context.next = 36;
+              _context.next = 35;
               return controller.readUserByID(exam.user_id);
 
-            case 36:
+            case 35:
               user = _context.sent;
               exam["user_name"] = user.name;
               exam["quiz_name"] = quiz.name;
 
-            case 39:
-              _context.next = 29;
+            case 38:
+              _context.next = 28;
               break;
 
-            case 41:
-              _context.next = 46;
+            case 40:
+              _context.next = 45;
               break;
 
-            case 43:
-              _context.prev = 43;
-              _context.t0 = _context["catch"](27);
+            case 42:
+              _context.prev = 42;
+              _context.t0 = _context["catch"](26);
 
               _iterator.e(_context.t0);
 
-            case 46:
-              _context.prev = 46;
+            case 45:
+              _context.prev = 45;
 
               _iterator.f();
 
-              return _context.finish(46);
+              return _context.finish(45);
 
-            case 49:
+            case 48:
               // now assign value for "this.exam_list"
               _this.exams_list = exams_list;
 
-            case 50:
+            case 49:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[27, 43, 46, 49]]);
+      }, _callee, null, [[26, 42, 45, 48]]);
     }))();
   }
 });
@@ -42454,19 +42460,21 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "dashboard" }, [
-    _c("div", { staticClass: "alert alert-block" }, [
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: { type: "button", "data-dismiss": "alert" }
-        },
-        [_vm._v("×")]
-      ),
-      _vm._v(" "),
-      _c("h4", [_vm._v("Announce")]),
-      _vm._v("\n    " + _vm._s(_vm.announce) + "\n  ")
-    ]),
+    _vm.announce
+      ? _c("div", { staticClass: "alert alert-block" }, [
+          _c(
+            "button",
+            {
+              staticClass: "close",
+              attrs: { type: "button", "data-dismiss": "alert" }
+            },
+            [_vm._v("×")]
+          ),
+          _vm._v(" "),
+          _c("h4", [_vm._v("Announce")]),
+          _vm._v("\n    " + _vm._s(_vm.announce) + "\n  ")
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _c("div", { staticClass: "btn-controls" }, [
       _c(
@@ -44974,7 +44982,7 @@ var render = function() {
                     _c("b", [_vm._v("(ID: " + _vm._s(exam.user_id) + " )")])
                   ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(exam.is_done))]),
+                  _c("td", [_vm._v(_vm._s(exam.is_done ? "yes" : "no"))]),
                   _vm._v(" "),
                   _vm.current_user.is_admin
                     ? _c("td", [
@@ -45012,8 +45020,8 @@ var render = function() {
                           "form",
                           {
                             attrs: {
-                              action: _vm.host + "/on_exam/on_exam",
-                              method: "post"
+                              action: "/on_exam/on_exam",
+                              method: "POST"
                             }
                           },
                           [
@@ -45025,6 +45033,16 @@ var render = function() {
                             _c("input", {
                               attrs: { type: "hidden", name: "exam_id" },
                               domProps: { value: exam.id }
+                            }),
+                            _vm._v(" "),
+                            _c("input", {
+                              attrs: { type: "hidden", name: "quiz_id" },
+                              domProps: { value: exam.quiz_id }
+                            }),
+                            _vm._v(" "),
+                            _c("input", {
+                              attrs: { type: "hidden", name: "user_id" },
+                              domProps: { value: exam.user_id }
                             }),
                             _vm._v(" "),
                             _c(
@@ -60854,8 +60872,7 @@ Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
  *
  * Eg. ./components/DashboardComponent.vue -> <dashboard-component></dashboard-component>
  */
-
-console.log("fuck you"); // const files = require.context('./', true, /\.vue$/i)
+// const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('dashboard-component', __webpack_require__(/*! ./components/DashboardComponent.vue */ "./resources/js/components/DashboardComponent.vue")["default"]); // Add event listener for the DOM element on the Sidebar
@@ -62668,11 +62685,11 @@ var Controller = /*#__PURE__*/function () {
 
               case 3:
                 // THis localStorage param will be use in route file
-                window.current_user = user;
-                console.log(window.current_user);
+                window.current_user = user; // console.log(window.current_user);
+
                 return _context2.abrupt("return", user);
 
-              case 6:
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -63031,11 +63048,12 @@ var Controller = /*#__PURE__*/function () {
               case 2:
                 exams_list_total = _context12.sent;
                 exam_list_not_done = exams_list_total.filter(function (exam) {
-                  return exam.is_done == false;
+                  return !exam.is_done;
                 });
+                console.log(exams_list_total);
                 return _context12.abrupt("return", exam_list_not_done);
 
-              case 5:
+              case 6:
               case "end":
                 return _context12.stop();
             }
@@ -63049,48 +63067,51 @@ var Controller = /*#__PURE__*/function () {
 
       return loadPendingExamsListByUserID;
     }()
+    /**
+     * Load the list of pending Exams (QuizUser instances) which have specified "user_id" attribute,
+     * pending Exams is the exam (QuizUser instances) which have been done (is_done == true)
+     * return value in JSON
+    */
+
+  }, {
+    key: "loadDoneExamsListByUserID",
+    value: function () {
+      var _loadDoneExamsListByUserID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13(user_id) {
+        var exams_list_total, exam_list_done;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+          while (1) {
+            switch (_context13.prev = _context13.next) {
+              case 0:
+                _context13.next = 2;
+                return this.loadExamsListByUserID(user_id);
+
+              case 2:
+                exams_list_total = _context13.sent;
+                exam_list_done = exams_list_total.filter(function (exam) {
+                  return !exam.is_done;
+                });
+                return _context13.abrupt("return", exam_list_done);
+
+              case 5:
+              case "end":
+                return _context13.stop();
+            }
+          }
+        }, _callee13, this);
+      }));
+
+      function loadDoneExamsListByUserID(_x8) {
+        return _loadDoneExamsListByUserID.apply(this, arguments);
+      }
+
+      return loadDoneExamsListByUserID;
+    }()
     /** Load the list of Answer instances in JSON */
 
   }, {
     key: "loadAnswersList",
     value: function () {
-      var _loadAnswersList = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
-        var list;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
-          while (1) {
-            switch (_context13.prev = _context13.next) {
-              case 0:
-                list = [];
-                _context13.next = 3;
-                return fetch(window.location.origin + "/action/all_answers").then(function (response) {
-                  return response.text();
-                }).then(function (res) {
-                  list = JSON.parse(res);
-                });
-
-              case 3:
-                return _context13.abrupt("return", list);
-
-              case 4:
-              case "end":
-                return _context13.stop();
-            }
-          }
-        }, _callee13);
-      }));
-
-      function loadAnswersList() {
-        return _loadAnswersList.apply(this, arguments);
-      }
-
-      return loadAnswersList;
-    }()
-    /** Load the list of Answer instances in JSON */
-
-  }, {
-    key: "loadResultsList",
-    value: function () {
-      var _loadResultsList = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14() {
+      var _loadAnswersList = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14() {
         var list;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
           while (1) {
@@ -63098,7 +63119,7 @@ var Controller = /*#__PURE__*/function () {
               case 0:
                 list = [];
                 _context14.next = 3;
-                return fetch(window.location.origin + "/action/all_results").then(function (response) {
+                return fetch(window.location.origin + "/action/all_answers").then(function (response) {
                   return response.text();
                 }).then(function (res) {
                   list = JSON.parse(res);
@@ -63113,6 +63134,42 @@ var Controller = /*#__PURE__*/function () {
             }
           }
         }, _callee14);
+      }));
+
+      function loadAnswersList() {
+        return _loadAnswersList.apply(this, arguments);
+      }
+
+      return loadAnswersList;
+    }()
+    /** Load the list of Answer instances in JSON */
+
+  }, {
+    key: "loadResultsList",
+    value: function () {
+      var _loadResultsList = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
+        var list;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
+          while (1) {
+            switch (_context15.prev = _context15.next) {
+              case 0:
+                list = [];
+                _context15.next = 3;
+                return fetch(window.location.origin + "/action/all_results").then(function (response) {
+                  return response.text();
+                }).then(function (res) {
+                  list = JSON.parse(res);
+                });
+
+              case 3:
+                return _context15.abrupt("return", list);
+
+              case 4:
+              case "end":
+                return _context15.stop();
+            }
+          }
+        }, _callee15);
       }));
 
       function loadResultsList() {
@@ -63131,18 +63188,18 @@ var Controller = /*#__PURE__*/function () {
   }, {
     key: "sendAPI",
     value: function () {
-      var _sendAPI = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15(path, form_datas) {
+      var _sendAPI = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16(path, form_datas) {
         var method,
             result,
-            _args15 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
+            _args16 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
           while (1) {
-            switch (_context15.prev = _context15.next) {
+            switch (_context16.prev = _context16.next) {
               case 0:
-                method = _args15.length > 2 && _args15[2] !== undefined ? _args15[2] : "POST";
+                method = _args16.length > 2 && _args16[2] !== undefined ? _args16[2] : "POST";
                 result = null; // console.log(form_datas.get('name'));
 
-                _context15.next = 4;
+                _context16.next = 4;
                 return fetch(window.location.origin + path, {
                   body: form_datas,
                   method: method.toUpperCase(),
@@ -63156,17 +63213,17 @@ var Controller = /*#__PURE__*/function () {
                 });
 
               case 4:
-                return _context15.abrupt("return", result);
+                return _context16.abrupt("return", result);
 
               case 5:
               case "end":
-                return _context15.stop();
+                return _context16.stop();
             }
           }
-        }, _callee15);
+        }, _callee16);
       }));
 
-      function sendAPI(_x8, _x9) {
+      function sendAPI(_x9, _x10) {
         return _sendAPI.apply(this, arguments);
       }
 
@@ -63177,15 +63234,15 @@ var Controller = /*#__PURE__*/function () {
   }, {
     key: "readQuestionByID",
     value: function () {
-      var _readQuestionByID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16(id) {
+      var _readQuestionByID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17(id) {
         var question;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
           while (1) {
-            switch (_context16.prev = _context16.next) {
+            switch (_context17.prev = _context17.next) {
               case 0:
                 question = null; // console.log(id);
 
-                _context16.next = 3;
+                _context17.next = 3;
                 return fetch(window.location.origin + "/action/find_question/" + id).then(function (response) {
                   return response.status == 200 ? response.text() : response.status;
                 }).then(function (res) {
@@ -63193,17 +63250,17 @@ var Controller = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context16.abrupt("return", question);
+                return _context17.abrupt("return", question);
 
               case 4:
               case "end":
-                return _context16.stop();
+                return _context17.stop();
             }
           }
-        }, _callee16);
+        }, _callee17);
       }));
 
-      function readQuestionByID(_x10) {
+      function readQuestionByID(_x11) {
         return _readQuestionByID.apply(this, arguments);
       }
 
@@ -63214,15 +63271,15 @@ var Controller = /*#__PURE__*/function () {
   }, {
     key: "readQuizByID",
     value: function () {
-      var _readQuizByID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17(id) {
+      var _readQuizByID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18(id) {
         var quiz;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
           while (1) {
-            switch (_context17.prev = _context17.next) {
+            switch (_context18.prev = _context18.next) {
               case 0:
                 quiz = null; // console.log(id);
 
-                _context17.next = 3;
+                _context18.next = 3;
                 return fetch(window.location.origin + "/action/find_quiz/" + id).then(function (response) {
                   return response.status == 200 ? response.text() : response.status;
                 }).then(function (res) {
@@ -63230,17 +63287,17 @@ var Controller = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context17.abrupt("return", quiz);
+                return _context18.abrupt("return", quiz);
 
               case 4:
               case "end":
-                return _context17.stop();
+                return _context18.stop();
             }
           }
-        }, _callee17);
+        }, _callee18);
       }));
 
-      function readQuizByID(_x11) {
+      function readQuizByID(_x12) {
         return _readQuizByID.apply(this, arguments);
       }
 
@@ -63251,14 +63308,14 @@ var Controller = /*#__PURE__*/function () {
   }, {
     key: "readResultByID",
     value: function () {
-      var _readResultByID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18(id) {
+      var _readResultByID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19(id) {
         var result;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee19$(_context19) {
           while (1) {
-            switch (_context18.prev = _context18.next) {
+            switch (_context19.prev = _context19.next) {
               case 0:
                 result = null;
-                _context18.next = 3;
+                _context19.next = 3;
                 return fetch(window.location.origin + "/action/find_result/" + id).then(function (response) {
                   return response.status == 200 ? response.text() : response.status;
                 }).then(function (res) {
@@ -63266,17 +63323,17 @@ var Controller = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context18.abrupt("return", result);
+                return _context19.abrupt("return", result);
 
               case 4:
               case "end":
-                return _context18.stop();
+                return _context19.stop();
             }
           }
-        }, _callee18);
+        }, _callee19);
       }));
 
-      function readResultByID(_x12) {
+      function readResultByID(_x13) {
         return _readResultByID.apply(this, arguments);
       }
 
@@ -63287,15 +63344,15 @@ var Controller = /*#__PURE__*/function () {
   }, {
     key: "readUserByID",
     value: function () {
-      var _readUserByID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19(id) {
+      var _readUserByID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee20(id) {
         var user;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee19$(_context19) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee20$(_context20) {
           while (1) {
-            switch (_context19.prev = _context19.next) {
+            switch (_context20.prev = _context20.next) {
               case 0:
                 user = null; // console.log(id);
 
-                _context19.next = 3;
+                _context20.next = 3;
                 return fetch(window.location.origin + "/action/find_user/" + id).then(function (response) {
                   return response.status == 200 ? response.text() : response.status;
                 }).then(function (res) {
@@ -63303,17 +63360,17 @@ var Controller = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context19.abrupt("return", user);
+                return _context20.abrupt("return", user);
 
               case 4:
               case "end":
-                return _context19.stop();
+                return _context20.stop();
             }
           }
-        }, _callee19);
+        }, _callee20);
       }));
 
-      function readUserByID(_x13) {
+      function readUserByID(_x14) {
         return _readUserByID.apply(this, arguments);
       }
 
@@ -63324,14 +63381,14 @@ var Controller = /*#__PURE__*/function () {
   }, {
     key: "readAnswersByQuestionID",
     value: function () {
-      var _readAnswersByQuestionID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee20(question_id) {
+      var _readAnswersByQuestionID = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee21(question_id) {
         var answers;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee20$(_context20) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee21$(_context21) {
           while (1) {
-            switch (_context20.prev = _context20.next) {
+            switch (_context21.prev = _context21.next) {
               case 0:
                 answers = null;
-                _context20.next = 3;
+                _context21.next = 3;
                 return fetch(window.location.origin + "/action/find_answer/question/" + question_id).then(function (response) {
                   return response.status == 200 ? response.text() : response.status;
                 }).then(function (res) {
@@ -63339,17 +63396,17 @@ var Controller = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context20.abrupt("return", answers);
+                return _context21.abrupt("return", answers);
 
               case 4:
               case "end":
-                return _context20.stop();
+                return _context21.stop();
             }
           }
-        }, _callee20);
+        }, _callee21);
       }));
 
-      function readAnswersByQuestionID(_x14) {
+      function readAnswersByQuestionID(_x15) {
         return _readAnswersByQuestionID.apply(this, arguments);
       }
 
@@ -63360,14 +63417,14 @@ var Controller = /*#__PURE__*/function () {
   }, {
     key: "find_next_id",
     value: function () {
-      var _find_next_id = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee21(table_name) {
+      var _find_next_id = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee22(table_name) {
         var next_id;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee21$(_context21) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee22$(_context22) {
           while (1) {
-            switch (_context21.prev = _context21.next) {
+            switch (_context22.prev = _context22.next) {
               case 0:
                 next_id = null;
-                _context21.next = 3;
+                _context22.next = 3;
                 return fetch(window.location.origin + "/action/find_next_id/" + table_name).then(function (response) {
                   return response.status == 200 ? response.text() : 'fail';
                 }).then(function (res) {
@@ -63375,17 +63432,17 @@ var Controller = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context21.abrupt("return", next_id);
+                return _context22.abrupt("return", next_id);
 
               case 4:
               case "end":
-                return _context21.stop();
+                return _context22.stop();
             }
           }
-        }, _callee21);
+        }, _callee22);
       }));
 
-      function find_next_id(_x15) {
+      function find_next_id(_x16) {
         return _find_next_id.apply(this, arguments);
       }
 
@@ -63547,6 +63604,7 @@ var routes = [{
   component: _components_table_component_LoadingComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
 }, {
   path: "/home",
+  alias: "/home/*",
   redirect: {
     name: "dashboard"
   }

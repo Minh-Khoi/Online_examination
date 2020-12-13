@@ -67,7 +67,7 @@ export class Controller {
             });
         // THis localStorage param will be use in route file
         window.current_user = user;
-        console.log(window.current_user);
+        // console.log(window.current_user);
         return user;
     }
 
@@ -178,10 +178,25 @@ export class Controller {
     async loadPendingExamsListByUserID(user_id) {
         let exams_list_total = await this.loadExamsListByUserID(user_id);
         let exam_list_not_done = exams_list_total.filter((exam) => {
-            return exam.is_done == false;
+            return !exam.is_done;
         })
+        console.log(exams_list_total);
         return exam_list_not_done;
     }
+
+    /**
+     * Load the list of pending Exams (QuizUser instances) which have specified "user_id" attribute,
+     * pending Exams is the exam (QuizUser instances) which have been done (is_done == true)
+     * return value in JSON
+    */
+    async loadDoneExamsListByUserID(user_id) {
+        let exams_list_total = await this.loadExamsListByUserID(user_id);
+        let exam_list_done = exams_list_total.filter((exam) => {
+            return !exam.is_done;
+        })
+        return exam_list_done;
+    }
+
 
     /** Load the list of Answer instances in JSON */
     async loadAnswersList() {

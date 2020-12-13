@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <div class="alert alert-block">
+    <div class="alert alert-block" v-if="announce">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       <h4>Announce</h4>
       {{announce}}
@@ -60,7 +60,9 @@ export default {
   data() {
     return {
       /** User who are logging in */
-      announce: document.querySelector("span[data-role=alert]").innerHTML,
+      announce: document.querySelector("span[data-role=alert]")
+        ? document.querySelector("span[data-role=alert]").innerHTML
+        : null,
       current_user: window.current_user,
       keep_direct_to: this.$route.params.direct_to
     };
@@ -68,7 +70,7 @@ export default {
   methods: {
     /** show the TableUsersComponent by calling routes */
     showUserTable() {
-      router.push({ name: "loading", params: { direct_to: "exams" } });
+      router.push({ name: "loading", params: { direct_to: "users" } });
     },
 
     /** show the TableQuizzesComponent by calling routes */
@@ -99,6 +101,7 @@ export default {
 
   mounted() {
     //
+    console.log(this.current_user);
   }
 };
 </script>

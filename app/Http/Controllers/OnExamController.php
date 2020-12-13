@@ -11,6 +11,7 @@ use App\Result;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OnExamController extends Controller
 {
@@ -24,11 +25,11 @@ class OnExamController extends Controller
         }
         $user_id = $request->input('user_id');
         $quiz_id = $request->input('quiz_id');
-        $exam_id = $request->input('exam-id');
+        $exam_id = $request->input('exam_id');
 
         $quiz = Quiz::find($quiz_id);
         $user = User::find($user_id);
-
+        // dd($quiz);
         $questions_list = Question::where('quiz_id', $quiz_id)->get()->all();
         // we will add the property "answers_list" for each Question instance of $question_list
         foreach ($questions_list as $k => $question) {
@@ -48,22 +49,25 @@ class OnExamController extends Controller
     public function submitExam(Request $request, $exam_id)
     {
         $results_collection = $request->all();
-        $announce = '';
+        $announce = null;
         $points = 0;
         try {
             foreach ($results_collection as $question_id => $answer_id) {
-                $result = new Result();
-                $result->quiz_user_id = $exam_id;
-                $result->question_id  = $question_id;
-                $result->answer_id  = $answer_id;
-                $result->save();
-                $quiz_user = QuizUser::find($exam_id);
-                $points = $quiz_user->point;
+                if ($question_id != '_token') {
+                    $result = new Result();
+                    $result->quiz_user_id = $exam_id;
+                    $result->question_id  = $question_id;
+                    $result->answer_id  = $answer_id;
+                    $result->save();
+                    $quiz_user = QuizUser::find($exam_id);
+                    $points = $quiz_user->point;
+                }
             }
             $announce = "You have done the exam number " . $exam_id . "!! And got the " . $points . " marks";
         } catch (Exception $e) {
-            $announce = "THe exam was destroyed!!! Contact to admin for more information and support";
+            $announce = $e->getMessage();
         }
-        return view('admin.admin')->with('announce', $announce);
+        $home_controller = new HomeController();
+        return redirect()->route('home.submit', ['announce' => $announce]);
     }
 }
