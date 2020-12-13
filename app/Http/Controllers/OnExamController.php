@@ -53,6 +53,10 @@ class OnExamController extends Controller
         $points = 0;
         try {
             foreach ($results_collection as $question_id => $answer_id) {
+                // unexpectedly, the exam submission include the csrf_token as a request 's field.
+                // It 's necessary to send a POST request in Laravel!!
+                // We must avoid saving this csrf_token as a Result instance.
+                // Unless the function will throw an SQLExeption
                 if ($question_id != '_token') {
                     $result = new Result();
                     $result->quiz_user_id = $exam_id;
