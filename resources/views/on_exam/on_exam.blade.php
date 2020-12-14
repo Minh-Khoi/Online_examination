@@ -1,12 +1,14 @@
 @extends('layouts.main_layout')
+
+@section('content')
+
 <div data-spy="scroll" data-target="#form_exam_submit">
 
-    @section('content')
     <h1>This is an exam number {{$exam_id}} : {{$quiz_object->name}} </h1>
 
     <div>
         @foreach ($quiz_object->questions_list as $k=>$question)
-            <a href="#{{$question->id}} " class="btn btn-default"> {{$k}} </a>
+            <a href="#{{$question->id}} " class="btn btn-default"> {{$k+1}} </a>
         @endforeach
     </div>
 
@@ -40,8 +42,8 @@
             let time_of_exam = document.querySelector('span[data-time=time_of_exam]').innerHTML;
             setTimeout(()=>{
                 form_submitted.submit();
-            },5000);
-            //time_of_exam*60*1000
+            },2500);
+            //},time_of_exam*60*1000);
         }
     </script>
 

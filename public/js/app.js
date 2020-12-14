@@ -4198,10 +4198,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    // console.log(this.$route.params);
     _routes_routes__WEBPACK_IMPORTED_MODULE_0__["router"].push({
       name: this.$route.params.direct_to,
-      params: this.$route.params.other_params ? this.$route.params.other_params : null
+      params: this.$route.params.other_params ? this.$route.params.other_params : {}
     });
   }
 });
