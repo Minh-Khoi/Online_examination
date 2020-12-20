@@ -4655,74 +4655,88 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               exams_list = exams_list.filter(function (exam) {
                 return only_done_exam_loaded ? exam.is_done : !exam.is_done;
               });
-              _context.next = 25;
+              _context.next = 31;
               break;
 
             case 22:
-              _context.next = 24;
-              return controller.loadPendingExamsListByUserID(window.current_user.id);
+              if (!_this.load_done_exam) {
+                _context.next = 28;
+                break;
+              }
 
-            case 24:
-              exams_list = _context.sent;
+              _context.next = 25;
+              return controller.loadDoneExamsListByUserID(_this.current_user.id);
 
             case 25:
+              exams_list = _context.sent;
+              _context.next = 31;
+              break;
+
+            case 28:
+              _context.next = 30;
+              return controller.loadPendingExamsListByUserID(_this.current_user.id);
+
+            case 30:
+              exams_list = _context.sent;
+
+            case 31:
               // add "user_name" and "quiz_name" fields
               _iterator = _createForOfIteratorHelper(exams_list);
-              _context.prev = 26;
+              _context.prev = 32;
 
               _iterator.s();
 
-            case 28:
+            case 34:
               if ((_step = _iterator.n()).done) {
-                _context.next = 40;
+                _context.next = 46;
                 break;
               }
 
               exam = _step.value;
-              _context.next = 32;
+              _context.next = 38;
               return controller.readQuizByID(exam.quiz_id);
 
-            case 32:
+            case 38:
               quiz = _context.sent;
-              _context.next = 35;
+              _context.next = 41;
               return controller.readUserByID(exam.user_id);
 
-            case 35:
+            case 41:
               user = _context.sent;
               exam["user_name"] = user.name;
               exam["quiz_name"] = quiz.name;
 
-            case 38:
-              _context.next = 28;
+            case 44:
+              _context.next = 34;
               break;
 
-            case 40:
-              _context.next = 45;
+            case 46:
+              _context.next = 51;
               break;
 
-            case 42:
-              _context.prev = 42;
-              _context.t0 = _context["catch"](26);
+            case 48:
+              _context.prev = 48;
+              _context.t0 = _context["catch"](32);
 
               _iterator.e(_context.t0);
 
-            case 45:
-              _context.prev = 45;
+            case 51:
+              _context.prev = 51;
 
               _iterator.f();
 
-              return _context.finish(45);
+              return _context.finish(51);
 
-            case 48:
+            case 54:
               // now assign value for "this.exam_list"
               _this.exams_list = exams_list;
 
-            case 49:
+            case 55:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[26, 42, 45, 48]]);
+      }, _callee, null, [[32, 48, 51, 54]]);
     }))();
   }
 });
@@ -63046,7 +63060,9 @@ var Controller = /*#__PURE__*/function () {
 
               case 2:
                 exams_list_total = _context12.sent;
+                // console.log(exams_list_total);
                 exam_list_not_done = exams_list_total.filter(function (exam) {
+                  // console.log(typeof exam.is_done);
                   return !exam.is_done;
                 });
                 console.log(exams_list_total);
@@ -63086,8 +63102,10 @@ var Controller = /*#__PURE__*/function () {
 
               case 2:
                 exams_list_total = _context13.sent;
+                // console.log(exams_list_total);
                 exam_list_done = exams_list_total.filter(function (exam) {
-                  return !exam.is_done;
+                  // console.log(exam.is_done);
+                  return exam.is_done;
                 });
                 return _context13.abrupt("return", exam_list_done);
 

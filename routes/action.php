@@ -181,6 +181,7 @@ Route::get('all_exams_with_user_id/{user_id}', function ($user_id) {
     // The variable below is a collection of QuizUsers instances, but we can convert it directly to JSON string.
     // It 's not neccessary to convert it to array
     $exams_list = QuizUser::where('user_id', $user_id)->get();
+    // dd($exams_list);
     return json_encode(($exams_list));
 });
 

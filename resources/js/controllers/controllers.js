@@ -177,7 +177,9 @@ export class Controller {
     */
     async loadPendingExamsListByUserID(user_id) {
         let exams_list_total = await this.loadExamsListByUserID(user_id);
+        // console.log(exams_list_total);
         let exam_list_not_done = exams_list_total.filter((exam) => {
+            // console.log(typeof exam.is_done);
             return !exam.is_done;
         })
         console.log(exams_list_total);
@@ -191,8 +193,10 @@ export class Controller {
     */
     async loadDoneExamsListByUserID(user_id) {
         let exams_list_total = await this.loadExamsListByUserID(user_id);
+        // console.log(exams_list_total);
         let exam_list_done = exams_list_total.filter((exam) => {
-            return !exam.is_done;
+            // console.log(exam.is_done);
+            return exam.is_done;
         })
         return exam_list_done;
     }

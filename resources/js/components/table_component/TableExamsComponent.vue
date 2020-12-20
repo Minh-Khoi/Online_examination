@@ -157,9 +157,15 @@ export default {
         return only_done_exam_loaded ? exam.is_done : !exam.is_done;
       });
     } else {
-      exams_list = await controller.loadPendingExamsListByUserID(
-        window.current_user.id
-      );
+      if (this.load_done_exam) {
+        exams_list = await controller.loadDoneExamsListByUserID(
+          this.current_user.id
+        );
+      } else {
+        exams_list = await controller.loadPendingExamsListByUserID(
+          this.current_user.id
+        );
+      }
     }
 
     // add "user_name" and "quiz_name" fields
