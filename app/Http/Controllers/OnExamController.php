@@ -35,10 +35,12 @@ class OnExamController extends Controller
         foreach ($questions_list as $k => $question) {
             $answers_list = Answer::where('question_id', $question->id)->get()->all();
             $question['answers_list'] = $answers_list;
+            // echo $question->id;
+            // print_r($answers_list);
         }
+        // die();
         // add the property "question_list" for the Quiz 's instance: $quiz
         $quiz['questions_list'] = $questions_list;
-
         return view("on_exam.on_exam")->with('quiz_object', $quiz)->with('user_object', $user)
             ->with('exam_id', $exam_id);
     }
@@ -63,6 +65,7 @@ class OnExamController extends Controller
                     $result->question_id  = $question_id;
                     $result->answer_id  = $answer_id;
                     $result->save();
+                    // dd($result);
                     $quiz_user = QuizUser::find($exam_id);
                     $points = $quiz_user->point;
                 }
@@ -71,7 +74,7 @@ class OnExamController extends Controller
         } catch (Exception $e) {
             $announce = $e->getMessage();
         }
-        $home_controller = new HomeController();
+        // $home_controller = new HomeController();
         return redirect()->route('home.submit', ['announce' => $announce]);
     }
 }

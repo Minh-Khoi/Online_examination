@@ -113,7 +113,7 @@ export default {
    */
   async mounted() {
     let controller = new Controller();
-    answers_list = null;
+    let answers_list = null;
 
     if (!this.question_in_reference) {
       answers_list = await controller.loadAnswersList();

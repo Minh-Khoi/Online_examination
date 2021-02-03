@@ -19,7 +19,6 @@ import CreateAnswerComponent from "../components/form_component/answer/CreateAns
 import CreateAdminComponent from '../components/form_component/user_admin/CreateAdminComponent.vue';
 import DeleteUserComponent from "../components/form_component/user_admin/DeleteUserComponent.vue";
 
-/** THis Route is used For admin Dashboard Template */
 const routes = [
     {
         path: "/vue/dashboard", name: "dashboard", component: DashboardComponent,

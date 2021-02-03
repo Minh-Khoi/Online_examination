@@ -4352,7 +4352,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _this = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var controller, _iterator, _step, answer, question;
+      var controller, answers_list, _iterator, _step, answer, question;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
@@ -63064,11 +63064,11 @@ var Controller = /*#__PURE__*/function () {
                 exam_list_not_done = exams_list_total.filter(function (exam) {
                   // console.log(typeof exam.is_done);
                   return !exam.is_done;
-                });
-                console.log(exams_list_total);
+                }); // console.log(exams_list_total);
+
                 return _context12.abrupt("return", exam_list_not_done);
 
-              case 6:
+              case 5:
               case "end":
                 return _context12.stop();
             }
@@ -63539,8 +63539,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-/** THis Route is used For admin Dashboard Template */
 
 var routes = [{
   path: "/vue/dashboard",

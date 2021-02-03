@@ -16,6 +16,7 @@
     <form action=" {{ url('/on_exam/submit_exam/' . $exam_id)}} " method="POST" id="form_exam_submit">
         @csrf
         <span data-time="time_of_exam" hidden> {{ $quiz_object->minutes }} </span>
+        <input type="submit" value="SUBMIT THIS EXAM" style="display: inline">
         @foreach ($quiz_object->questions_list as $k=>$question)
             <ul class="nav nav-tabs nav-stacked" id=" {{$question->id}} "
                         style="background-color: aqua; color: aliceblue; font-size: 16px">
@@ -23,9 +24,8 @@
                                 padding: 15px 20px; font-size: 1.2em; font-weight: 600">
                     {{$question->question_content}}
                 </li>
-
                 @foreach ($question->answers_list as $k=>$answer)
-                    <li style="background-color: aqua; padding: 15px 20px; ">
+                    <li style="background-color: aqua; padding: 15px 20px; color: black ">
                         {{--
                             // let me explain this input radio: when the form submited. It will send a request
                             // which have attribute "question_id" with value "answer_id"
@@ -33,7 +33,9 @@
                         --}}
                         <input type="radio" id="{{$answer->id}}"
                                                 name="{{$question->id}}" value="{{$answer->id}}">
-                        <label for="{{$answer->id}}">{{$answer->answer_content}}</label>
+                        <label style="display: inline" for="{{$answer->id}}">
+                            {{$answer->answer_content}}
+                        </label>
                     </li>
                 @endforeach
             </ul>

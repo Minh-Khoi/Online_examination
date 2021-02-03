@@ -182,7 +182,7 @@ export class Controller {
             // console.log(typeof exam.is_done);
             return !exam.is_done;
         })
-        console.log(exams_list_total);
+        // console.log(exams_list_total);
         return exam_list_not_done;
     }
 
