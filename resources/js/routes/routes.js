@@ -18,6 +18,7 @@ import DeleteExamComponent from '../components/form_component/exam/DeleteExamCom
 import CreateAnswerComponent from "../components/form_component/answer/CreateAnswerComponent.vue";
 import CreateAdminComponent from '../components/form_component/user_admin/CreateAdminComponent.vue';
 import DeleteUserComponent from "../components/form_component/user_admin/DeleteUserComponent.vue";
+import DeleteAnswerComponent from "../components/form_component/answer/DeleteAnswerComponent.vue";
 
 const routes = [
     {
@@ -42,6 +43,7 @@ const routes = [
     { path: "/vue/delete_question/:id", name: "delete_question", component: DeleteQuestionComponent },
     { path: "/vue/delete_exam/:id", name: "delete_exam", component: DeleteExamComponent },
     { path: "/vue/delete_user/:id", name: "delete_user", component: DeleteUserComponent },
+    { path: "/vue/delete_answer/:id", name: "delete_answer", component: DeleteAnswerComponents },
     { path: "/vue/loading", name: "loading", component: LoadingComponent },
     { path: "/home", alias: "/home/*", redirect: { name: "dashboard" } },
 ];

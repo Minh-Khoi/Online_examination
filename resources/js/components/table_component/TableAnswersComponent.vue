@@ -41,7 +41,6 @@
               <strong>{{answer.question_name}} ---- (ID: {{answer.question_id}} )</strong>
             </td>
             <td>
-              <button @click="goto_edit_form(answer)" class="btn btn-warning">EDIT</button>
               <button @click="goto_delete_form(answer)" class="btn btn-danger">DELETE</button>
             </td>
             <td
