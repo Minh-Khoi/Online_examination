@@ -78,6 +78,26 @@
         </div>
 
         <div class="control-group">
+          <label class="control-label">Correct Answer??</label>
+          <div class="controls">
+            <input
+              type="radio"
+              name="is_correct"
+              class="text-info"
+              value="1"
+              :checked="current_answer.is_correct"
+            /> YES
+            <input
+              type="radio"
+              name="is_correct"
+              class="text-danger"
+              value="0"
+              :checked="!current_answer.is_correct"
+            /> NO
+          </div>
+        </div>
+
+        <div class="control-group">
           <div class="controls">
             <button type="submit" class="btn btn-success">Submit Form</button>
           </div>
@@ -154,6 +174,7 @@ export default {
     // we must render the questions_list to "select" tag by method controller.loadQuestionsList()
     let controller = new Controller();
     this.questions_list = await controller.loadQuestionsList();
+    this.onQuestionChoosen(this.current_answer.question_id);
   }
 };
 </script>

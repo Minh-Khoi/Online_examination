@@ -19,6 +19,7 @@ import CreateAnswerComponent from "../components/form_component/answer/CreateAns
 import CreateAdminComponent from '../components/form_component/user_admin/CreateAdminComponent.vue';
 import DeleteUserComponent from "../components/form_component/user_admin/DeleteUserComponent.vue";
 import DeleteAnswerComponent from "../components/form_component/answer/DeleteAnswerComponent.vue";
+import EditAnswerComponent from "../components/form_component/answer/EditAnswerComponent.vue";
 
 const routes = [
     {
@@ -39,11 +40,12 @@ const routes = [
     { path: "/vue/edit_quiz/:id", name: "edit_quiz", component: EditQuizComponent },
     { path: "/vue/edit_question/:id", name: "edit_question", component: EditQuestionComponent },
     { path: "/vue/edit_exam/:id", name: "edit_exam", component: EditExamComponent },
+    { path: "/vue/edit_answer/:id", name: "edit_answer", component: EditAnswerComponent },
     { path: "/vue/delete_quiz/:id", name: "delete_quiz", component: DeleteQuizComponent },
     { path: "/vue/delete_question/:id", name: "delete_question", component: DeleteQuestionComponent },
     { path: "/vue/delete_exam/:id", name: "delete_exam", component: DeleteExamComponent },
     { path: "/vue/delete_user/:id", name: "delete_user", component: DeleteUserComponent },
-    { path: "/vue/delete_answer/:id", name: "delete_answer", component: DeleteAnswerComponents },
+    { path: "/vue/delete_answer/:id", name: "delete_answer", component: DeleteAnswerComponent },
     { path: "/vue/loading", name: "loading", component: LoadingComponent },
     { path: "/home", alias: "/home/*", redirect: { name: "dashboard" } },
 ];

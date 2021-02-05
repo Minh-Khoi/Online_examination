@@ -393,6 +393,7 @@ Route::post('create_answer', function (Request $request) {
     $answer->id = 0;
     $answer->question_id = $request->input('question_id');
     $answer->answer_content = $request->input('answer_content');
+    $answer->is_correct = $request->input('is_correct');
     $answer->save();
     return "Create 01 Answer successfully";
 });
@@ -408,6 +409,7 @@ Route::post('edit_answer', function (Request $request) {
     $answer = Answer::find($request->input('id'));
     $answer->question_id = $request->input('question_id');
     $answer->answer_content = $request->input('answer_content');
+    $answer->is_correct = $request->input('is_correct');
     $answer->save();
     return "Updated 01 Answer successfully";
 });
