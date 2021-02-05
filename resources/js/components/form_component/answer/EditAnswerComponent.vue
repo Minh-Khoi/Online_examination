@@ -175,6 +175,7 @@ export default {
     let controller = new Controller();
     this.questions_list = await controller.loadQuestionsList();
     this.onQuestionChoosen(this.current_answer.question_id);
+    console.log(this.current_answer);
   }
 };
 </script>
