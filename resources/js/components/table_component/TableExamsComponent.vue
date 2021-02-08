@@ -151,11 +151,6 @@ export default {
       } else {
         exams_list = await controller.loadExamsList();
       }
-      // now filter exams_list depends on variable "this.exam_is_done"
-      let only_done_exam_loaded = this.load_done_exam;
-      exams_list = exams_list.filter(exam => {
-        return only_done_exam_loaded ? exam.is_done : !exam.is_done;
-      });
     } else {
       if (this.load_done_exam) {
         exams_list = await controller.loadDoneExamsListByUserID(
@@ -166,6 +161,11 @@ export default {
           this.current_user.id
         );
       }
+      // now filter exams_list depends on variable "this.exam_is_done"
+      let only_done_exam_loaded = this.load_done_exam;
+      exams_list = exams_list.filter(exam => {
+        return only_done_exam_loaded ? exam.is_done : !exam.is_done;
+      });
     }
 
     // add "user_name" and "quiz_name" fields

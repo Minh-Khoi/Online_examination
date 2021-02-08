@@ -2657,7 +2657,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               _this3.onQuestionChoosen(_this3.current_answer.question_id);
 
-            case 5:
+              console.log(_this3.current_answer);
+
+            case 6:
             case "end":
               return _context3.stop();
           }
@@ -4994,7 +4996,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               // load the exams list
 
               if (!(window.current_user.is_admin == 1)) {
-                _context.next = 22;
+                _context.next = 20;
                 break;
               }
 
@@ -5033,34 +5035,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               exams_list = _context.sent;
 
             case 18:
+              _context.next = 31;
+              break;
+
+            case 20:
+              if (!_this.load_done_exam) {
+                _context.next = 26;
+                break;
+              }
+
+              _context.next = 23;
+              return controller.loadDoneExamsListByUserID(_this.current_user.id);
+
+            case 23:
+              exams_list = _context.sent;
+              _context.next = 29;
+              break;
+
+            case 26:
+              _context.next = 28;
+              return controller.loadPendingExamsListByUserID(_this.current_user.id);
+
+            case 28:
+              exams_list = _context.sent;
+
+            case 29:
               // now filter exams_list depends on variable "this.exam_is_done"
               only_done_exam_loaded = _this.load_done_exam;
               exams_list = exams_list.filter(function (exam) {
                 return only_done_exam_loaded ? exam.is_done : !exam.is_done;
               });
-              _context.next = 31;
-              break;
-
-            case 22:
-              if (!_this.load_done_exam) {
-                _context.next = 28;
-                break;
-              }
-
-              _context.next = 25;
-              return controller.loadDoneExamsListByUserID(_this.current_user.id);
-
-            case 25:
-              exams_list = _context.sent;
-              _context.next = 31;
-              break;
-
-            case 28:
-              _context.next = 30;
-              return controller.loadPendingExamsListByUserID(_this.current_user.id);
-
-            case 30:
-              exams_list = _context.sent;
 
             case 31:
               // add "user_name" and "quiz_name" fields
